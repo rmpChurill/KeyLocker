@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.IO;
+    using System.Windows.Forms;
     using System.Xml;
 
     public static class Data
@@ -58,10 +59,17 @@
 
         internal static void Check()
         {
+            if(!Settings.Instance.WarnForOldPasswords)
+            {
+                return;
+            }
+
             foreach(var entry in entries)
             {
                 if(entry.IsOutdated)
                 {
+                    MessageBox.Show("There are outdated Entries!");
+
                     break;
                 }
             }
