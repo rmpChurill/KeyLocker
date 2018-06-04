@@ -231,6 +231,7 @@
             this.Name = "EditDialog";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "EditDialog";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.OnClosed);
             this.Shown += new System.EventHandler(this.OnShown);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

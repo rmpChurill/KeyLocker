@@ -8,6 +8,7 @@ namespace KeyLocker
     public partial class EditDialog : DialogBase
     {
         private Entry entry;
+        private string originalPassword;
 
         public EditDialog() :
             this(null)
@@ -25,6 +26,8 @@ namespace KeyLocker
             {
                 this.entry = new Entry(entry);
             }
+
+            this.originalPassword = this.entry.Password;
         }
 
         public Entry Entry
@@ -69,7 +72,7 @@ namespace KeyLocker
 
         private void OnPasswordChanged(object sender, EventArgs e)
         {
-            if(this.validatePasswordCheckBox.Checked)
+            if (this.validatePasswordCheckBox.Checked)
             {
                 this.ValidatePassword();
             }
@@ -84,7 +87,7 @@ namespace KeyLocker
             this.ValidateUpperCaseCharacters(this.passwordTextBox.Text, messages);
             this.ValidateSpecialCharacters(this.passwordTextBox.Text, messages);
 
-            if(messages.Count == 0)
+            if (messages.Count == 0)
             {
                 messages.Add("Alles Ok");
             }
@@ -94,7 +97,7 @@ namespace KeyLocker
 
         private void ValidateLength(string text, List<string> messages)
         {
-            if(text.Length < Settings.Instance.MinLength)
+            if (text.Length < Settings.Instance.MinLength)
             {
                 messages.Add(string.Format("The password must be at least {0} characters long!", Settings.Instance.MinLength));
             }
@@ -107,17 +110,17 @@ namespace KeyLocker
 
         private void ValidateSpecialCharacters(string text, List<string> messages)
         {
-            if(Settings.Instance.SpecialCharacters == Usage.Forbid)
+            if (Settings.Instance.SpecialCharacters == Usage.Forbid)
             {
-                for(var i = 0; i < text.Length; i++)
+                for (var i = 0; i < text.Length; i++)
                 {
-                    if(Definitions.SpecialCharacters.IndexOf(text[i]) != -1)
+                    if (Definitions.SpecialCharacters.IndexOf(text[i]) != -1)
                     {
                         messages.Add(string.Format("Must not contain special character '{0}'!", text[i]));
                     }
                 }
             }
-            else if(Settings.Instance.SpecialCharacters == Usage.Require)
+            else if (Settings.Instance.SpecialCharacters == Usage.Require)
             {
                 if (text.IndexOfAny(Definitions.SpecialCharacters.ToCharArray()) == -1)
                 {
@@ -175,6 +178,14 @@ namespace KeyLocker
             this.commentTextBox.DataBindings.Add(nameof(this.commentTextBox.Text), this.entry, nameof(this.entry.Comment));
             this.loginTextBox.DataBindings.Add(nameof(this.loginTextBox.Text), this.entry, nameof(this.entry.Login));
             this.SetFormState();
+        }
+
+        private void OnClosed(object sender, FormClosedEventArgs e)
+        {
+            if (this.entry.Password != this.originalPassword)
+            {
+                this.entry.Date = DateTime.Now;
+            }
         }
     }
 }

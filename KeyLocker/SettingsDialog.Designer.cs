@@ -47,8 +47,15 @@
             this.deleteAllDataButton = new System.Windows.Forms.Button();
             this.changePasswordButton = new System.Windows.Forms.Button();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.decayTimeNumericUpDown = new System.Windows.Forms.NumericUpDown();
+            this.OldPwWarningCheckBox = new System.Windows.Forms.CheckBox();
+            this.decayTimeUnitComboBox = new System.Windows.Forms.ComboBox();
+            this.label6 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.groupBox3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.decayTimeNumericUpDown)).BeginInit();
             this.SuspendLayout();
             // 
             // maxLengthTextBox
@@ -210,7 +217,7 @@
             this.groupBox2.Controls.Add(this.changePasswordButton);
             this.groupBox2.Location = new System.Drawing.Point(218, 12);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(200, 246);
+            this.groupBox2.Size = new System.Drawing.Size(200, 109);
             this.groupBox2.TabIndex = 14;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "User";
@@ -251,6 +258,55 @@
             this.changePasswordButton.UseVisualStyleBackColor = true;
             this.changePasswordButton.Click += new System.EventHandler(this.HandleChangePasswordClicked);
             // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.decayTimeNumericUpDown);
+            this.groupBox3.Controls.Add(this.OldPwWarningCheckBox);
+            this.groupBox3.Controls.Add(this.decayTimeUnitComboBox);
+            this.groupBox3.Controls.Add(this.label6);
+            this.groupBox3.Location = new System.Drawing.Point(218, 127);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(200, 131);
+            this.groupBox3.TabIndex = 15;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Password Lifetime";
+            // 
+            // decayTimeNumericUpDown
+            // 
+            this.decayTimeNumericUpDown.Location = new System.Drawing.Point(6, 32);
+            this.decayTimeNumericUpDown.Name = "decayTimeNumericUpDown";
+            this.decayTimeNumericUpDown.Size = new System.Drawing.Size(113, 20);
+            this.decayTimeNumericUpDown.TabIndex = 9;
+            // 
+            // OldPwWarningCheckBox
+            // 
+            this.OldPwWarningCheckBox.AutoSize = true;
+            this.OldPwWarningCheckBox.Checked = true;
+            this.OldPwWarningCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.OldPwWarningCheckBox.Location = new System.Drawing.Point(6, 56);
+            this.OldPwWarningCheckBox.Name = "OldPwWarningCheckBox";
+            this.OldPwWarningCheckBox.Size = new System.Drawing.Size(137, 17);
+            this.OldPwWarningCheckBox.TabIndex = 8;
+            this.OldPwWarningCheckBox.Text = "Warn for old passwords";
+            this.OldPwWarningCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // decayTimeUnitComboBox
+            // 
+            this.decayTimeUnitComboBox.FormattingEnabled = true;
+            this.decayTimeUnitComboBox.Location = new System.Drawing.Point(125, 31);
+            this.decayTimeUnitComboBox.Name = "decayTimeUnitComboBox";
+            this.decayTimeUnitComboBox.Size = new System.Drawing.Size(69, 21);
+            this.decayTimeUnitComboBox.TabIndex = 7;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(6, 16);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(139, 13);
+            this.label6.TabIndex = 5;
+            this.label6.Text = "Mark passwords as old after";
+            // 
             // SettingsDialog
             // 
             this.AcceptButton = this.okButton;
@@ -258,6 +314,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cancelButton;
             this.ClientSize = new System.Drawing.Size(430, 299);
+            this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.okButton);
@@ -272,6 +329,9 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.decayTimeNumericUpDown)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -297,5 +357,10 @@
         private System.Windows.Forms.Button deleteAllDataButton;
         private System.Windows.Forms.Button changePasswordButton;
         private System.Windows.Forms.SaveFileDialog saveFileDialog;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.ComboBox decayTimeUnitComboBox;
+        private System.Windows.Forms.CheckBox OldPwWarningCheckBox;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.NumericUpDown decayTimeNumericUpDown;
     }
 }

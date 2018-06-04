@@ -54,6 +54,7 @@
     <Compile Include="Data.cs" />
     <Compile Include="Definitions.cs" />
     <Compile Include="Settings.cs" />
+    <Compile Include="TimeUnit.cs" />
     <Compile Include="Util.cs" />
     <Compile Include="NewPasswordDialog.cs">
       <SubType>Form</SubType>

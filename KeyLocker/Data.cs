@@ -56,6 +56,17 @@
             }
         }
 
+        internal static void Check()
+        {
+            foreach(var entry in entries)
+            {
+                if(entry.IsOutdated)
+                {
+                    break;
+                }
+            }
+        }
+
         public delegate void HandleDataChanged();
         public static event HandleDataChanged DataChanged;
 

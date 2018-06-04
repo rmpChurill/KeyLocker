@@ -14,11 +14,13 @@ namespace KeyLocker.Common
             if (e.KeyCode == Keys.Escape)
             {
                 this.DialogResult = DialogResult.Cancel;
+                e.Handled = true;
                 this.Close();
             }
             else if (e.KeyCode == Keys.Enter)
             {
                 this.DialogResult = DialogResult.OK;
+                e.Handled = true;
                 this.Close();
             }
         }

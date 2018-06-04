@@ -38,6 +38,7 @@ namespace KeyLocker
             if (authorized)
             {
                 Data.Load();
+                Data.Check();
             }
             else
             {

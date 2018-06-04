@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Xml;
 
 namespace KeyLocker
@@ -11,6 +12,7 @@ namespace KeyLocker
             this.Comment = string.Empty;
             this.Password = string.Empty;
             this.Login = string.Empty;
+            this.Date = DateTime.MinValue;
         }
 
         public Entry(Entry copy)
@@ -19,6 +21,7 @@ namespace KeyLocker
             this.Comment = copy.Comment;
             this.Password = copy.Password;
             this.Login = copy.Login;
+            this.Date = DateTime.Now;
         }
 
         public Entry(XmlNode node)
@@ -29,7 +32,7 @@ namespace KeyLocker
                 {
                     if (property.SetMethod != null && property.Name.ToLower().Equals(childNode.Name))
                     {
-                        property.SetValue(this, Util.Decode(childNode.InnerText));
+                        Util.Set(property, this, Util.Decode(childNode.InnerText));
                     }
                 }
             }
@@ -96,6 +99,21 @@ namespace KeyLocker
         {
             get;
             set;
+        }
+
+        [DisplayName("Date")]
+        public DateTime Date
+        {
+            get;
+            set;
+        }
+
+        public bool IsOutdated
+        {
+            get
+            {
+                return Util.IsOutdated(this.Date, DateTime.Now, Settings.Instance.DecayTime, Settings.Instance.DecayTimeUnit);
+            }
         }
     }
 }

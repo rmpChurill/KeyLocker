@@ -36,12 +36,20 @@ namespace KeyLocker
                 objects[i] = values.GetValue(i);
             }
 
+            foreach(var value in Enum.GetValues(typeof(TimeUnit)))
+            {
+                this.decayTimeUnitComboBox.Items.Add(value);
+            }
+
             this.digitsComboBox.Items.AddRange(objects);
             this.digitsComboBox.DataBindings.Add(nameof(this.digitsComboBox.SelectedValue), this.settings, nameof(this.settings.Digits));
             this.upperCaseCharsComboBox.Items.AddRange(objects);
             this.upperCaseCharsComboBox.DataBindings.Add(nameof(this.upperCaseCharsComboBox.SelectedValue), this.settings, nameof(this.settings.UpperCaseChars));
             this.specialCharactersComboBox.Items.AddRange(objects);
             this.specialCharactersComboBox.DataBindings.Add(nameof(this.specialCharactersComboBox.SelectedValue), this.settings, nameof(this.settings.SpecialCharacters));
+            this.decayTimeNumericUpDown.DataBindings.Add(nameof(this.decayTimeNumericUpDown.Value), this.settings, nameof(this.settings.DecayTime));
+            this.decayTimeUnitComboBox.DataBindings.Add(nameof(this.decayTimeUnitComboBox.SelectedItem), this.settings, nameof(this.settings.DecayTimeUnit));
+            this.OldPwWarningCheckBox.DataBindings.Add(nameof(this.OldPwWarningCheckBox.Checked), this.settings, nameof(this.settings.WarnForOldPasswords));
         }
 
         private void OnResetClicked(object sender, EventArgs e)
@@ -61,6 +69,11 @@ namespace KeyLocker
                 Data.Entries.Clear();
                 Data.Save();
             }
+        }
+
+        private void HandleTextBoxTextChanged(object sender, EventArgs e)
+        {
+
         }
 
         private void HandleExportClicked(object sender, EventArgs args)

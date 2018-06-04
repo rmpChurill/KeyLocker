@@ -73,22 +73,7 @@
                     {
                         if (property.GetMethod != null && property.SetMethod != null && property.Name.Equals(parts[0]))
                         {
-                            if (property.PropertyType.Equals(typeof(string)))
-                            {
-                                property.SetValue(this, parts[1]);
-                            }
-                            else if (property.PropertyType.Equals(typeof(Usage)))
-                            {
-                                property.SetValue(this, Enum.Parse(typeof(Usage), parts[1]));
-                            }
-                            else if (property.PropertyType.Equals(typeof(int)))
-                            {
-                                property.SetValue(this, int.Parse(parts[1]));
-                            }
-                            else
-                            {
-                                throw new NotSupportedException();
-                            }
+                            Util.Set(property, this, parts[1]);
                         }
                     }
                 }
@@ -168,6 +153,9 @@
                     MaxLength = 32,
                     SaltedPasswordHash = string.Empty,
                     Salt = string.Empty,
+                    DecayTime = 1,
+                    DecayTimeUnit = TimeUnit.Years,
+                    WarnForOldPasswords = true,
                 };
             }
         }
@@ -218,6 +206,24 @@
         }
 
         public string Salt
+        {
+            get;
+            set;
+        }
+
+        public int DecayTime
+        {
+            get;
+            set;
+        }
+
+        public TimeUnit DecayTimeUnit
+        {
+            get;
+            set;
+        }
+
+        public bool WarnForOldPasswords
         {
             get;
             set;

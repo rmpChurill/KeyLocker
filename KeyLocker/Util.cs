@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
 using System.Windows.Forms;
@@ -34,6 +35,34 @@ namespace KeyLocker
             }
 
             return new string(res).GetHashCode().ToString("X");
+        }
+
+        internal static void Set(PropertyInfo property, object obj, string data)
+        {
+            if (property.PropertyType.Equals(typeof(string)))
+            {
+                property.SetValue(obj, data);
+            }
+            else if (property.PropertyType.IsEnum)
+            {
+                property.SetValue(obj, Enum.Parse(property.PropertyType, data));
+            }
+            else if (property.PropertyType.Equals(typeof(int)))
+            {
+                property.SetValue(obj, int.Parse(data));
+            }
+            else if (property.PropertyType.Equals(typeof(bool)))
+            {
+                property.SetValue(obj, bool.Parse(data));
+            }
+            else if(property.PropertyType.Equals(typeof(DateTime)))
+            {
+                property.SetValue(obj, DateTime.Parse(data));
+            }
+            else
+            {
+                throw new NotSupportedException();
+            }
         }
 
         public static string Encode(string text)
@@ -141,7 +170,7 @@ namespace KeyLocker
 
         public static string Decrypt(string cipherText, string passPhrase)
         {
-            if(string.IsNullOrEmpty(cipherText))
+            if (string.IsNullOrEmpty(cipherText))
             {
                 return string.Empty;
             }
@@ -207,6 +236,21 @@ namespace KeyLocker
             }
 
             Directory.CreateDirectory(path);
+        }
+
+        public static bool IsOutdated(DateTime date, DateTime compare, int time, TimeUnit timeUnit)
+        {
+            switch (timeUnit)
+            {
+                case TimeUnit.Days:
+                    return (compare - date).TotalDays > time;
+                case TimeUnit.Months:
+                    return (compare.Year - date.Year - 1) * 12 + date.Month - compare.Month > time;
+                case TimeUnit.Years:
+                    return compare.Year - date.Year > time;
+                default:
+                    throw new NotSupportedException();
+            }
         }
     }
 }
