@@ -48,7 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Common\DialogBase.cs">
+    <Compile Include="DialogBase.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Data.cs" />
@@ -92,7 +92,7 @@
     </Compile>
     <Compile Include="RandomGenerator.cs" />
     <Compile Include="Usage.cs" />
-    <EmbeddedResource Include="Common\DialogBase.resx">
+    <EmbeddedResource Include="DialogBase.resx">
       <DependentUpon>DialogBase.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="NewPasswordDialog.resx">
