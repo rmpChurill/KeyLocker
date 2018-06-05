@@ -19,7 +19,27 @@ namespace KeyLocker
         private void OnDataChanged()
         {
             this.dataGridView1.DataSource = null;
-            this.dataGridView1.DataSource = new BindingList<Entry>(Data.Entries);
+            this.dataGridView1.DataSource = new BindingList<Entry>(this.Filter(Data.Entries));
+        }
+
+        private IList<Entry> Filter(IList<Entry> entries)
+        {
+            if (string.IsNullOrEmpty(this.searchTextBox.Text))
+            {
+                return entries;
+            }
+
+            var res = new List<Entry>(entries.Count);
+
+            foreach (var entry in entries)
+            {
+                if (entry.Name.ToLower().Contains(this.searchTextBox.Text.ToLower()))
+                {
+                    res.Add(entry);
+                }
+            }
+
+            return res;
         }
 
         private void OnShown(object sender, System.EventArgs e)
@@ -187,10 +207,15 @@ namespace KeyLocker
 
         private void HandleCellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            if(e.Button == MouseButtons.Left && ModifierKeys == Keys.Control)
+            if (e.Button == MouseButtons.Left && ModifierKeys == Keys.Control)
             {
 
             }
+        }
+
+        private void HandleSearchTextChanged(object sender, EventArgs e)
+        {
+            this.OnDataChanged();
         }
     }
 }

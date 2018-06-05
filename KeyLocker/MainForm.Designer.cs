@@ -35,6 +35,8 @@
             this.editButton = new System.Windows.Forms.Button();
             this.copyButton = new System.Windows.Forms.Button();
             this.settingsButton = new System.Windows.Forms.Button();
+            this.searchTextBox = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -46,17 +48,18 @@
             this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.dataGridView1.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.Disable;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
-            this.dataGridView1.Location = new System.Drawing.Point(12, 12);
+            this.dataGridView1.Location = new System.Drawing.Point(12, 41);
             this.dataGridView1.MultiSelect = false;
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(634, 276);
+            this.dataGridView1.Size = new System.Drawing.Size(634, 247);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.OnCellDoubleClick);
             this.dataGridView1.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.HandleCellMouseClick);
@@ -128,11 +131,30 @@
             this.settingsButton.UseVisualStyleBackColor = true;
             this.settingsButton.Click += new System.EventHandler(this.OnSettingsClicked);
             // 
+            // searchTextBox
+            // 
+            this.searchTextBox.Location = new System.Drawing.Point(59, 14);
+            this.searchTextBox.Name = "searchTextBox";
+            this.searchTextBox.Size = new System.Drawing.Size(587, 20);
+            this.searchTextBox.TabIndex = 7;
+            this.searchTextBox.TextChanged += new System.EventHandler(this.HandleSearchTextChanged);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(12, 17);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(41, 13);
+            this.label1.TabIndex = 8;
+            this.label1.Text = "Search";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(739, 300);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.searchTextBox);
             this.Controls.Add(this.settingsButton);
             this.Controls.Add(this.copyButton);
             this.Controls.Add(this.editButton);
@@ -146,6 +168,7 @@
             this.Shown += new System.EventHandler(this.OnShown);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -158,6 +181,8 @@
         private System.Windows.Forms.Button editButton;
         private System.Windows.Forms.Button copyButton;
         private System.Windows.Forms.Button settingsButton;
+        private System.Windows.Forms.TextBox searchTextBox;
+        private System.Windows.Forms.Label label1;
     }
 }
 
