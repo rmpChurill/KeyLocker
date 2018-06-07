@@ -48,7 +48,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DialogBase.cs">
+    <Compile Include="Lib\CustomDataGridView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Lib\CustomDataGridViewCellColumn.cs" />
+    <Compile Include="Lib\CustomDataGridViewCell.cs" />
+    <Compile Include="Lib\CustomDataGridViewColumnHeaderCell.cs" />
+    <Compile Include="Lib\DialogBase.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Data.cs" />
@@ -92,7 +98,7 @@
     </Compile>
     <Compile Include="RandomGenerator.cs" />
     <Compile Include="Usage.cs" />
-    <EmbeddedResource Include="DialogBase.resx">
+    <EmbeddedResource Include="Lib\DialogBase.resx">
       <DependentUpon>DialogBase.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="NewPasswordDialog.resx">

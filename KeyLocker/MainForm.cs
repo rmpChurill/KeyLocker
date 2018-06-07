@@ -8,7 +8,7 @@ using KeyLocker.Common;
 
 namespace KeyLocker
 {
-    public partial class MainForm : DialogBase
+    public partial class MainForm : Form
     {
         public MainForm()
         {
@@ -178,8 +178,13 @@ namespace KeyLocker
             this.HandleEdit();
         }
 
-        private void OnKeyUp(object sender, KeyEventArgs e)
+        private void OnKeyDown(object sender, KeyEventArgs e)
         {
+            if(e.Handled)
+            {
+                return;
+            }
+
             switch (e.KeyCode)
             {
                 case Keys.Enter:
