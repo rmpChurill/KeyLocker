@@ -20,6 +20,10 @@ namespace KeyLocker
         {
             this.dataGridView1.DataSource = null;
             this.dataGridView1.DataSource = new BindingList<Entry>(this.Filter(Data.Entries));
+
+            var bindingSource = new BindingSource();
+            bindingSource.DataSource = Data.Entries;
+
         }
 
         private IList<Entry> Filter(IList<Entry> entries)
@@ -180,7 +184,7 @@ namespace KeyLocker
 
         private void OnKeyDown(object sender, KeyEventArgs e)
         {
-            if(e.Handled)
+            if (e.Handled)
             {
                 return;
             }

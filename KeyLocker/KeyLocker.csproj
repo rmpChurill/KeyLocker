@@ -51,14 +51,15 @@
     <Compile Include="Lib\CustomDataGridView.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Lib\CustomDataGridViewCellColumn.cs" />
-    <Compile Include="Lib\CustomDataGridViewCell.cs" />
-    <Compile Include="Lib\CustomDataGridViewColumnHeaderCell.cs" />
+    <Compile Include="Lib\CustomDataGridViewValidationCell.cs" />
     <Compile Include="Lib\DialogBase.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Data.cs" />
     <Compile Include="Definitions.cs" />
+    <Compile Include="Lib\IElementValidator.cs" />
+    <Compile Include="Lib\IValidationItem.cs" />
+    <Compile Include="Lib\NotifyPropertyChangedBase.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="TimeUnit.cs" />
     <Compile Include="Util.cs" />
@@ -124,6 +125,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -140,6 +142,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app.ico" />
+    <None Include="Resources\Time_16x.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

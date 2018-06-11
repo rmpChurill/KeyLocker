@@ -1,6 +1,5 @@
 ﻿namespace KeyLocker.Lib
 {
-    using System.ComponentModel;
     using System.Windows.Forms;
 
     public class CustomDataGridView<T> : DataGridView
@@ -8,18 +7,14 @@
         public CustomDataGridView()
         {
             this.DoubleBuffered = true;
+            this.ColumnAdded += this.HandleColumnAdded;
+        }
 
-            foreach (var property in typeof(T).GetProperties())
+        private void HandleColumnAdded(object sender, DataGridViewColumnEventArgs e)
+        {
+            if (typeof(IElementValidator).Equals(e.Column.ValueType))
             {
-                var browseableAttribues = property.GetCustomAttributes(typeof(BrowsableAttribute), true);
-
-                if (browseableAttribues.Length == 0 || ((BrowsableAttribute)browseableAttribues[0]).Browsable)
-                {
-                    var displayNameAttributes = property.GetCustomAttributes(typeof(DisplayNameAttribute), true);
-                    var displayName = displayNameAttributes.Length != 0 ? ((DisplayNameAttribute)displayNameAttributes[0]).DisplayName : property.Name;
-
-                    this.Columns.Add(new CustomDataGridViewCellColumn(displayName));
-                }
+                e.Column.CellTemplate = new CustomDataGridViewValidationCell();
             }
         }
     }
