@@ -12,7 +12,7 @@ namespace KeyLocker
     {
         private readonly Entry entry;
         private bool dirty;
-        private List<IValidationItem> validationResults;
+        private readonly List<IValidationItem> validationResults;
 
         public EntryValidator(Entry entry)
         {
@@ -140,7 +140,7 @@ namespace KeyLocker
 
         private class LengthValidationResult : IValidationItem
         {
-            private string description;
+            private readonly string description;
 
             public LengthValidationResult()
             {
