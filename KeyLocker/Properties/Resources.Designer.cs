@@ -63,9 +63,9 @@ namespace KeyLocker.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Abbreviation_16x {
+        internal static System.Drawing.Bitmap CaseError_16px {
             get {
-                object obj = ResourceManager.GetObject("Abbreviation_16x", resourceCulture);
+                object obj = ResourceManager.GetObject("CaseError_16px", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -73,9 +73,9 @@ namespace KeyLocker.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap CaseSensitive_16x {
+        internal static System.Drawing.Bitmap DigitError_16px {
             get {
-                object obj = ResourceManager.GetObject("CaseSensitive_16x", resourceCulture);
+                object obj = ResourceManager.GetObject("DigitError_16px", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -83,9 +83,9 @@ namespace KeyLocker.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap data_number_on_16x {
+        internal static System.Drawing.Bitmap LengthError_16px {
             get {
-                object obj = ResourceManager.GetObject("data_number_on_16x", resourceCulture);
+                object obj = ResourceManager.GetObject("LengthError_16px", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -103,9 +103,9 @@ namespace KeyLocker.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap RegularExpression_16x {
+        internal static System.Drawing.Bitmap SpecialCharError_16px {
             get {
-                object obj = ResourceManager.GetObject("RegularExpression_16x", resourceCulture);
+                object obj = ResourceManager.GetObject("SpecialCharError_16px", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -113,9 +113,9 @@ namespace KeyLocker.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap SquareSingle_16x {
+        internal static System.Drawing.Bitmap TimeError_16px {
             get {
-                object obj = ResourceManager.GetObject("SquareSingle_16x", resourceCulture);
+                object obj = ResourceManager.GetObject("TimeError_16px", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -123,9 +123,9 @@ namespace KeyLocker.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Time_16x {
+        internal static System.Drawing.Bitmap UnknownError_16px {
             get {
-                object obj = ResourceManager.GetObject("Time_16x", resourceCulture);
+                object obj = ResourceManager.GetObject("UnknownError_16px", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

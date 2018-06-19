@@ -167,7 +167,7 @@ namespace KeyLocker
             {
                 get
                 {
-                    return Resources.Abbreviation_16x;
+                    return Resources.LengthError_16px;
                 }
             }
         }
@@ -184,7 +184,7 @@ namespace KeyLocker
             {
                 this.items = new List<T>();
                 this.description = string.Empty;
-                this.icon = Resources.SquareSingle_16x;
+                this.icon = Resources.UnknownError_16px;
                 this.severity = 0;
             }
 
@@ -252,7 +252,7 @@ namespace KeyLocker
             {
                 get
                 {
-                    return Resources.RegularExpression_16x;
+                    return Resources.SpecialCharError_16px;
                 }
             }
         }
@@ -279,7 +279,7 @@ namespace KeyLocker
             {
                 get
                 {
-                    return Resources.CaseSensitive_16x;
+                    return Resources.CaseError_16px;
                 }
             }
         }
@@ -306,7 +306,7 @@ namespace KeyLocker
             {
                 get
                 {
-                    return Resources.data_number_on_16x;
+                    return Resources.DigitError_16px;
                 }
             }
         }
@@ -333,7 +333,7 @@ namespace KeyLocker
             {
                 get
                 {
-                    return Resources.Time_16x;
+                    return Resources.TimeError_16px;
                 }
             }
         }
