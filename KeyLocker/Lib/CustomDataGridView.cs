@@ -1,5 +1,6 @@
 ﻿namespace KeyLocker.Lib
 {
+    using System.ComponentModel;
     using System.Windows.Forms;
 
     public class CustomDataGridView<T> : DataGridView
@@ -7,6 +8,7 @@
         public CustomDataGridView()
         {
             this.DoubleBuffered = true;
+
             this.ColumnAdded += this.HandleColumnAdded;
         }
 

@@ -14,16 +14,14 @@ namespace KeyLocker
         {
             InitializeComponent();
             Data.DataChanged += this.OnDataChanged;
+            this.dataGridView1.DataSource = new BindingSource();
         }
 
         private void OnDataChanged()
         {
-            this.dataGridView1.DataSource = null;
-            this.dataGridView1.DataSource = new BindingList<Entry>(this.Filter(Data.Entries));
-
-            var bindingSource = new BindingSource();
-            bindingSource.DataSource = Data.Entries;
-
+            (this.dataGridView1.DataSource as BindingSource).DataSource = Data.Entries;
+            ////(this.dataGridView1.DataSource as BindingSource).Filter = string.Format("{0} like {1}", nameof(Entry.Name), this.searchTextBox.Text);
+            (this.dataGridView1.DataSource as BindingSource).Sort = string.Format("{0}", nameof(Entry.Name));
         }
 
         private IList<Entry> Filter(IList<Entry> entries)

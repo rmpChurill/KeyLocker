@@ -6,6 +6,10 @@
 
     public class CustomDataGridViewValidationCell : DataGridViewTextBoxCell
     {
+        private const int ValidationIconSize = 16;
+
+        private IValidationItem[] lastValidationState;
+
         protected override void Paint(
             Graphics graphics,
             Rectangle clipBounds,
@@ -21,15 +25,17 @@
         {
             base.Paint(graphics, clipBounds, cellBounds, rowIndex, cellState, value, formattedValue, errorText, cellStyle, advancedBorderStyle, paintParts);
 
-            if (this.State == DataGridViewElementStates.Visible && this.Value != null)
+            if (value != null && value is IElementValidator validator)
             {
-                var validationItems = ((IElementValidator)this.Value).Validate();
+                var validationItems = validator.Validate();
 
                 var xOffset = 0;
+                var yOffset = (cellBounds.Height - ValidationIconSize) / 2;
 
                 foreach (var validationItem in validationItems)
                 {
-                    graphics.DrawImage(validationItem.Icon, xOffset, clipBounds.Y);
+                    graphics.DrawImage(validationItem.Icon, cellBounds.X + xOffset, cellBounds.Y + yOffset, ValidationIconSize, ValidationIconSize);
+                    xOffset += ValidationIconSize;
                 }
             }
         }

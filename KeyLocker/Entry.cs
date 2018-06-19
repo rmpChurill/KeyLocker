@@ -1,21 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing;
 using System.Xml;
 using KeyLocker.Lib;
-using KeyLocker.Properties;
 
 namespace KeyLocker
 {
-    public class Entry : NotifyPropertyChangedBase
+    public partial class Entry : NotifyPropertyChangedBase
     {
         private string name;
         private string comment;
         private string password;
         private string login;
         private DateTime date;
-        private ElementValidator validator;
+        private readonly EntryValidator validator;
 
         public Entry()
         {
@@ -24,7 +21,7 @@ namespace KeyLocker
             this.password = string.Empty;
             this.login = string.Empty;
             this.date = DateTime.MinValue;
-            this.validator = new ElementValidator(this);
+            this.validator = new EntryValidator(this);
         }
 
         public Entry(Entry copy)
@@ -34,7 +31,7 @@ namespace KeyLocker
             this.password = copy.Password;
             this.login = copy.Login;
             this.date = DateTime.Now;
-            this.validator = new ElementValidator(this);
+            this.validator = new EntryValidator(this);
         }
 
         public Entry(XmlNode node)
@@ -49,6 +46,8 @@ namespace KeyLocker
                     }
                 }
             }
+
+            this.validator = new EntryValidator(this);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -193,78 +192,6 @@ namespace KeyLocker
             get
             {
                 return Util.IsOutdated(this.Date, DateTime.Now, Settings.Instance.DecayTime, Settings.Instance.DecayTimeUnit);
-            }
-        }
-
-        private class ElementValidator : IElementValidator
-        {
-            private readonly Entry entry;
-            private bool dirty;
-            private List<IValidationItem> validationResults;
-
-            public ElementValidator(Entry entry)
-            {
-                this.entry = entry;
-                this.dirty = true;
-                this.validationResults = new List<IValidationItem>();
-
-                this.entry.PropertyChanged += this.HandleEntryPropertyChanged;
-            }
-
-            private void HandleEntryPropertyChanged(object sender, PropertyChangedEventArgs e)
-            {
-                this.dirty = true;
-            }
-
-            public IValidationItem[] Validate()
-            {
-                if (this.dirty)
-                {
-                    this.CreateValidationResults();
-                    this.dirty = false;
-                }
-
-                return this.validationResults.ToArray();
-            }
-
-            private void CreateValidationResults()
-            {
-                this.validationResults.Clear();
-
-                if (this.entry.IsOutdated)
-                {
-                    this.validationResults.Add(new OutDatetValidationResult());
-                }
-
-                ////TODO: Debugging only
-                this.validationResults.Add(new OutDatetValidationResult());
-            }
-
-            private class OutDatetValidationResult : IValidationItem
-            {
-                public string Description
-                {
-                    get
-                    {
-                        return "The passwrod is older than [TODO]";
-                    }
-                }
-
-                public int Severity
-                {
-                    get
-                    {
-                        return 8;
-                    }
-                }
-
-                public Image Icon
-                {
-                    get
-                    {
-                        return Resources.Time_16x;
-                    }
-                }
             }
         }
     }

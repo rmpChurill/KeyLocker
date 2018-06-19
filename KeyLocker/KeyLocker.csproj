@@ -48,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EntryValidator.cs" />
     <Compile Include="Lib\CustomDataGridView.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -142,6 +143,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app.ico" />
+    <None Include="Resources\SquareSingle_16x.png" />
+    <None Include="Resources\Abbreviation_16x.png" />
+    <None Include="Resources\RegularExpression_16x.png" />
+    <None Include="Resources\data_number_on_16x.png" />
+    <None Include="Resources\CaseSensitive_16x.png" />
+    <None Include="Resources\Lock_16x.png" />
     <None Include="Resources\Time_16x.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
