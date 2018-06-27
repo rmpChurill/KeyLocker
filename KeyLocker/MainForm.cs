@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.IO;
 using System.Windows.Forms;
-using System.Xml;
-using KeyLocker.Common;
 
 namespace KeyLocker
 {
@@ -13,15 +9,24 @@ namespace KeyLocker
         public MainForm()
         {
             InitializeComponent();
-            Data.DataChanged += this.OnDataChanged;
+            Data.Instance.DataChanged += this.OnDataChanged;
             this.dataGridView1.DataSource = new BindingSource();
         }
 
         private void OnDataChanged()
         {
-            (this.dataGridView1.DataSource as BindingSource).DataSource = Data.Entries;
-            ////(this.dataGridView1.DataSource as BindingSource).Filter = string.Format("{0} like {1}", nameof(Entry.Name), this.searchTextBox.Text);
-            (this.dataGridView1.DataSource as BindingSource).Sort = string.Format("{0}", nameof(Entry.Name));
+            this.dataGridView1.DataSource = null;
+
+            if(string.IsNullOrEmpty(this.searchTextBox.Text))
+            {
+                Data.Instance.RemoveFilter();
+            }
+            else
+            {
+                Data.Instance.ApplyFilter(new EntryNameFilter(this.searchTextBox.Text));
+            }
+
+            this.dataGridView1.DataSource = Data.Instance.FilteredEntries;
         }
 
         private IList<Entry> Filter(IList<Entry> entries)
@@ -59,8 +64,8 @@ namespace KeyLocker
 
             if (authorized)
             {
-                Data.Load();
-                Data.Check();
+                Data.Instance.Load();
+                Data.Instance.Check();
             }
             else
             {
@@ -70,7 +75,7 @@ namespace KeyLocker
 
         private void OnClosing(object sender, FormClosingEventArgs e)
         {
-            Data.Save();
+            Data.Instance.Save();
             Settings.Instance.Save();
         }
 
@@ -85,7 +90,7 @@ namespace KeyLocker
             {
                 if (dialog.ShowDialog() == DialogResult.OK)
                 {
-                    Data.Entries.Add(dialog.Entry);
+                    Data.Instance.Entries.Add(dialog.Entry);
                     this.OnDataChanged();
                 }
             }
@@ -100,7 +105,7 @@ namespace KeyLocker
         {
             if (this.ValidSelection(out var index))
             {
-                Data.Entries.RemoveAt(index);
+                Data.Instance.Entries.RemoveAt(index);
                 this.OnDataChanged();
             }
         }
@@ -114,7 +119,7 @@ namespace KeyLocker
         {
             if (this.ValidSelection(out var index))
             {
-                MessageBox.Show(Data.Entries[index].Password);
+                MessageBox.Show(Data.Instance.Entries[index].Password);
             }
         }
 
@@ -127,11 +132,11 @@ namespace KeyLocker
         {
             if (this.ValidSelection(out var index))
             {
-                using (var dialog = new EditDialog(Data.Entries[index]))
+                using (var dialog = new EditDialog(Data.Instance.Entries[index]))
                 {
                     if (dialog.ShowDialog() == DialogResult.OK)
                     {
-                        Data.Entries[index] = dialog.Entry;
+                        Data.Instance.Entries[index] = dialog.Entry;
                         this.OnDataChanged();
                     }
                 }
@@ -147,7 +152,7 @@ namespace KeyLocker
         {
             if (this.ValidSelection(out var index))
             {
-                Clipboard.SetText(Data.Entries[index].Password);
+                Clipboard.SetText(Data.Instance.Entries[index].Password);
             }
         }
 

@@ -5,20 +5,82 @@
     using System.IO;
     using System.Windows.Forms;
     using System.Xml;
+    using KeyLocker.Lib;
 
-    public static class Data
+    public class Data
     {
-        private static List<Entry> entries = new List<Entry>();
+        private static Data instance;
 
-        public static IList<Entry> Entries
+        private List<Entry> entries;
+        private List<Entry> filteredEntries;
+        private IFilter<Entry> filter;
+        private IComparer<Entry> comparer;
+
+        public static Data Instance
         {
             get
             {
-                return entries;
+                if (instance == null)
+                {
+                    instance = new Data();
+                }
+
+                return instance;
             }
         }
 
-        public static void Save()
+        public Data()
+        {
+            this.entries = new List<Entry>();
+        }
+
+
+        public IList<Entry> Entries
+        {
+            get
+            {
+                return this.entries;
+            }
+        }
+
+        public IList<Entry> FilteredEntries
+        {
+            get
+            {
+                if (this.filteredEntries == null)
+                {
+                    this.CreateFilteredData();
+                }
+
+                return this.filteredEntries;
+            }
+        }
+
+        public void ApplyFilter(IFilter<Entry> filter)
+        {
+            this.filteredEntries = null;
+            this.filter = filter;
+        }
+
+        public void RemoveFilter()
+        {
+            this.filteredEntries = null;
+            this.filter = null;
+        }
+
+        public void Sort(IComparer<Entry> comparer)
+        {
+            this.filteredEntries = null;
+            this.comparer = comparer;
+        }
+
+        public void RemoveSorting()
+        {
+            this.comparer = null;
+            this.filteredEntries = null;
+        }
+
+        public void Save()
         {
             var doc = default(XmlDocument);
             var writer = default(StreamWriter);
@@ -35,7 +97,7 @@
                 doc = new XmlDocument();
                 doc.AppendChild(doc.CreateElement("entries"));
 
-                foreach (var entry in entries)
+                foreach (var entry in this.entries)
                 {
                     doc.DocumentElement.AppendChild(entry.ToXml(doc));
                 }
@@ -57,16 +119,16 @@
             }
         }
 
-        internal static void Check()
+        internal void Check()
         {
-            if(!Settings.Instance.WarnForOldPasswords)
+            if (!Settings.Instance.WarnForOldPasswords)
             {
                 return;
             }
 
-            foreach(var entry in entries)
+            foreach (var entry in this.entries)
             {
-                if(entry.IsOutdated)
+                if (entry.IsOutdated)
                 {
                     MessageBox.Show("There are outdated Entries!");
 
@@ -76,11 +138,11 @@
         }
 
         public delegate void HandleDataChanged();
-        public static event HandleDataChanged DataChanged;
+        public event HandleDataChanged DataChanged;
 
-        public static void Load()
+        public void Load()
         {
-            entries = new List<Entry>();
+            this.entries = new List<Entry>();
             var doc = default(XmlDocument);
 
             try
@@ -92,11 +154,11 @@
                     doc = new XmlDocument();
                     doc.Load(file);
 
-                    entries.Clear();
+                    this.entries.Clear();
 
                     foreach (XmlNode node in doc.DocumentElement.ChildNodes)
                     {
-                        entries.Add(new Entry(node));
+                        this.entries.Add(new Entry(node));
                     }
                 }
             }
@@ -108,6 +170,34 @@
             }
 
             DataChanged?.Invoke();
+        }
+
+        private void CreateFilteredData()
+        {
+            if (this.filter == null && this.comparer == null)
+            {
+                this.filteredEntries = this.entries;
+            }
+            else
+            {
+                this.filteredEntries = new List<Entry>();
+
+                if (this.filter != null)
+                {
+                    foreach(var entry in this.entries)
+                    {
+                        if(this.filter.IsValid(entry))
+                        {
+                            this.filteredEntries.Add(entry);
+                        }
+                    }
+                }
+
+                if(this.comparer != null)
+                {
+                    this.filteredEntries.Sort(this.comparer);
+                }
+            }
         }
     }
 }

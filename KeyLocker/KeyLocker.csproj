@@ -48,6 +48,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EntryNameComparer.cs" />
+    <Compile Include="EntryNameFilter.cs" />
     <Compile Include="EntryValidator.cs" />
     <Compile Include="Lib\CustomDataGridView.cs">
       <SubType>Component</SubType>
@@ -58,6 +60,7 @@
     </Compile>
     <Compile Include="Data.cs" />
     <Compile Include="Definitions.cs" />
+    <Compile Include="Lib\IFilter.cs" />
     <Compile Include="Lib\IElementValidator.cs" />
     <Compile Include="Lib\IValidationItem.cs" />
     <Compile Include="Lib\NotifyPropertyChangedBase.cs" />

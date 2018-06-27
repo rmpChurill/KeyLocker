@@ -66,8 +66,8 @@ namespace KeyLocker
         {
             if (MessageBox.Show("Deleting all your data irreversible. Are you sure?") == DialogResult.Yes)
             {
-                Data.Entries.Clear();
-                Data.Save();
+                Data.Instance.Entries.Clear();
+                Data.Instance.Save();
             }
         }
 
@@ -86,7 +86,7 @@ namespace KeyLocker
                 {
                     writer.WriteLine(string.Format("{0};{1};{2};{3};", nameof(Entry.Name), nameof(Entry.Login), nameof(Entry.Password), nameof(Entry.Comment)));
                     
-                    foreach(var entry in Data.Entries)
+                    foreach(var entry in Data.Instance.Entries)
                     {
                         writer.WriteLine(string.Format("{0};{1};{2};{3};", entry.Name, entry.Login, entry.Password, entry.Comment));
                     }
