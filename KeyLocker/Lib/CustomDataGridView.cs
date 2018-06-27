@@ -8,6 +8,15 @@
         public CustomDataGridView()
         {
             this.DoubleBuffered = true;
+            this.AllowUserToResizeRows = false;
+            this.AllowUserToOrderColumns = false;
+            this.RowHeadersVisible = false;
+            this.AllowUserToAddRows = false;
+            this.EditMode = DataGridViewEditMode.EditProgrammatically;
+            this.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            this.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+            this.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+            this.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
 
             this.ColumnAdded += this.HandleColumnAdded;
         }

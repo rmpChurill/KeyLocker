@@ -51,6 +51,9 @@
     <Compile Include="EntryNameComparer.cs" />
     <Compile Include="EntryNameFilter.cs" />
     <Compile Include="EntryValidator.cs" />
+    <Compile Include="EntryDataGridView.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Lib\CustomDataGridView.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -103,6 +106,9 @@
     </Compile>
     <Compile Include="RandomGenerator.cs" />
     <Compile Include="Usage.cs" />
+    <EmbeddedResource Include="EntryDataGridView.resx">
+      <DependentUpon>EntryDataGridView.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Lib\DialogBase.resx">
       <DependentUpon>DialogBase.cs</DependentUpon>
     </EmbeddedResource>

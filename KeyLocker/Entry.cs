@@ -1,10 +1,12 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Xml;
 using KeyLocker.Lib;
 
 namespace KeyLocker
 {
+    [DebuggerDisplay("Name={name}")]
     public partial class Entry : NotifyPropertyChangedBase
     {
         private string name;

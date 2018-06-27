@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Windows.Forms;
 
 namespace KeyLocker
@@ -9,15 +10,19 @@ namespace KeyLocker
         public MainForm()
         {
             InitializeComponent();
-            Data.Instance.DataChanged += this.OnDataChanged;
-            this.dataGridView1.DataSource = new BindingSource();
+            Data.Instance.DataChanged += this.HandleDataChanged;
         }
 
-        private void OnDataChanged()
+        private void HandleDataChanged()
         {
-            this.dataGridView1.DataSource = null;
+            this.RefreshDisplayedData();
+        }
 
-            if(string.IsNullOrEmpty(this.searchTextBox.Text))
+        private void RefreshDisplayedData()
+        {
+            this.entryDataGridView.DataSource = null;
+
+            if (string.IsNullOrEmpty(this.searchTextBox.Text))
             {
                 Data.Instance.RemoveFilter();
             }
@@ -26,7 +31,10 @@ namespace KeyLocker
                 Data.Instance.ApplyFilter(new EntryNameFilter(this.searchTextBox.Text));
             }
 
-            this.dataGridView1.DataSource = Data.Instance.FilteredEntries;
+            this.entryDataGridView.ClearSelection();
+            this.entryDataGridView.Rows.Clear();
+            this.entryDataGridView.DataSource = new BindingList<Entry>(Data.Instance.FilteredEntries);
+            this.entryDataGridView.Refresh();
         }
 
         private IList<Entry> Filter(IList<Entry> entries)
@@ -91,7 +99,7 @@ namespace KeyLocker
                 if (dialog.ShowDialog() == DialogResult.OK)
                 {
                     Data.Instance.Entries.Add(dialog.Entry);
-                    this.OnDataChanged();
+                    this.HandleDataChanged();
                 }
             }
         }
@@ -106,7 +114,7 @@ namespace KeyLocker
             if (this.ValidSelection(out var index))
             {
                 Data.Instance.Entries.RemoveAt(index);
-                this.OnDataChanged();
+                this.HandleDataChanged();
             }
         }
 
@@ -132,12 +140,12 @@ namespace KeyLocker
         {
             if (this.ValidSelection(out var index))
             {
-                using (var dialog = new EditDialog(Data.Instance.Entries[index]))
+                using (var dialog = new EditDialog(Data.Instance.FilteredEntries[index]))
                 {
                     if (dialog.ShowDialog() == DialogResult.OK)
                     {
                         Data.Instance.Entries[index] = dialog.Entry;
-                        this.OnDataChanged();
+                        this.HandleDataChanged();
                     }
                 }
             }
@@ -158,9 +166,9 @@ namespace KeyLocker
 
         private bool ValidSelection(out int index)
         {
-            if (this.dataGridView1.SelectedRows.Count == 1)
+            if (this.entryDataGridView.SelectedRows.Count == 1)
             {
-                index = this.dataGridView1.SelectedRows[0].Index;
+                index = this.entryDataGridView.SelectedRows[0].Index;
                 return true;
             }
 
@@ -227,7 +235,15 @@ namespace KeyLocker
 
         private void HandleSearchTextChanged(object sender, EventArgs e)
         {
-            this.OnDataChanged();
+            this.HandleDataChanged();
+        }
+
+        private void HandleSearchTextBoxKeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.KeyCode == Keys.Enter)
+            {
+                this.HandleEdit();
+            }
         }
     }
 }
