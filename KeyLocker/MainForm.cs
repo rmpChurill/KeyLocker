@@ -9,7 +9,7 @@ namespace KeyLocker
     {
         public MainForm()
         {
-            InitializeComponent();
+            this.InitializeComponent();
             Data.Instance.DataChanged += this.HandleDataChanged;
         }
 
@@ -89,7 +89,7 @@ namespace KeyLocker
 
         private void OnAddClicked(object sender, System.EventArgs e)
         {
-            HandleAdd();
+            this.HandleAdd();
         }
 
         private void HandleAdd()
@@ -106,7 +106,7 @@ namespace KeyLocker
 
         private void OnDeleteClicked(object sender, System.EventArgs e)
         {
-            HandleDelete();
+            this.HandleDelete();
         }
 
         private void HandleDelete()
@@ -120,7 +120,7 @@ namespace KeyLocker
 
         private void OnShowClicked(object sender, System.EventArgs e)
         {
-            HandleShow();
+            this.HandleShow();
         }
 
         private void HandleShow()
@@ -133,7 +133,7 @@ namespace KeyLocker
 
         private void OnEditClicked(object sender, System.EventArgs e)
         {
-            HandleEdit();
+            this.HandleEdit();
         }
 
         private void HandleEdit()
@@ -153,7 +153,7 @@ namespace KeyLocker
 
         private void OnCopyClicked(object sender, System.EventArgs e)
         {
-            HandleCopy();
+            this.HandleCopy();
         }
 
         private void HandleCopy()
@@ -209,15 +209,15 @@ namespace KeyLocker
                     this.HandleEdit();
                     break;
                 case Keys.F3:
-                    HandleShow();
+                    this.HandleShow();
                     break;
                 case Keys.Delete:
-                    HandleDelete();
+                    this.HandleDelete();
                     break;
                 case Keys.C:
                     if (e.Modifiers == Keys.Control)
                     {
-                        HandleCopy();
+                        this.HandleCopy();
                     }
                     break;
                 default:

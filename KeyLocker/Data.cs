@@ -83,7 +83,7 @@
         public void Save()
         {
             var doc = default(XmlDocument);
-            var writer = default(StreamWriter);
+            var buf = default(StringWriter);
 
             try
             {
@@ -102,8 +102,10 @@
                     doc.DocumentElement.AppendChild(entry.ToXml(doc));
                 }
 
-                writer = new StreamWriter(file, false);
-                doc.Save(writer);
+                buf = new StringWriter();
+                doc.Save(buf);
+
+                File.WriteAllText(file, Util.Encode(buf.ToString()));
             }
             catch (Exception e)
             {
@@ -111,10 +113,10 @@
             }
             finally
             {
-                if (writer != null)
+                if (buf != null)
                 {
-                    writer.Close();
-                    writer.Dispose();
+                    buf.Close();
+                    buf.Dispose();
                 }
             }
         }
@@ -152,7 +154,7 @@
                 if (File.Exists(file))
                 {
                     doc = new XmlDocument();
-                    doc.Load(file);
+                    doc.LoadXml(Util.Decode(File.ReadAllText(file)));
 
                     this.entries.Clear();
 

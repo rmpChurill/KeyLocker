@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Reflection;
 using System.Xml;
 using KeyLocker.Lib;
 
@@ -9,12 +11,29 @@ namespace KeyLocker
     [DebuggerDisplay("Name={name}")]
     public partial class Entry : NotifyPropertyChangedBase
     {
+        private static Dictionary<string, PropertyInfo> properties;
+
         private string name;
         private string comment;
         private string password;
         private string login;
         private DateTime date;
         private readonly EntryValidator validator;
+
+        static Entry()
+        {
+            var properties = typeof(Entry).GetProperties();
+
+            Entry.properties = new Dictionary<string, PropertyInfo>();
+
+            foreach (var property in properties)
+            {
+                if (property.SetMethod != null && property.GetMethod != null)
+                {
+                    Entry.properties.Add(property.Name.ToLower(), property);
+                }
+            }
+        }
 
         public Entry()
         {
@@ -40,12 +59,9 @@ namespace KeyLocker
         {
             foreach (XmlNode childNode in node.ChildNodes)
             {
-                foreach (var property in this.GetType().GetProperties())
+                if (Entry.properties.TryGetValue(childNode.Name, out var property))
                 {
-                    if (property.SetMethod != null && property.Name.ToLower().Equals(childNode.Name))
-                    {
-                        Util.Set(property, this, Util.Decode(childNode.InnerText));
-                    }
+                    Util.Set(property, this, childNode.InnerText);
                 }
             }
 
@@ -58,16 +74,13 @@ namespace KeyLocker
         {
             var node = parent.CreateElement(nameof(Entry).ToLower());
 
-            foreach (var property in this.GetType().GetProperties())
+            foreach (var kvp in Entry.properties)
             {
-                if (property.GetMethod != null && property.SetMethod != null)
-                {
-                    var newNode = parent.CreateElement(property.Name.ToLower());
-                    var value = property.GetValue(this);
+                var newNode = parent.CreateElement(kvp.Key);
+                var value = kvp.Value.GetValue(this);
 
-                    newNode.InnerText = value != null ? Util.Encode(value.ToString()) : string.Empty;
-                    node.AppendChild(newNode);
-                }
+                newNode.InnerText = value != null ? value.ToString() : string.Empty;
+                node.AppendChild(newNode);
             }
 
             return node;
