@@ -45,6 +45,23 @@ namespace KeyLocker
             this.validator = new EntryValidator(this);
         }
 
+        public Entry(string fromCsv)
+        {
+            var parts = fromCsv.Split(';');
+
+            if (parts.Length < 4)
+            {
+                throw new NotSupportedException("ungültiges Format!");
+            }
+
+            this.Name = parts[0];
+            this.login = parts[1];
+            this.password = parts[2];
+            this.comment = parts[3];
+            this.date = DateTime.Now;
+            this.validator = new EntryValidator(this);
+        }
+
         public Entry(Entry copy)
         {
             this.name = copy.Name;

@@ -11,7 +11,7 @@ namespace KeyLocker
 
         public SettingsDialog()
         {
-            InitializeComponent();
+            this.InitializeComponent();
             this.settings = new Settings(Settings.Instance);
         }
 
@@ -36,7 +36,7 @@ namespace KeyLocker
                 objects[i] = values.GetValue(i);
             }
 
-            foreach(var value in Enum.GetValues(typeof(TimeUnit)))
+            foreach (var value in Enum.GetValues(typeof(TimeUnit)))
             {
                 this.decayTimeUnitComboBox.Items.Add(value);
             }
@@ -78,6 +78,10 @@ namespace KeyLocker
 
         private void HandleExportClicked(object sender, EventArgs args)
         {
+            this.saveFileDialog.AddExtension = true;
+            this.saveFileDialog.DefaultExt = ".csv";
+            this.saveFileDialog.Filter = "csv-Tabelle|*.csv";
+
             if (this.saveFileDialog.ShowDialog() == DialogResult.OK)
             {
                 var writer = new StreamWriter(this.saveFileDialog.FileName);
@@ -85,23 +89,38 @@ namespace KeyLocker
                 try
                 {
                     writer.WriteLine(string.Format("{0};{1};{2};{3};", nameof(Entry.Name), nameof(Entry.Login), nameof(Entry.Password), nameof(Entry.Comment)));
-                    
-                    foreach(var entry in Data.Instance.Entries)
+
+                    foreach (var entry in Data.Instance.Entries)
                     {
                         writer.WriteLine(string.Format("{0};{1};{2};{3};", entry.Name, entry.Login, entry.Password, entry.Comment));
                     }
                 }
-                catch(IOException e)
+                catch (IOException e)
                 {
                     ErrorHandler.HandleError(e);
                 }
                 finally
                 {
-                    if(writer != null)
+                    if (writer != null)
                     {
                         writer.Close();
                         writer.Dispose();
                     }
+                }
+            }
+        }
+
+        private void HandleImportClicked(object sender, EventArgs e)
+        {
+            this.openFileDialog1.Filter = "csv-Tabelle|*.csv";
+
+            if (this.openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                var lines = File.ReadAllLines(this.openFileDialog1.FileName);
+
+                for (var i = 1; i < lines.Length; i++)
+                {
+                    Data.Instance.Entries.Add(new Entry(lines[i]));
                 }
             }
         }

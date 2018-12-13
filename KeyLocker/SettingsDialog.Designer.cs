@@ -43,6 +43,7 @@
             this.okButton = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.button1 = new System.Windows.Forms.Button();
             this.exportButton = new System.Windows.Forms.Button();
             this.deleteAllDataButton = new System.Windows.Forms.Button();
             this.changePasswordButton = new System.Windows.Forms.Button();
@@ -52,6 +53,7 @@
             this.OldPwWarningCheckBox = new System.Windows.Forms.CheckBox();
             this.decayTimeUnitComboBox = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -212,15 +214,28 @@
             // 
             this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox2.Controls.Add(this.button1);
             this.groupBox2.Controls.Add(this.exportButton);
             this.groupBox2.Controls.Add(this.deleteAllDataButton);
             this.groupBox2.Controls.Add(this.changePasswordButton);
             this.groupBox2.Location = new System.Drawing.Point(218, 12);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(200, 109);
+            this.groupBox2.Size = new System.Drawing.Size(200, 135);
             this.groupBox2.TabIndex = 14;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "User";
+            // 
+            // button1
+            // 
+            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.button1.Location = new System.Drawing.Point(6, 106);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(188, 23);
+            this.button1.TabIndex = 10;
+            this.button1.Text = "Import csv";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.HandleImportClicked);
             // 
             // exportButton
             // 
@@ -230,7 +245,7 @@
             this.exportButton.Name = "exportButton";
             this.exportButton.Size = new System.Drawing.Size(188, 23);
             this.exportButton.TabIndex = 9;
-            this.exportButton.Text = "Export Clear Text";
+            this.exportButton.Text = "Export csv";
             this.exportButton.UseVisualStyleBackColor = true;
             this.exportButton.Click += new System.EventHandler(this.HandleExportClicked);
             // 
@@ -264,9 +279,9 @@
             this.groupBox3.Controls.Add(this.OldPwWarningCheckBox);
             this.groupBox3.Controls.Add(this.decayTimeUnitComboBox);
             this.groupBox3.Controls.Add(this.label6);
-            this.groupBox3.Location = new System.Drawing.Point(218, 127);
+            this.groupBox3.Location = new System.Drawing.Point(218, 153);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(200, 131);
+            this.groupBox3.Size = new System.Drawing.Size(200, 105);
             this.groupBox3.TabIndex = 15;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Password Lifetime";
@@ -306,6 +321,10 @@
             this.label6.Size = new System.Drawing.Size(139, 13);
             this.label6.TabIndex = 5;
             this.label6.Text = "Mark passwords as old after";
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
             // 
             // SettingsDialog
             // 
@@ -362,5 +381,7 @@
         private System.Windows.Forms.CheckBox OldPwWarningCheckBox;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.NumericUpDown decayTimeNumericUpDown;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
     }
 }
