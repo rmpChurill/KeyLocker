@@ -59,9 +59,8 @@ namespace KeyLocker
 
         private void OnShown(object sender, System.EventArgs e)
         {
-            var authorized = true;
-
-            if (string.IsNullOrEmpty(Settings.Instance.SaltedPasswordHash))
+            bool authorized;
+            if (string.IsNullOrEmpty(AppSettings.Instance.SaltedPasswordHash))
             {
                 authorized = Util.CreateNewPassword();
             }
@@ -84,7 +83,7 @@ namespace KeyLocker
         private void OnClosing(object sender, FormClosingEventArgs e)
         {
             Data.Instance.Save();
-            Settings.Instance.Save();
+            AppSettings.Instance.Save();
         }
 
         private void OnAddClicked(object sender, System.EventArgs e)
@@ -160,7 +159,7 @@ namespace KeyLocker
         {
             if (this.ValidSelection(out var index))
             {
-                Clipboard.SetText(Data.Instance.Entries[index].Password);
+                Clipboard.SetText(Data.Instance.FilteredEntries[index].Password);
             }
         }
 
@@ -178,13 +177,9 @@ namespace KeyLocker
 
         private void OnSettingsClicked(object sender, EventArgs e)
         {
-            using (var dialog = new SettingsDialog())
+            using(var dialog = new AppSettingsEditDialog())
             {
-                if (dialog.ShowDialog() == DialogResult.OK)
-                {
-                    Settings.Instance.CopyFrom(dialog.Settings);
-                    Settings.Instance.Save();
-                }
+                dialog.ShowDialog();
             }
         }
 
@@ -199,6 +194,8 @@ namespace KeyLocker
             {
                 return;
             }
+
+            var handled = true;
 
             switch (e.KeyCode)
             {
@@ -219,10 +216,17 @@ namespace KeyLocker
                     {
                         this.HandleCopy();
                     }
+                    else
+                    {
+                        handled = false;
+                    }
                     break;
                 default:
+                    handled = false;
                     break;
             }
+
+            e.Handled = handled;
         }
 
         private void HandleCellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
@@ -240,10 +244,25 @@ namespace KeyLocker
 
         private void HandleSearchTextBoxKeyDown(object sender, KeyEventArgs e)
         {
-            if(e.KeyCode == Keys.Enter)
+            if (e.KeyCode == Keys.Enter)
             {
                 this.HandleEdit();
             }
+        }
+
+        private void OutdatedFilterChecked(object sender, EventArgs e)
+        {
+
+        }
+
+        private void WeakFilterChecked(object sender, EventArgs e)
+        {
+
+        }
+
+        private void UnfittingFilterChecked(object sender, EventArgs e)
+        {
+
         }
     }
 }

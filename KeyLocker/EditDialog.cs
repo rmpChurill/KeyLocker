@@ -16,7 +16,7 @@ namespace KeyLocker
 
         public EditDialog(Entry entry)
         {
-            InitializeComponent();
+            this.InitializeComponent();
 
             if (entry == null)
             {
@@ -28,6 +28,8 @@ namespace KeyLocker
             }
 
             this.originalPassword = this.entry.Password;
+
+            this.SetFormState();
         }
 
         public Entry Entry
@@ -40,8 +42,10 @@ namespace KeyLocker
 
         private void SetFormState()
         {
-            this.passwordTextBox.PasswordChar = this.showCharsCheckBox.Checked ? default(char) : '*';
+            this.useDefaultSettingsCheckBox.Checked = !this.entry.HasCustomSettings;
+            this.passwordTextBox.PasswordChar = this.showCharsCheckBox.Checked ? default : '*';
             this.validationTextBox.Enabled = this.validatePasswordCheckBox.Checked;
+            this.editCustomSettingsButton.Enabled = !this.useDefaultSettingsCheckBox.Checked;
 
             if (this.validatePasswordCheckBox.Checked)
             {
@@ -55,7 +59,7 @@ namespace KeyLocker
 
         private void OnRandomPasswordClicked(object sender, EventArgs e)
         {
-            var pw = RandomGenerator.Generate();
+            var pw = RandomGenerator.Generate(this.entry.ApplicableSettings);
             this.passwordTextBox.Text = pw;
             this.entry.Password = pw;
         }
@@ -86,6 +90,7 @@ namespace KeyLocker
             this.ValidateDigits(this.passwordTextBox.Text, messages);
             this.ValidateUpperCaseCharacters(this.passwordTextBox.Text, messages);
             this.ValidateSpecialCharacters(this.passwordTextBox.Text, messages);
+            this.ValidateForbiddenDigits(this.passwordTextBox.Text, messages);
 
             if (messages.Count == 0)
             {
@@ -97,20 +102,20 @@ namespace KeyLocker
 
         private void ValidateLength(string text, List<string> messages)
         {
-            if (text.Length < Settings.Instance.MinLength)
+            if (text.Length < this.entry.ApplicableSettings.MinLength)
             {
-                messages.Add(string.Format("The password must be at least {0} characters long!", Settings.Instance.MinLength));
+                messages.Add(string.Format("The password must be at least {0} characters long!", this.entry.ApplicableSettings.MinLength));
             }
 
-            if (text.Length >= Settings.Instance.MaxLength)
+            if (text.Length >= this.entry.ApplicableSettings.MaxLength)
             {
-                messages.Add(string.Format("The password must not be longer than {0} characters!", Settings.Instance.MaxLength));
+                messages.Add(string.Format("The password must not be longer than {0} characters!", this.entry.ApplicableSettings.MaxLength));
             }
         }
 
         private void ValidateSpecialCharacters(string text, List<string> messages)
         {
-            if (Settings.Instance.SpecialCharacters == Usage.Forbid)
+            if (this.entry.ApplicableSettings.SpecialCharacters == Usage.Forbid)
             {
                 for (var i = 0; i < text.Length; i++)
                 {
@@ -120,7 +125,7 @@ namespace KeyLocker
                     }
                 }
             }
-            else if (Settings.Instance.SpecialCharacters == Usage.Require)
+            else if (this.entry.ApplicableSettings.SpecialCharacters == Usage.Require)
             {
                 if (text.IndexOfAny(Definitions.SpecialCharacters.ToCharArray()) == -1)
                 {
@@ -131,7 +136,7 @@ namespace KeyLocker
 
         private void ValidateUpperCaseCharacters(string text, List<string> messages)
         {
-            if (Settings.Instance.UpperCaseChars == Usage.Forbid)
+            if (this.entry.ApplicableSettings.UpperCaseChars == Usage.Forbid)
             {
                 for (var i = 0; i < text.Length; i++)
                 {
@@ -141,7 +146,7 @@ namespace KeyLocker
                     }
                 }
             }
-            else if (Settings.Instance.UpperCaseChars == Usage.Require)
+            else if (this.entry.ApplicableSettings.UpperCaseChars == Usage.Require)
             {
                 if (text.IndexOfAny(Definitions.UpperCaseChars.ToCharArray()) == -1)
                 {
@@ -152,7 +157,7 @@ namespace KeyLocker
 
         private void ValidateDigits(string text, List<string> messages)
         {
-            if (Settings.Instance.Digits == Usage.Forbid)
+            if (this.entry.ApplicableSettings.Digits == Usage.Forbid)
             {
                 for (var i = 0; i < text.Length; i++)
                 {
@@ -162,11 +167,25 @@ namespace KeyLocker
                     }
                 }
             }
-            else if (Settings.Instance.Digits == Usage.Require)
+            else if (this.entry.ApplicableSettings.Digits == Usage.Require)
             {
                 if (text.IndexOfAny(Definitions.Digits.ToCharArray()) == -1)
                 {
                     messages.Add(string.Format("Missing digit! ({0})", Definitions.Digits));
+                }
+            }
+        }
+
+        private void ValidateForbiddenDigits(string text, List<string> messages)
+        {
+            if (this.entry.ApplicableSettings.ForbiddenCharacters.Length > 0)
+            {
+                foreach (var c in this.entry.ApplicableSettings.ForbiddenCharacters)
+                {
+                    if (text.IndexOf(c) >= 0)
+                    {
+                        messages.Add(string.Format("Forbidden digit found ({0})", c));
+                    }
                 }
             }
         }
@@ -185,6 +204,49 @@ namespace KeyLocker
             if (this.entry.Password != this.originalPassword)
             {
                 this.entry.Date = DateTime.Now;
+            }
+        }
+
+        private void OnUseDefaultSettingsCheckedChanged(object sender, EventArgs e)
+        {
+            if (this.useDefaultSettingsCheckBox.Checked)
+            {
+                this.UseDefaultSettings();
+            }
+            else
+            {
+                this.UseCustomSettings();
+            }
+
+            this.SetFormState();
+        }
+
+        private void OnEditSettingsClicked(object sender, EventArgs e)
+        {
+            this.UseCustomSettings();
+
+            using (var dialog = new PasswordSettingsDialog(this.entry.CustomSettings))
+            {
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    this.entry.CustomSettings.CopyFrom(dialog.Settings);
+                }
+            }
+        }
+
+        private void UseCustomSettings()
+        {
+            if (!this.entry.HasCustomSettings)
+            {
+                this.entry.CustomSettings = new PasswordSettings(AppSettings.Instance);
+            }
+        }
+
+        private void UseDefaultSettings()
+        {
+            if (this.entry.HasCustomSettings)
+            {
+                this.entry.CustomSettings = null;
             }
         }
     }

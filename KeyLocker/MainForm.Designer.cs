@@ -37,6 +37,10 @@
             this.searchTextBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.entryDataGridView = new KeyLocker.Lib.EntryDataGridView();
+            this.label2 = new System.Windows.Forms.Label();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.checkBox2 = new System.Windows.Forms.CheckBox();
+            this.checkBox3 = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.entryDataGridView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -135,22 +139,68 @@
             this.entryDataGridView.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.entryDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.entryDataGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
-            this.entryDataGridView.Location = new System.Drawing.Point(12, 41);
+            this.entryDataGridView.Location = new System.Drawing.Point(12, 57);
             this.entryDataGridView.Name = "entryDataGridView";
             this.entryDataGridView.RowHeadersVisible = false;
             this.entryDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.entryDataGridView.Size = new System.Drawing.Size(634, 247);
+            this.entryDataGridView.Size = new System.Drawing.Size(634, 231);
             this.entryDataGridView.TabIndex = 1;
             this.entryDataGridView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.OnCellDoubleClick);
             this.entryDataGridView.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.HandleCellMouseClick);
             this.entryDataGridView.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.HandleCellMouseClick);
             this.entryDataGridView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnKeyDown);
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(12, 41);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(32, 13);
+            this.label2.TabIndex = 9;
+            this.label2.Text = "Filter:";
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(59, 40);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(70, 17);
+            this.checkBox1.TabIndex = 10;
+            this.checkBox1.Text = "Outdated";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBox1.CheckedChanged += new System.EventHandler(this.OutdatedFilterChecked);
+            // 
+            // checkBox2
+            // 
+            this.checkBox2.AutoSize = true;
+            this.checkBox2.Location = new System.Drawing.Point(135, 40);
+            this.checkBox2.Name = "checkBox2";
+            this.checkBox2.Size = new System.Drawing.Size(55, 17);
+            this.checkBox2.TabIndex = 11;
+            this.checkBox2.Text = "Weak";
+            this.checkBox2.UseVisualStyleBackColor = true;
+            this.checkBox2.CheckedChanged += new System.EventHandler(this.WeakFilterChecked);
+            // 
+            // checkBox3
+            // 
+            this.checkBox3.AutoSize = true;
+            this.checkBox3.Location = new System.Drawing.Point(196, 40);
+            this.checkBox3.Name = "checkBox3";
+            this.checkBox3.Size = new System.Drawing.Size(65, 17);
+            this.checkBox3.TabIndex = 12;
+            this.checkBox3.Text = "Unfitting";
+            this.checkBox3.UseVisualStyleBackColor = true;
+            this.checkBox3.CheckedChanged += new System.EventHandler(this.UnfittingFilterChecked);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(739, 300);
+            this.Controls.Add(this.checkBox3);
+            this.Controls.Add(this.checkBox2);
+            this.Controls.Add(this.checkBox1);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.entryDataGridView);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.searchTextBox);
@@ -160,10 +210,12 @@
             this.Controls.Add(this.showButton);
             this.Controls.Add(this.deleteButton);
             this.Controls.Add(this.addButton);
+            this.KeyPreview = true;
             this.Name = "MainForm";
             this.Text = "Form1";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.OnClosing);
             this.Shown += new System.EventHandler(this.OnShown);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnKeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.entryDataGridView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -181,6 +233,10 @@
         private System.Windows.Forms.TextBox searchTextBox;
         private System.Windows.Forms.Label label1;
         private Lib.EntryDataGridView entryDataGridView;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.CheckBox checkBox2;
+        private System.Windows.Forms.CheckBox checkBox3;
     }
 }
 

@@ -48,6 +48,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppSettingsEditDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AppSettingsEditDialog.Designer.cs">
+      <DependentUpon>AppSettingsEditDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Directories.cs" />
     <Compile Include="EntryNameComparer.cs" />
     <Compile Include="EntryNameFilter.cs" />
     <Compile Include="EntryValidator.cs" />
@@ -67,7 +74,8 @@
     <Compile Include="Lib\IElementValidator.cs" />
     <Compile Include="Lib\IValidationItem.cs" />
     <Compile Include="Lib\NotifyPropertyChangedBase.cs" />
-    <Compile Include="Settings.cs" />
+    <Compile Include="AppSettings.cs" />
+    <Compile Include="PasswordSettings.cs" />
     <Compile Include="TimeUnit.cs" />
     <Compile Include="Util.cs" />
     <Compile Include="NewPasswordDialog.cs">
@@ -98,14 +106,17 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SettingsDialog.cs">
+    <Compile Include="PasswordSettingsDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SettingsDialog.Designer.cs">
-      <DependentUpon>SettingsDialog.cs</DependentUpon>
+    <Compile Include="PasswordSettingsDialog.Designer.cs">
+      <DependentUpon>PasswordSettingsDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="RandomGenerator.cs" />
     <Compile Include="Usage.cs" />
+    <EmbeddedResource Include="AppSettingsEditDialog.resx">
+      <DependentUpon>AppSettingsEditDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="EntryDataGridView.resx">
       <DependentUpon>EntryDataGridView.cs</DependentUpon>
     </EmbeddedResource>
@@ -124,8 +135,8 @@
     <EmbeddedResource Include="PasswordDialog.resx">
       <DependentUpon>PasswordDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SettingsDialog.resx">
-      <DependentUpon>SettingsDialog.cs</DependentUpon>
+    <EmbeddedResource Include="PasswordSettingsDialog.resx">
+      <DependentUpon>PasswordSettingsDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

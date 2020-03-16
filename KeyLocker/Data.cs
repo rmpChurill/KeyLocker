@@ -87,7 +87,7 @@
 
             try
             {
-                var file = Settings.DataFile;
+                var file = Directories.DataFile;
 
                 if (!File.Exists(file))
                 {
@@ -123,14 +123,10 @@
 
         internal void Check()
         {
-            if (!Settings.Instance.WarnForOldPasswords)
-            {
-                return;
-            }
-
             foreach (var entry in this.entries)
             {
-                if (entry.IsOutdated)
+                if (entry.IsOutdated &&
+                    (entry.HasCustomSettings && entry.CustomSettings.WarnIfOld || AppSettings.Instance.WarnIfOld))
                 {
                     MessageBox.Show("There are outdated Entries!");
 
@@ -149,7 +145,7 @@
 
             try
             {
-                var file = Settings.DataFile;
+                var file = Directories.DataFile;
 
                 if (File.Exists(file))
                 {
@@ -186,16 +182,16 @@
 
                 if (this.filter != null)
                 {
-                    foreach(var entry in this.entries)
+                    foreach (var entry in this.entries)
                     {
-                        if(this.filter.IsValid(entry))
+                        if (this.filter.IsValid(entry))
                         {
                             this.filteredEntries.Add(entry);
                         }
                     }
                 }
 
-                if(this.comparer != null)
+                if (this.comparer != null)
                 {
                     this.filteredEntries.Sort(this.comparer);
                 }

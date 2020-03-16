@@ -1,20 +1,67 @@
 ﻿namespace KeyLocker
 {
     using System;
+    using System.Security.Cryptography;
 
     public static class RandomGenerator
     {
-        private static readonly Random rnd = new Random();
+        private static readonly RNGCryptoServiceProvider cryptoServiceProvider = new RNGCryptoServiceProvider();
 
-        public static string Generate()
+        public static string Generate(PasswordSettings settings)
         {
-            return Generate(Settings.Instance);
+            var res = new char[GenerateRandomInteger(settings.MinLength, settings.MaxLength + 1)];
+            var allowedChars = GetAllowedCharacters(settings);
+            var indices = new int[res.Length];
+
+            for (var i = 0; i < indices.Length; i++)
+            {
+                indices[i] = i;
+            }
+
+            for (var i = 0; i < indices.Length - 1; i++)
+            {
+                var indexToSwap = GenerateRandomInteger(i, indices.Length);
+                var buf = indices[indexToSwap];
+                indices[indexToSwap] = indices[i];
+                indices[i] = buf;
+            }
+
+            var index = 0;
+
+            if (settings.Digits == Usage.Require)
+            {
+                res[indices[index]] = RandomCharFrom(Definitions.Digits);
+
+                index++;
+            }
+
+            if (settings.UpperCaseChars == Usage.Require)
+            {
+                res[indices[index]] = RandomCharFrom(Definitions.UpperCaseChars);
+
+                index++;
+            }
+
+            if (settings.SpecialCharacters == Usage.Require)
+            {
+                res[indices[index]] = RandomCharFrom(Definitions.SpecialCharacters);
+
+                index++;
+            }
+
+            while (index < indices.Length)
+            {
+                res[indices[index]] = RandomCharFrom(allowedChars);
+
+                index++;
+            }
+
+            return new string(res);
         }
 
-        public static string Generate(Settings settings)
+        private static string GetAllowedCharacters(PasswordSettings settings)
         {
             var allowedChars = Definitions.LowerCaseChars;
-            var res = new char[rnd.Next(settings.MinLength, settings.MaxLength + 1)];
 
             if (settings.Digits != Usage.Forbid)
             {
@@ -28,62 +75,51 @@
 
             if (settings.SpecialCharacters != Usage.Forbid)
             {
-                allowedChars += Definitions.SpecialCharacters;
+                allowedChars += settings.SpecialCharacters;
             }
 
-            var assingments = new int[res.Length];
-
-            for (var i = 0; i < res.Length - 1; i++)
+            foreach (var c in settings.ForbiddenCharacters)
             {
-                var other = rnd.Next(res.Length - i - 1) + i;
-                var buf = assingments[other];
-                assingments[other] = assingments[i];
-                assingments[i] = buf;
-            }
+                var index = allowedChars.IndexOf(c);
 
-            var index = 0;
-
-            if (settings.Digits == Usage.Require)
-            {
-                if (index >= assingments.Length)
+                if (index >= 0)
                 {
-                    throw new NotSupportedException();
+                    allowedChars = allowedChars.Remove(index, 1);
                 }
-
-                res[assingments[index++]] = RandomChar(Definitions.Digits);
             }
 
-            if (settings.UpperCaseChars != Usage.Forbid)
-            {
-                if (index >= assingments.Length)
-                {
-                    throw new NotSupportedException();
-                }
-
-                res[assingments[index++]] = RandomChar(Definitions.UpperCaseChars);
-            }
-
-            if (settings.SpecialCharacters != Usage.Forbid)
-            {
-                if (index >= assingments.Length)
-                {
-                    throw new NotSupportedException();
-                }
-
-                res[assingments[index++]] = RandomChar(Definitions.SpecialCharacters);
-            }
-
-            while (index < assingments.Length)
-            {
-                res[assingments[index++]] = RandomChar(allowedChars);
-            }
-
-            return new string(res);
+            return allowedChars;
         }
 
-        private static char RandomChar(string src)
+        private static char RandomCharFrom(string src)
         {
-            return src[rnd.Next(0, src.Length)];
+            return src[GenerateRandomPositiveInteger(src.Length)];
+        }
+
+        private static int GenerateRandomInteger(int min, int max)
+        {
+            return GenerateRandomPositiveInteger(max - min) + min;
+        }
+
+        private static int GenerateRandomPositiveInteger(int max)
+        {
+            return (int)(GenerateRandomInt() % (uint)max);
+        }
+
+        private static uint GenerateRandomInt()
+        {
+            var buf = new byte[4];
+
+            cryptoServiceProvider.GetBytes(buf);
+
+            var res = 0u;
+
+            res = (res | buf[0]) << 8;
+            res = (res | buf[1]) << 8;
+            res = (res | buf[2]) << 8;
+            res = (res | buf[3]);
+
+            return res;
         }
     }
 }

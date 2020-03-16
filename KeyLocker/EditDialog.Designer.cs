@@ -40,6 +40,8 @@
             this.validationTextBox = new System.Windows.Forms.TextBox();
             this.randomPasswordButton = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.useDefaultSettingsCheckBox = new System.Windows.Forms.CheckBox();
+            this.editCustomSettingsButton = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.loginTextBox = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
@@ -143,7 +145,7 @@
             this.validationTextBox.Location = new System.Drawing.Point(6, 42);
             this.validationTextBox.Multiline = true;
             this.validationTextBox.Name = "validationTextBox";
-            this.validationTextBox.Size = new System.Drawing.Size(275, 233);
+            this.validationTextBox.Size = new System.Drawing.Size(275, 204);
             this.validationTextBox.TabIndex = 7;
             this.validationTextBox.TabStop = false;
             // 
@@ -162,7 +164,9 @@
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Controls.Add(this.useDefaultSettingsCheckBox);
             this.groupBox1.Controls.Add(this.validationTextBox);
+            this.groupBox1.Controls.Add(this.editCustomSettingsButton);
             this.groupBox1.Controls.Add(this.validatePasswordCheckBox);
             this.groupBox1.Location = new System.Drawing.Point(327, 12);
             this.groupBox1.Name = "groupBox1";
@@ -170,6 +174,27 @@
             this.groupBox1.TabIndex = 13;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Validation";
+            // 
+            // useDefaultSettingsCheckBox
+            // 
+            this.useDefaultSettingsCheckBox.AutoSize = true;
+            this.useDefaultSettingsCheckBox.Location = new System.Drawing.Point(196, 256);
+            this.useDefaultSettingsCheckBox.Name = "useDefaultSettingsCheckBox";
+            this.useDefaultSettingsCheckBox.Size = new System.Drawing.Size(85, 17);
+            this.useDefaultSettingsCheckBox.TabIndex = 10;
+            this.useDefaultSettingsCheckBox.Text = "Use defaults";
+            this.useDefaultSettingsCheckBox.UseVisualStyleBackColor = true;
+            this.useDefaultSettingsCheckBox.CheckedChanged += new System.EventHandler(this.OnUseDefaultSettingsCheckedChanged);
+            // 
+            // editValidationSettingsButton
+            // 
+            this.editCustomSettingsButton.Location = new System.Drawing.Point(6, 252);
+            this.editCustomSettingsButton.Name = "editValidationSettingsButton";
+            this.editCustomSettingsButton.Size = new System.Drawing.Size(184, 23);
+            this.editCustomSettingsButton.TabIndex = 11;
+            this.editCustomSettingsButton.Text = "Edit validation settings";
+            this.editCustomSettingsButton.UseVisualStyleBackColor = true;
+            this.editCustomSettingsButton.Click += new System.EventHandler(this.OnEditSettingsClicked);
             // 
             // groupBox2
             // 
@@ -259,5 +284,7 @@
         private System.Windows.Forms.TextBox passwordTextBox;
         private System.Windows.Forms.TextBox loginTextBox;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button editCustomSettingsButton;
+        private System.Windows.Forms.CheckBox useDefaultSettingsCheckBox;
     }
 }

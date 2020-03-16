@@ -1,6 +1,6 @@
 ﻿namespace KeyLocker
 {
-    partial class SettingsDialog
+    partial class PasswordSettingsDialog
     {
         /// <summary>
         /// Required designer variable.
@@ -42,20 +42,16 @@
             this.cancelButton = new System.Windows.Forms.Button();
             this.okButton = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.exportButton = new System.Windows.Forms.Button();
-            this.deleteAllDataButton = new System.Windows.Forms.Button();
-            this.changePasswordButton = new System.Windows.Forms.Button();
-            this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
+            this.forbiddenCharactersCheckbox = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.decayTimeNumericUpDown = new System.Windows.Forms.NumericUpDown();
-            this.OldPwWarningCheckBox = new System.Windows.Forms.CheckBox();
+            this.oldPwWarningCheckBox = new System.Windows.Forms.CheckBox();
             this.decayTimeUnitComboBox = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.specialCharactersTextbox = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.decayTimeNumericUpDown)).BeginInit();
             this.SuspendLayout();
@@ -64,18 +60,18 @@
             // 
             this.maxLengthTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.maxLengthTextBox.Location = new System.Drawing.Point(6, 191);
+            this.maxLengthTextBox.Location = new System.Drawing.Point(9, 230);
             this.maxLengthTextBox.Name = "maxLengthTextBox";
-            this.maxLengthTextBox.Size = new System.Drawing.Size(188, 20);
+            this.maxLengthTextBox.Size = new System.Drawing.Size(394, 20);
             this.maxLengthTextBox.TabIndex = 4;
             // 
             // minLengthTextBox
             // 
             this.minLengthTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.minLengthTextBox.Location = new System.Drawing.Point(6, 152);
+            this.minLengthTextBox.Location = new System.Drawing.Point(6, 191);
             this.minLengthTextBox.Name = "minLengthTextBox";
-            this.minLengthTextBox.Size = new System.Drawing.Size(188, 20);
+            this.minLengthTextBox.Size = new System.Drawing.Size(394, 20);
             this.minLengthTextBox.TabIndex = 3;
             // 
             // label1
@@ -108,7 +104,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(6, 136);
+            this.label4.Location = new System.Drawing.Point(6, 175);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(56, 13);
             this.label4.TabIndex = 5;
@@ -117,7 +113,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(6, 175);
+            this.label5.Location = new System.Drawing.Point(6, 214);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(59, 13);
             this.label5.TabIndex = 6;
@@ -125,41 +121,44 @@
             // 
             // specialCharactersComboBox
             // 
+            this.specialCharactersComboBox.AllowDrop = true;
             this.specialCharactersComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.specialCharactersComboBox.FormattingEnabled = true;
             this.specialCharactersComboBox.Location = new System.Drawing.Point(6, 112);
             this.specialCharactersComboBox.Name = "specialCharactersComboBox";
-            this.specialCharactersComboBox.Size = new System.Drawing.Size(188, 21);
+            this.specialCharactersComboBox.Size = new System.Drawing.Size(394, 21);
             this.specialCharactersComboBox.TabIndex = 2;
             // 
             // digitsComboBox
             // 
+            this.digitsComboBox.AllowDrop = true;
             this.digitsComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.digitsComboBox.FormattingEnabled = true;
             this.digitsComboBox.Location = new System.Drawing.Point(6, 72);
             this.digitsComboBox.Name = "digitsComboBox";
-            this.digitsComboBox.Size = new System.Drawing.Size(188, 21);
+            this.digitsComboBox.Size = new System.Drawing.Size(394, 21);
             this.digitsComboBox.TabIndex = 1;
             // 
             // upperCaseCharsComboBox
             // 
+            this.upperCaseCharsComboBox.AllowDrop = true;
             this.upperCaseCharsComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.upperCaseCharsComboBox.FormattingEnabled = true;
             this.upperCaseCharsComboBox.Location = new System.Drawing.Point(6, 32);
             this.upperCaseCharsComboBox.Name = "upperCaseCharsComboBox";
-            this.upperCaseCharsComboBox.Size = new System.Drawing.Size(188, 21);
+            this.upperCaseCharsComboBox.Size = new System.Drawing.Size(394, 21);
             this.upperCaseCharsComboBox.TabIndex = 0;
             // 
             // resetButton
             // 
-            this.resetButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.resetButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.resetButton.Location = new System.Drawing.Point(6, 217);
+            this.resetButton.Location = new System.Drawing.Point(12, 412);
             this.resetButton.Name = "resetButton";
-            this.resetButton.Size = new System.Drawing.Size(188, 23);
+            this.resetButton.Size = new System.Drawing.Size(406, 23);
             this.resetButton.TabIndex = 6;
             this.resetButton.Text = "Reset";
             this.resetButton.UseVisualStyleBackColor = true;
@@ -169,7 +168,7 @@
             // 
             this.cancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cancelButton.Location = new System.Drawing.Point(343, 264);
+            this.cancelButton.Location = new System.Drawing.Point(343, 441);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(75, 23);
             this.cancelButton.TabIndex = 11;
@@ -180,7 +179,7 @@
             // 
             this.okButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.okButton.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.okButton.Location = new System.Drawing.Point(262, 264);
+            this.okButton.Location = new System.Drawing.Point(262, 441);
             this.okButton.Name = "okButton";
             this.okButton.Size = new System.Drawing.Size(75, 23);
             this.okButton.TabIndex = 10;
@@ -189,10 +188,12 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox1.Controls.Add(this.resetButton);
+            this.groupBox1.Controls.Add(this.specialCharactersTextbox);
+            this.groupBox1.Controls.Add(this.label8);
+            this.groupBox1.Controls.Add(this.forbiddenCharactersCheckbox);
+            this.groupBox1.Controls.Add(this.label7);
             this.groupBox1.Controls.Add(this.maxLengthTextBox);
             this.groupBox1.Controls.Add(this.minLengthTextBox);
             this.groupBox1.Controls.Add(this.label1);
@@ -205,83 +206,41 @@
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(200, 246);
+            this.groupBox1.Size = new System.Drawing.Size(406, 298);
             this.groupBox1.TabIndex = 13;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Password Criteria";
             // 
-            // groupBox2
+            // forbiddenCharactersCheckbox
             // 
-            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.forbiddenCharactersCheckbox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox2.Controls.Add(this.button1);
-            this.groupBox2.Controls.Add(this.exportButton);
-            this.groupBox2.Controls.Add(this.deleteAllDataButton);
-            this.groupBox2.Controls.Add(this.changePasswordButton);
-            this.groupBox2.Location = new System.Drawing.Point(218, 12);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(200, 135);
-            this.groupBox2.TabIndex = 14;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "User";
+            this.forbiddenCharactersCheckbox.Location = new System.Drawing.Point(6, 269);
+            this.forbiddenCharactersCheckbox.Name = "forbiddenCharactersCheckbox";
+            this.forbiddenCharactersCheckbox.Size = new System.Drawing.Size(394, 20);
+            this.forbiddenCharactersCheckbox.TabIndex = 7;
             // 
-            // button1
+            // label7
             // 
-            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.Location = new System.Drawing.Point(6, 106);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(188, 23);
-            this.button1.TabIndex = 10;
-            this.button1.Text = "Import csv";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.HandleImportClicked);
-            // 
-            // exportButton
-            // 
-            this.exportButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.exportButton.Location = new System.Drawing.Point(6, 77);
-            this.exportButton.Name = "exportButton";
-            this.exportButton.Size = new System.Drawing.Size(188, 23);
-            this.exportButton.TabIndex = 9;
-            this.exportButton.Text = "Export csv";
-            this.exportButton.UseVisualStyleBackColor = true;
-            this.exportButton.Click += new System.EventHandler(this.HandleExportClicked);
-            // 
-            // deleteAllDataButton
-            // 
-            this.deleteAllDataButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.deleteAllDataButton.Location = new System.Drawing.Point(6, 48);
-            this.deleteAllDataButton.Name = "deleteAllDataButton";
-            this.deleteAllDataButton.Size = new System.Drawing.Size(188, 23);
-            this.deleteAllDataButton.TabIndex = 8;
-            this.deleteAllDataButton.Text = "Delete All Data";
-            this.deleteAllDataButton.UseVisualStyleBackColor = true;
-            this.deleteAllDataButton.Click += new System.EventHandler(this.HandleDeleteDataClicked);
-            // 
-            // changePasswordButton
-            // 
-            this.changePasswordButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.changePasswordButton.Location = new System.Drawing.Point(6, 19);
-            this.changePasswordButton.Name = "changePasswordButton";
-            this.changePasswordButton.Size = new System.Drawing.Size(188, 23);
-            this.changePasswordButton.TabIndex = 7;
-            this.changePasswordButton.Text = "Change Password";
-            this.changePasswordButton.UseVisualStyleBackColor = true;
-            this.changePasswordButton.Click += new System.EventHandler(this.HandleChangePasswordClicked);
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(6, 253);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(108, 13);
+            this.label7.TabIndex = 8;
+            this.label7.Text = "Forbidden Characters";
             // 
             // groupBox3
             // 
+            this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox3.Controls.Add(this.decayTimeNumericUpDown);
-            this.groupBox3.Controls.Add(this.OldPwWarningCheckBox);
+            this.groupBox3.Controls.Add(this.oldPwWarningCheckBox);
             this.groupBox3.Controls.Add(this.decayTimeUnitComboBox);
             this.groupBox3.Controls.Add(this.label6);
-            this.groupBox3.Location = new System.Drawing.Point(218, 153);
+            this.groupBox3.Location = new System.Drawing.Point(12, 316);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(200, 105);
+            this.groupBox3.Size = new System.Drawing.Size(406, 90);
             this.groupBox3.TabIndex = 15;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Password Lifetime";
@@ -293,20 +252,21 @@
             this.decayTimeNumericUpDown.Size = new System.Drawing.Size(113, 20);
             this.decayTimeNumericUpDown.TabIndex = 9;
             // 
-            // OldPwWarningCheckBox
+            // oldPwWarningCheckBox
             // 
-            this.OldPwWarningCheckBox.AutoSize = true;
-            this.OldPwWarningCheckBox.Checked = true;
-            this.OldPwWarningCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.OldPwWarningCheckBox.Location = new System.Drawing.Point(6, 56);
-            this.OldPwWarningCheckBox.Name = "OldPwWarningCheckBox";
-            this.OldPwWarningCheckBox.Size = new System.Drawing.Size(137, 17);
-            this.OldPwWarningCheckBox.TabIndex = 8;
-            this.OldPwWarningCheckBox.Text = "Warn for old passwords";
-            this.OldPwWarningCheckBox.UseVisualStyleBackColor = true;
+            this.oldPwWarningCheckBox.AutoSize = true;
+            this.oldPwWarningCheckBox.Checked = true;
+            this.oldPwWarningCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.oldPwWarningCheckBox.Location = new System.Drawing.Point(6, 58);
+            this.oldPwWarningCheckBox.Name = "oldPwWarningCheckBox";
+            this.oldPwWarningCheckBox.Size = new System.Drawing.Size(98, 17);
+            this.oldPwWarningCheckBox.TabIndex = 8;
+            this.oldPwWarningCheckBox.Text = "Warn when old";
+            this.oldPwWarningCheckBox.UseVisualStyleBackColor = true;
             // 
             // decayTimeUnitComboBox
             // 
+            this.decayTimeUnitComboBox.AllowDrop = true;
             this.decayTimeUnitComboBox.FormattingEnabled = true;
             this.decayTimeUnitComboBox.Location = new System.Drawing.Point(125, 31);
             this.decayTimeUnitComboBox.Name = "decayTimeUnitComboBox";
@@ -322,32 +282,45 @@
             this.label6.TabIndex = 5;
             this.label6.Text = "Mark passwords as old after";
             // 
-            // openFileDialog1
+            // specialCharactersTextbox
             // 
-            this.openFileDialog1.FileName = "openFileDialog1";
+            this.specialCharactersTextbox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.specialCharactersTextbox.Location = new System.Drawing.Point(6, 152);
+            this.specialCharactersTextbox.Name = "specialCharactersTextbox";
+            this.specialCharactersTextbox.Size = new System.Drawing.Size(394, 20);
+            this.specialCharactersTextbox.TabIndex = 9;
             // 
-            // SettingsDialog
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(6, 136);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(96, 13);
+            this.label8.TabIndex = 10;
+            this.label8.Text = "Special Characters";
+            // 
+            // PasswordSettingsDialog
             // 
             this.AcceptButton = this.okButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cancelButton;
-            this.ClientSize = new System.Drawing.Size(430, 299);
+            this.ClientSize = new System.Drawing.Size(430, 477);
             this.Controls.Add(this.groupBox3);
-            this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.resetButton);
             this.Controls.Add(this.okButton);
             this.Controls.Add(this.cancelButton);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "SettingsDialog";
+            this.Name = "PasswordSettingsDialog";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Einstellungen";
             this.Shown += new System.EventHandler(this.OnShown);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.decayTimeNumericUpDown)).EndInit();
@@ -371,17 +344,14 @@
         private System.Windows.Forms.Button cancelButton;
         private System.Windows.Forms.Button okButton;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.Button exportButton;
-        private System.Windows.Forms.Button deleteAllDataButton;
-        private System.Windows.Forms.Button changePasswordButton;
-        private System.Windows.Forms.SaveFileDialog saveFileDialog;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.ComboBox decayTimeUnitComboBox;
-        private System.Windows.Forms.CheckBox OldPwWarningCheckBox;
+        private System.Windows.Forms.CheckBox oldPwWarningCheckBox;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.NumericUpDown decayTimeNumericUpDown;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.TextBox forbiddenCharactersCheckbox;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.TextBox specialCharactersTextbox;
+        private System.Windows.Forms.Label label8;
     }
 }

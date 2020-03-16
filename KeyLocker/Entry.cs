@@ -11,7 +11,7 @@ namespace KeyLocker
     [DebuggerDisplay("Name={name}")]
     public partial class Entry : NotifyPropertyChangedBase
     {
-        private static Dictionary<string, PropertyInfo> properties;
+        private static readonly Dictionary<string, PropertyInfo> properties;
 
         private string name;
         private string comment;
@@ -19,6 +19,7 @@ namespace KeyLocker
         private string login;
         private DateTime date;
         private readonly EntryValidator validator;
+        private PasswordSettings customSettings;
 
         static Entry()
         {
@@ -43,6 +44,7 @@ namespace KeyLocker
             this.login = string.Empty;
             this.date = DateTime.MinValue;
             this.validator = new EntryValidator(this);
+            this.customSettings = null;
         }
 
         public Entry(string fromCsv)
@@ -60,6 +62,11 @@ namespace KeyLocker
             this.comment = parts[3];
             this.date = DateTime.Now;
             this.validator = new EntryValidator(this);
+
+            if (parts.Length > 4)
+            {
+                throw new NotSupportedException("Hier sollen wahrscheinlich noch custom settings geparsed werden...");
+            }
         }
 
         public Entry(Entry copy)
@@ -70,13 +77,23 @@ namespace KeyLocker
             this.login = copy.Login;
             this.date = DateTime.Now;
             this.validator = new EntryValidator(this);
+
+            if (copy.HasCustomSettings)
+            {
+                this.customSettings = new PasswordSettings(copy.CustomSettings);
+            }
         }
 
         public Entry(XmlNode node)
         {
             foreach (XmlNode childNode in node.ChildNodes)
             {
-                if (Entry.properties.TryGetValue(childNode.Name, out var property))
+                if (childNode.Name == nameof(this.CustomSettings).ToLower())
+                {
+                    this.customSettings = this.customSettings = new PasswordSettings();
+                    this.customSettings.LoadFromString(childNode.InnerText);
+                }
+                else if (Entry.properties.TryGetValue(childNode.Name, out var property))
                 {
                     Util.Set(property, this, childNode.InnerText);
                 }
@@ -84,8 +101,6 @@ namespace KeyLocker
 
             this.validator = new EntryValidator(this);
         }
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         public XmlNode ToXml(XmlDocument parent)
         {
@@ -219,11 +234,47 @@ namespace KeyLocker
         }
 
         [Browsable(false)]
+        public bool HasCustomSettings
+        {
+            get
+            {
+                return this.customSettings != null;
+            }
+        }
+
+        [Browsable(false)]
+        public PasswordSettings CustomSettings
+        {
+            get
+            {
+                return this.customSettings;
+            }
+
+            set
+            {
+                if (this.customSettings != value)
+                {
+                    this.customSettings = value;
+                    this.OnPropertyChanged();
+                }
+            }
+        }
+
+        [Browsable(false)]
+        public PasswordSettings ApplicableSettings
+        {
+            get
+            {
+                return this.HasCustomSettings ? this.customSettings : AppSettings.Instance;
+            }
+        }
+
+        [Browsable(false)]
         public bool IsOutdated
         {
             get
             {
-                return Util.IsOutdated(this.Date, DateTime.Now, Settings.Instance.DecayTime, Settings.Instance.DecayTimeUnit);
+                return Util.IsOutdated(this.Date, DateTime.Now, this.ApplicableSettings.DecayTime, this.ApplicableSettings.DecayTimeUnit);
             }
         }
     }

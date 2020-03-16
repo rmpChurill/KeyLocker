@@ -21,7 +21,7 @@ namespace KeyLocker
 
         public static string ComputeSaltedHash(string text)
         {
-            return string.Concat(text, Settings.Instance.Salt).GetHashCode().ToString("X");
+            return string.Concat(text, AppSettings.Instance.Salt).GetHashCode().ToString("X");
         }
 
         public static string ComputeRandomSalt()
@@ -67,12 +67,12 @@ namespace KeyLocker
 
         public static string Encode(string text)
         {
-            return Encrypt(text, Settings.Instance.SaltedPasswordHash);
+            return Encrypt(text, AppSettings.Instance.SaltedPasswordHash);
         }
 
         public static string Decode(string text)
         {
-            return Decrypt(text, Settings.Instance.SaltedPasswordHash);
+            return Decrypt(text, AppSettings.Instance.SaltedPasswordHash);
         }
 
         public static string Encrypt(string plainText, string passPhrase)
@@ -127,8 +127,8 @@ namespace KeyLocker
 
                 if (result == DialogResult.OK)
                 {
-                    Settings.Instance.Salt = Util.ComputeRandomSalt();
-                    Settings.Instance.SaltedPasswordHash = Util.ComputeSaltedHash(dialog.Password);
+                    AppSettings.Instance.Salt = Util.ComputeRandomSalt();
+                    AppSettings.Instance.SaltedPasswordHash = Util.ComputeSaltedHash(dialog.Password);
                     newPasswordCreated = true;
                 }
             }
@@ -148,7 +148,7 @@ namespace KeyLocker
                 {
                     if (dialog.ShowDialog() == DialogResult.OK)
                     {
-                        if (dialog.HashedPassword.Equals(Settings.Instance.SaltedPasswordHash))
+                        if (dialog.HashedPassword.Equals(AppSettings.Instance.SaltedPasswordHash))
                         {
                             passwordMatched = true;
                         }

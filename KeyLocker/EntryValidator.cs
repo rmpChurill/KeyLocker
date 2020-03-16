@@ -52,17 +52,18 @@ namespace KeyLocker
             this.ValidateDigits(this.entry.Password, this.validationResults);
             this.ValidateUpperCaseCharacters(this.entry.Password, this.validationResults);
             this.ValidateSpecialCharacters(this.entry.Password, this.validationResults);
+            this.ValidateForbiddenDigits(this.entry.Password, this.validationResults);
         }
 
         private void ValidateLength(string text, List<IValidationItem> messages)
         {
-            if (text.Length < Settings.Instance.MinLength)
+            if (text.Length < this.entry.ApplicableSettings.MinLength)
             {
                 ////messages.Add(string.Format("The password must be at least {0} characters long!", Settings.Instance.MinLength));
                 messages.Add(new LengthValidationResult());
             }
 
-            if (text.Length >= Settings.Instance.MaxLength)
+            if (text.Length >= this.entry.ApplicableSettings.MaxLength)
             {
                 ////messages.Add(string.Format("The password must not be longer than {0} characters!", Settings.Instance.MaxLength));
                 messages.Add(new LengthValidationResult());
@@ -71,7 +72,7 @@ namespace KeyLocker
 
         private void ValidateSpecialCharacters(string text, List<IValidationItem> messages)
         {
-            if (Settings.Instance.SpecialCharacters == Usage.Forbid)
+            if (this.entry.ApplicableSettings.SpecialCharacters == Usage.Forbid)
             {
                 for (var i = 0; i < text.Length; i++)
                 {
@@ -82,7 +83,7 @@ namespace KeyLocker
                     }
                 }
             }
-            else if (Settings.Instance.SpecialCharacters == Usage.Require)
+            else if (this.entry.ApplicableSettings.SpecialCharacters == Usage.Require)
             {
                 if (text.IndexOfAny(Definitions.SpecialCharacters.ToCharArray()) == -1)
                 {
@@ -94,7 +95,7 @@ namespace KeyLocker
 
         private void ValidateUpperCaseCharacters(string text, List<IValidationItem> messages)
         {
-            if (Settings.Instance.UpperCaseChars == Usage.Forbid)
+            if (this.entry.ApplicableSettings.UpperCaseChars == Usage.Forbid)
             {
                 for (var i = 0; i < text.Length; i++)
                 {
@@ -105,7 +106,7 @@ namespace KeyLocker
                     }
                 }
             }
-            else if (Settings.Instance.UpperCaseChars == Usage.Require)
+            else if (this.entry.ApplicableSettings.UpperCaseChars == Usage.Require)
             {
                 if (text.IndexOfAny(Definitions.UpperCaseChars.ToCharArray()) == -1)
                 {
@@ -117,7 +118,7 @@ namespace KeyLocker
 
         private void ValidateDigits(string text, List<IValidationItem> messages)
         {
-            if (Settings.Instance.Digits == Usage.Forbid)
+            if (this.entry.ApplicableSettings.Digits == Usage.Forbid)
             {
                 for (var i = 0; i < text.Length; i++)
                 {
@@ -128,12 +129,58 @@ namespace KeyLocker
                     }
                 }
             }
-            else if (Settings.Instance.Digits == Usage.Require)
+            else if (this.entry.ApplicableSettings.Digits == Usage.Require)
             {
                 if (text.IndexOfAny(Definitions.Digits.ToCharArray()) == -1)
                 {
                     ////messages.Add(string.Format("Missing digit! ({0})", Definitions.Digits));
                     messages.Add(new DigitValidationResult());
+                }
+            }
+        }
+
+        private void ValidateForbiddenDigits(string text, List<IValidationItem> messages)
+        {
+            if (this.entry.ApplicableSettings.ForbiddenCharacters.Length > 0)
+            {
+                foreach (var c in this.entry.ApplicableSettings.ForbiddenCharacters)
+                {
+                    if (text.IndexOf(c) >= 0)
+                    {
+                        //messages.Add(string.Format("Forbidden digit found ({0})", c));
+                        messages.Add(new ForbiddenDigitResult());
+                    }
+                }
+            }
+        }
+
+        private class ForbiddenDigitResult : IValidationItem
+        {
+            public ForbiddenDigitResult()
+            {
+            }
+
+            public string Description
+            {
+                get
+                {
+                    return "forbidden digit [TODO]";
+                }
+            }
+
+            public int Severity
+            {
+                get
+                {
+                    return 8;
+                }
+            }
+
+            public Image Icon
+            {
+                get
+                {
+                    return Resources.UnknownError_16px;
                 }
             }
         }
