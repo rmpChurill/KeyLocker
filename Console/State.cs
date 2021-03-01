@@ -11,18 +11,21 @@ namespace KeyLocker.Console
     public abstract class State : HasParentBase
     {
         /// <summary>
-        /// Aktionen, die in diesem Zustand erlaubt sind.
-        /// </summary>
-        private List<Action> allowedActions;
-
-        /// <summary>
         /// Initialisiert eine neue Instanz der Klasse.
         /// </summary>
         /// <param name="parent">Die <see cref="ConsoleCore"/>-Instanz, die mit dieser Instanz verknüpft ist.</param>
         /// <param name="allowedActions">Die in diesem Zustand erlaubten Aktionen.</param>
         public State(ConsoleCore parent, IEnumerable<Action> allowedActions) : base(parent)
         {
-            this.allowedActions = new List<Action>(allowedActions);
+            this.AllowedActions = new List<Action>(allowedActions);
+        }
+
+        /// <summary>
+        /// Holt eine Auflistung von Aktionen, die in diesem Zustand erlaubt sind.
+        /// </summary>
+        protected IEnumerable<Action> AllowedActions
+        {
+            get;
         }
 
         /// <summary>
@@ -38,7 +41,7 @@ namespace KeyLocker.Console
             var command = input.Substring(0, i);
             var actionToRun = default(Action);
 
-            foreach (var action in this.allowedActions)
+            foreach (var action in this.AllowedActions)
             {
                 var comparison = action.IsCaseSensitive
                                ? StringComparison.Ordinal

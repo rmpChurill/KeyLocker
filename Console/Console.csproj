@@ -15,12 +15,12 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <DocumentationFile>D:\Entwicklung\Projekte\KeyLocker\Console\documentation.xml</DocumentationFile>
+    <DocumentationFile>documentation.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <DocumentationFile>D:\Entwicklung\Projekte\KeyLocker\Console\documentation.xml</DocumentationFile>
+    <DocumentationFile>documentation.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
