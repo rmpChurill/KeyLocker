@@ -1,29 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace KeyLocker.Console
+﻿namespace KeyLocker.Console.States
 {
+    using System;
+    using System.Collections.Generic;
+
+    using KeyLocker.Console.Commands;
+
     /// <summary>
     /// Stellt einen Zustand des Programms dar.
     /// Implementierende Klassen stellen Methoden und Eigenschaften zur Identifikation der Zustände und 
     /// der Behandlung von Übergängen dar.
     /// </summary>
-    public abstract class State : HasParentBase
+    public abstract class State
     {
         /// <summary>
         /// Initialisiert eine neue Instanz der Klasse.
         /// </summary>
-        /// <param name="parent">Die <see cref="ConsoleCore"/>-Instanz, die mit dieser Instanz verknüpft ist.</param>
-        /// <param name="allowedActions">Die in diesem Zustand erlaubten Aktionen.</param>
-        public State(ConsoleCore parent, IEnumerable<Action> allowedActions) : base(parent)
+        /// <param name="allowedCommands">Die in diesem Zustand ausführbaren Befehle.</param>
+        public State(IEnumerable<ICommand> allowedCommands)
         {
-            this.AllowedActions = new List<Action>(allowedActions);
+            this.AllowedCommands = new List<ICommand>(allowedCommands);
         }
 
         /// <summary>
-        /// Holt eine Auflistung von Aktionen, die in diesem Zustand erlaubt sind.
+        /// Holt eine Auflistung von Befehlen, die in diesem Zustand ausgeführt werden können.
         /// </summary>
-        protected IEnumerable<Action> AllowedActions
+        protected IEnumerable<ICommand> AllowedCommands
         {
             get;
         }
@@ -31,17 +32,18 @@ namespace KeyLocker.Console
         /// <summary>
         /// Behandelt die Eingabe eines Nutzers.
         /// </summary>
+        /// <param name="core">Die ausführende <see cref="ConsoleCore"/>-Instanz.</param>
         /// <param name="input">Die Nutzereingabe.</param>
-        public void HandleUserInput(string input)
+        public void HandleUserInput(ConsoleCore core, string input)
         {
             var i = 0;
 
-            while (char.IsWhiteSpace(input[i])) { i++; }
+            while (i < input.Length && !char.IsWhiteSpace(input[i])) { i++; }
 
-            var command = input.Substring(0, i);
-            var actionToRun = default(Action);
+            var command = input[0..i];
+            var actionToRun = default(ICommand);
 
-            foreach (var action in this.AllowedActions)
+            foreach (var action in this.AllowedCommands)
             {
                 var comparison = action.IsCaseSensitive
                                ? StringComparison.Ordinal
@@ -68,15 +70,16 @@ namespace KeyLocker.Console
 
                 if (actionToRun != default)
                 {
-                    var arg = input.Substring(i);
+                    var arg = input[i..];
 
-                    this.OnActionRun(actionToRun, arg);
-
-                    actionToRun.Execute(arg);
+                    if (this.OnActionRun(core, actionToRun, arg))
+                    {
+                        actionToRun.Execute(core, arg);
+                    }
                 }
                 else
                 {
-                    this.OnActionNotFound(input);
+                    this.OnActionNotFound(core, input);
                 }
             }
         }
@@ -84,19 +87,21 @@ namespace KeyLocker.Console
         /// <summary>
         /// Wird aufgerufen wenn für eine Eingabe keine Aktion gefunden wurden.
         /// </summary>
+        /// <param name="core">Die ausführende <see cref="ConsoleCore"/>-Instanz.</param>
         /// <param name="input">Die Nutzereingabe.</param>
-        public virtual void OnActionNotFound(string input)
+        public virtual void OnActionNotFound(ConsoleCore core, string input)
         {
-            //// TODO
+            Console.WriteLine($"\"{input}\" is no valid command!");
         }
 
         /// <summary>
         /// Wird aufgerufen wenn eine Aktion begonnen wird.
         /// </summary>
+        /// <param name="core">Die ausführende <see cref="ConsoleCore"/>-Instanz.</param>
         /// <param name="action">Die Aktion, die als nächstes ausgeführt wird.</param>
         /// <param name="argument">Die Eingabe für diese Aktion.</param>
         /// <returns>True, wenn die Aktion ausgeführt soll, sonst false.</returns>
-        public virtual bool OnActionRun(Action action, string argument)
+        public virtual bool OnActionRun(ConsoleCore core, ICommand action, string argument)
         {
             return true;
         }
@@ -104,14 +109,27 @@ namespace KeyLocker.Console
         /// <summary>
         /// Wird aufgerufen wenn der Zustand begonnen wird, also wenn die Instanz zu <see cref="ConsoleCore.StateStack"/> hinzugefügt wird.
         /// </summary>
-        public virtual void OnBegin()
+        /// <param name="core">Die ausführende <see cref="ConsoleCore"/>-Instanz.</param>
+        public virtual void OnBegin(ConsoleCore core)
         {
+        }
+
+        /// <summary>
+        /// Behandelt einen Ausführungsschritt.
+        /// </summary>
+        /// <param name="core">Die ausführende <see cref="ConsoleCore"/>-Instanz.</param>
+        public virtual void OnTick(ConsoleCore core)
+        {
+            var input = ConsoleHelper.Prompt();
+
+            this.HandleUserInput(core, input);
         }
 
         /// <summary>
         /// Wird aufgerufen wenn der Zustand beendet wird, also wenn die Instanz von <see cref="ConsoleCore.StateStack"/> entfernt wird.
         /// </summary>
-        public virtual void OnEnd()
+        /// <param name="core">Die ausführende <see cref="ConsoleCore"/>-Instanz.</param>
+        public virtual void OnEnd(ConsoleCore core)
         {
         }
     }

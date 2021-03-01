@@ -4,48 +4,100 @@
         <name>Console</name>
     </assembly>
     <members>
-        <member name="T:KeyLocker.Console.Action">
+        <member name="T:KeyLocker.Console.Commands.HelpCommand">
+            <summary>
+            Stellt den Hilfebefehl dar.
+            </summary>
+        </member>
+        <member name="M:KeyLocker.Console.Commands.HelpCommand.#ctor">
+            <summary>
+            Initialisiert eine neue Instanz der Klasse.
+            </summary>
+        </member>
+        <member name="P:KeyLocker.Console.Commands.HelpCommand.HelpDescritpion">
+            <inheritdoc/>
+        </member>
+        <member name="P:KeyLocker.Console.Commands.HelpCommand.IsCaseSensitive">
+            <inheritdoc/>
+        </member>
+        <member name="P:KeyLocker.Console.Commands.HelpCommand.Command">
+            <inheritdoc/>
+        </member>
+        <member name="P:KeyLocker.Console.Commands.HelpCommand.Aliases">
+            <inheritdoc/>
+        </member>
+        <member name="M:KeyLocker.Console.Commands.HelpCommand.Execute(KeyLocker.Console.ConsoleCore,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="T:KeyLocker.Console.Commands.ICommand">
             <summary>
             Stellt eine ausführbare Aktion dar. 
             Ableitende Klassen stellen Methoden und Eigenschaften zur Identifikation der Aktion bereit.
             </summary>
         </member>
-        <member name="M:KeyLocker.Console.Action.#ctor(KeyLocker.Console.ConsoleCore)">
-            <summary>
-            Initialisiert eine neue Instanz der Klasse.
-            </summary>
-            <param name="parent">Die <see cref="T:KeyLocker.Console.ConsoleCore"/>-Instanz, die mit dieser Instanz verknüpft ist.</param>
-        </member>
-        <member name="P:KeyLocker.Console.Action.HelpDescritpion">
+        <member name="P:KeyLocker.Console.Commands.ICommand.HelpDescritpion">
             <summary>
             Holt einen Text, der in der Hilfe als Beschreibung angezeigt werden soll.
             </summary>
         </member>
-        <member name="P:KeyLocker.Console.Action.IsCaseSensitive">
+        <member name="P:KeyLocker.Console.Commands.ICommand.IsCaseSensitive">
             <summary>
-            Holt einen Wert, der angibt, ob bei dem Vergleich einer Nutzereingabe mit <see cref="P:KeyLocker.Console.Action.Command"/> oder 
-            einem Element aus <see cref="P:KeyLocker.Console.Action.Aliases"/> die Groß-/Kleinschreibung beachtet werden soll oder nicht.
+            Holt einen Wert, der angibt, ob bei dem Vergleich einer Nutzereingabe mit <see cref="P:KeyLocker.Console.Commands.ICommand.Command"/> oder 
+            einem Element aus <see cref="P:KeyLocker.Console.Commands.ICommand.Aliases"/> die Groß-/Kleinschreibung beachtet werden soll oder nicht.
             </summary>
         </member>
-        <member name="P:KeyLocker.Console.Action.Command">
+        <member name="P:KeyLocker.Console.Commands.ICommand.Command">
             <summary>
             Holt den Befehl, der mit dieser Aktion verknüpft werden soll.
             </summary>
         </member>
-        <member name="P:KeyLocker.Console.Action.Aliases">
+        <member name="P:KeyLocker.Console.Commands.ICommand.Aliases">
             <summary>
             Holt eine Auflistung von alternativen Befehlen für diese Aktion.
             </summary>
         </member>
-        <member name="M:KeyLocker.Console.Action.Execute(System.String)">
+        <member name="M:KeyLocker.Console.Commands.ICommand.Execute(KeyLocker.Console.ConsoleCore,System.String)">
             <summary>
             Führt die Aktion aus.
             </summary>
+            <param name="core">Die ausführende <see cref="T:KeyLocker.Console.ConsoleCore"/>-Instanz.</param>
             <param name="arg">Der Teil der Nutzereingabe, der dem Namen des Befehls (oder einem Alias) folgte.</param>
         </member>
         <member name="T:KeyLocker.Console.ConsoleCore">
             <summary>
             Stellt den Kern der Anwendung dar.
+            </summary>
+        </member>
+        <member name="M:KeyLocker.Console.ConsoleCore.#ctor">
+            <summary>
+            Initialisiert eine neue Instanz der Klasse.
+            </summary>
+        </member>
+        <member name="P:KeyLocker.Console.ConsoleCore.StateStack">
+            <summary>
+            Holt einen Stack, der eine Reihe von Zuständen speichert.
+            Der oberste Eintrag ist der aktuelle Zustand.
+            </summary>
+        </member>
+        <member name="P:KeyLocker.Console.ConsoleCore.AllCommands">
+            <summary>
+            Holt eine Auflistung aller registrirten Befehle.
+            </summary>
+        </member>
+        <member name="M:KeyLocker.Console.ConsoleCore.PushState(KeyLocker.Console.States.State)">
+            <summary>
+            Betritt einen neuen Zustand.
+            </summary>
+            <param name="state">Der neue Zustand.</param>
+        </member>
+        <member name="M:KeyLocker.Console.ConsoleCore.PopState">
+            <summary>
+            Beendet den letzten Zustand.
+            </summary>
+        </member>
+        <member name="M:KeyLocker.Console.ConsoleCore.Run">
+            <summary>
+            Startet die Ausführung des Konsolenprogramms in einer Endlosschleife.
             </summary>
         </member>
         <member name="T:KeyLocker.Console.ConsoleHelper">
@@ -68,27 +120,19 @@
             <param name="question">Der Text, der vor der Eingabe angezeigt werden soll.</param>
             <returns>Die Nutzereingabe.</returns>
         </member>
+        <member name="M:KeyLocker.Console.ConsoleHelper.WriteLine``1(System.Collections.Generic.IEnumerable{``0},System.String)">
+            <summary>
+            Schreibt eine Auflistung von Elementen in die Konsole.
+            </summary>
+            <typeparam name="T">Der Typ der auszugebenden Items.</typeparam>
+            <param name="items">Die auszugebenden Items.</param>
+            <param name="seperator">Der string, der nach jedem Element, außer dem letzten, aus <paramref name="items"/> ausgegeben wird.</param>
+        </member>
         <member name="M:KeyLocker.Console.ConsoleHelper.HiddenReadLine">
             <summary>
             Liest eine Zeile der Nutzereingabe ein, ohne die Zeichen im Terminal anzuzeigen.
             </summary>
             <returns>Die Nutzereingabe.</returns>
-        </member>
-        <member name="T:KeyLocker.Console.HasParentBase">
-            <summary>
-            Die Basisklasse für alle Klassen, die mit einer Instanz von <see cref="T:KeyLocker.Console.ConsoleCore"/> verknüpft sein sollen.
-            </summary>
-        </member>
-        <member name="M:KeyLocker.Console.HasParentBase.#ctor(KeyLocker.Console.ConsoleCore)">
-            <summary>
-            Initialisiert eine neue Instanz der Klasse.
-            </summary>
-            <param name="parent">Die <see cref="T:KeyLocker.Console.ConsoleCore"/>-Instanz, die mit dieser Instanz verknüpft ist.</param>
-        </member>
-        <member name="P:KeyLocker.Console.HasParentBase.Parent">
-            <summary>
-            Holt die <see cref="T:KeyLocker.Console.ConsoleCore"/>-Instanz, die mit dieser Instanz verknüpft ist.
-            </summary>
         </member>
         <member name="T:KeyLocker.Console.Program">
             <summary>
@@ -101,59 +145,75 @@
             </summary>
             <param name="args">Die Aufrufparameter.</param>
         </member>
-        <member name="M:KeyLocker.Console.Program.DisplayHelp">
+        <member name="T:KeyLocker.Console.States.BasicState">
             <summary>
-            Zeigt die Hilfe an.
+            Der Grundzustand des Programms.
             </summary>
         </member>
-        <member name="T:KeyLocker.Console.State">
+        <member name="M:KeyLocker.Console.States.BasicState.#ctor(System.Collections.Generic.IEnumerable{KeyLocker.Console.Commands.ICommand})">
+            <summary>
+            Initialisiert eine neue Instanz der Klasse.
+            </summary>
+            <param name="allowedCommands">Die in diesem Zustand ausführbaren Befehle.</param>
+        </member>
+        <member name="T:KeyLocker.Console.States.State">
             <summary>
             Stellt einen Zustand des Programms dar.
             Implementierende Klassen stellen Methoden und Eigenschaften zur Identifikation der Zustände und 
             der Behandlung von Übergängen dar.
             </summary>
         </member>
-        <member name="F:KeyLocker.Console.State.allowedActions">
-            <summary>
-            Aktionen, die in diesem Zustand erlaubt sind.
-            </summary>
-        </member>
-        <member name="M:KeyLocker.Console.State.#ctor(KeyLocker.Console.ConsoleCore,System.Collections.Generic.IEnumerable{KeyLocker.Console.Action})">
+        <member name="M:KeyLocker.Console.States.State.#ctor(System.Collections.Generic.IEnumerable{KeyLocker.Console.Commands.ICommand})">
             <summary>
             Initialisiert eine neue Instanz der Klasse.
             </summary>
-            <param name="parent">Die <see cref="T:KeyLocker.Console.ConsoleCore"/>-Instanz, die mit dieser Instanz verknüpft ist.</param>
-            <param name="allowedActions">Die in diesem Zustand erlaubten Aktionen.</param>
+            <param name="allowedCommands">Die in diesem Zustand ausführbaren Befehle.</param>
         </member>
-        <member name="M:KeyLocker.Console.State.HandleUserInput(System.String)">
+        <member name="P:KeyLocker.Console.States.State.AllowedCommands">
+            <summary>
+            Holt eine Auflistung von Befehlen, die in diesem Zustand ausgeführt werden können.
+            </summary>
+        </member>
+        <member name="M:KeyLocker.Console.States.State.HandleUserInput(KeyLocker.Console.ConsoleCore,System.String)">
             <summary>
             Behandelt die Eingabe eines Nutzers.
             </summary>
+            <param name="core">Die ausführende <see cref="T:KeyLocker.Console.ConsoleCore"/>-Instanz.</param>
             <param name="input">Die Nutzereingabe.</param>
         </member>
-        <member name="M:KeyLocker.Console.State.OnActionNotFound(System.String)">
+        <member name="M:KeyLocker.Console.States.State.OnActionNotFound(KeyLocker.Console.ConsoleCore,System.String)">
             <summary>
             Wird aufgerufen wenn für eine Eingabe keine Aktion gefunden wurden.
             </summary>
+            <param name="core">Die ausführende <see cref="T:KeyLocker.Console.ConsoleCore"/>-Instanz.</param>
             <param name="input">Die Nutzereingabe.</param>
         </member>
-        <member name="M:KeyLocker.Console.State.OnActionRun(KeyLocker.Console.Action,System.String)">
+        <member name="M:KeyLocker.Console.States.State.OnActionRun(KeyLocker.Console.ConsoleCore,KeyLocker.Console.Commands.ICommand,System.String)">
             <summary>
             Wird aufgerufen wenn eine Aktion begonnen wird.
             </summary>
+            <param name="core">Die ausführende <see cref="T:KeyLocker.Console.ConsoleCore"/>-Instanz.</param>
             <param name="action">Die Aktion, die als nächstes ausgeführt wird.</param>
             <param name="argument">Die Eingabe für diese Aktion.</param>
             <returns>True, wenn die Aktion ausgeführt soll, sonst false.</returns>
         </member>
-        <member name="M:KeyLocker.Console.State.OnBegin">
+        <member name="M:KeyLocker.Console.States.State.OnBegin(KeyLocker.Console.ConsoleCore)">
             <summary>
-            Wird aufgerufen wenn der Zustand begonnen wird, also wenn die Instanz zu <see cref="!:ConsoleCore.StateStack"/> hinzugefügt wird.
+            Wird aufgerufen wenn der Zustand begonnen wird, also wenn die Instanz zu <see cref="P:KeyLocker.Console.ConsoleCore.StateStack"/> hinzugefügt wird.
             </summary>
+            <param name="core">Die ausführende <see cref="T:KeyLocker.Console.ConsoleCore"/>-Instanz.</param>
         </member>
-        <member name="M:KeyLocker.Console.State.OnEnd">
+        <member name="M:KeyLocker.Console.States.State.OnTick(KeyLocker.Console.ConsoleCore)">
             <summary>
-            Wird aufgerufen wenn der Zustand beendet wird, also wenn die Instanz von <see cref="!:ConsoleCore.StateStack"/> entfernt wird.
+            Behandelt einen Ausführungsschritt.
             </summary>
+            <param name="core">Die ausführende <see cref="T:KeyLocker.Console.ConsoleCore"/>-Instanz.</param>
+        </member>
+        <member name="M:KeyLocker.Console.States.State.OnEnd(KeyLocker.Console.ConsoleCore)">
+            <summary>
+            Wird aufgerufen wenn der Zustand beendet wird, also wenn die Instanz von <see cref="P:KeyLocker.Console.ConsoleCore.StateStack"/> entfernt wird.
+            </summary>
+            <param name="core">Die ausführende <see cref="T:KeyLocker.Console.ConsoleCore"/>-Instanz.</param>
         </member>
     </members>
 </doc>

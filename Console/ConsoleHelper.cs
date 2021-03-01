@@ -1,6 +1,7 @@
 ﻿namespace KeyLocker.Console
 {
     using System;
+    using System.Collections.Generic;
     using System.Text;
 
     /// <summary>
@@ -16,7 +17,7 @@
         public static string Prompt(string question = "> ")
         {
             Console.WriteLine();
-            Console.WriteLine(question);
+            Console.Write(question);
 
             return Console.ReadLine() ?? string.Empty;
         }
@@ -30,9 +31,33 @@
         public static string HiddenPrompt(string question = "> ")
         {
             Console.WriteLine();
-            Console.WriteLine(question);
+            Console.Write(question);
 
             return HiddenReadLine();
+        }
+
+        /// <summary>
+        /// Schreibt eine Auflistung von Elementen in die Konsole.
+        /// </summary>
+        /// <typeparam name="T">Der Typ der auszugebenden Items.</typeparam>
+        /// <param name="items">Die auszugebenden Items.</param>
+        /// <param name="seperator">Der string, der nach jedem Element, außer dem letzten, aus <paramref name="items"/> ausgegeben wird.</param>
+        public static void WriteLine<T>(IEnumerable<T> items, string seperator = ", ")
+        {
+            var itemEnumerator = items.GetEnumerator();
+
+            if (itemEnumerator.MoveNext())
+            {
+                Console.Write(itemEnumerator.Current);
+            }
+
+            while (itemEnumerator.MoveNext())
+            {
+                Console.Write(seperator);
+                Console.Write(itemEnumerator.Current);
+            }
+
+            Console.WriteLine();
         }
 
         /// <summary>
