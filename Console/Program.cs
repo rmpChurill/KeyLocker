@@ -7,6 +7,12 @@
     /// </summary>
     public class Program
     {
+        private const string CommandQuit = "quit";
+        private const string CommandQuitShort = "q";
+
+        private const string CommandHelp = "help";
+        private const string CommandHelpShort = "help";
+
         /// <summary>
         /// Haupteinsprungspunkt des Konsolenprogramms.
         /// </summary>
@@ -20,7 +26,31 @@
                 Console.WriteLine("Sorry, Arguments are not yet supported :(");
             }
 
+            var quit = false;
 
+            while (!quit)
+            {
+                var command = ConsoleHelper.Prompt();
+
+                switch (command.ToLowerInvariant())
+                {
+                    case CommandQuit:
+                    case CommandQuitShort:
+                        quit = true;
+                        break;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Zeigt die Hilfe an.
+        /// </summary>
+        private static void DisplayHelp()
+        {
+            Console.Write("help:" +
+                "" +
+                "" +
+                "");
         }
     }
 }
