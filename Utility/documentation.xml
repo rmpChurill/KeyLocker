@@ -1,0 +1,95 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Utility</name>
+    </assembly>
+    <members>
+        <member name="T:KeyLocker.Utility.CryptoRandomGenerator">
+            <summary>
+            Enthält einige statische Methoden für die Erzeugung von Kryptografischen Zufallswerten.
+            </summary>
+        </member>
+        <member name="F:KeyLocker.Utility.CryptoRandomGenerator.cryptoServiceProvider">
+            <summary>
+            Der Provider für Crypto-Services.
+            </summary>
+        </member>
+        <member name="M:KeyLocker.Utility.CryptoRandomGenerator.#ctor">
+            <summary>
+            Initialisiert eine neue Instanz der Klasse.
+            </summary>
+        </member>
+        <member name="M:KeyLocker.Utility.CryptoRandomGenerator.RandomCharFrom(System.Char[])">
+            <summary>
+            Gibt ein zufälliges Zeichen aus <paramref name="src"/> zurück.
+            </summary>
+            <param name="src">Das Array, aus dem ein zufälliges Element entnommen wird.</param>
+            <returns>Ein zufälliges Zeichen aus <paramref name="src"/>.</returns>
+        </member>
+        <member name="M:KeyLocker.Utility.CryptoRandomGenerator.GenerateRandomUint(System.UInt32,System.UInt32)">
+            <summary>
+            Erzeugt einen zufälligen <see cref="T:System.UInt32"/> im Bereich [min, max).
+            </summary>
+            <param name="min">Das Minimum (inklusiv).</param>
+            <param name="max">Das Maximum (exklusiv).</param>
+            <returns>Einen zufälligen <see cref="T:System.UInt32"/> im Bereich [min, max).</returns>
+        </member>
+        <member name="M:KeyLocker.Utility.CryptoRandomGenerator.GenerateRandomUint(System.UInt32)">
+            <summary>
+            Erzeugt einen zufälligen <see cref="T:System.UInt32"/> im Bereich [0, max).
+            </summary>
+            <param name="max">Das Maximum (exklusiv).</param>
+            <returns>Einen zufälligen <see cref="T:System.UInt32"/> im Bereich [0, max).</returns>
+        </member>
+        <member name="M:KeyLocker.Utility.CryptoRandomGenerator.GenerateRandomUint">
+            <summary>
+            Erzeugt einen zufälligen <see cref="T:System.UInt32"/> aus einer cryptografiesicheren Quelle.
+            </summary>
+            <returns>Ein zufälliger <see cref="T:System.UInt32"/>.</returns>
+        </member>
+        <member name="T:KeyLocker.Utility.NotifyPropertyChangedBase">
+            <summary>
+            Basisklasse für Objekte, die eine Änderung einer Eigenschaft publizieren wollen.
+            </summary>
+        </member>
+        <member name="E:KeyLocker.Utility.NotifyPropertyChangedBase.PropertyChanged">
+            <summary>
+            Wird ausgelöst, wenn 
+            </summary>
+        </member>
+        <member name="M:KeyLocker.Utility.NotifyPropertyChangedBase.OnPropertyChanged(System.String)">
+            <summary>
+            Löst <see cref="E:KeyLocker.Utility.NotifyPropertyChangedBase.PropertyChanged"/> aus.
+            </summary>
+            <param name="propertyName">Der Name der geänderten Eigenschaft.</param>
+        </member>
+        <member name="T:KeyLocker.Utility.PropertyChangedEventArgs">
+            <summary>
+            Argumente für ein Event, dass die Änderung einer Eigenschaft beschreibt.
+            </summary>
+        </member>
+        <member name="P:KeyLocker.Utility.PropertyChangedEventArgs.PropertyName">
+            <summary>
+            Der Name der geänderten Eigenschaftn.
+            </summary>
+        </member>
+        <member name="T:Utility.FileUtil">
+            <summary>
+            Stellt Methoden zum Erstellen von Dateien bereit.
+            </summary>
+        </member>
+        <member name="M:Utility.FileUtil.CreateFile(System.String)">
+            <summary>
+            Erzeugt eine neue Datei mit dem Pfad <paramref name="path"/>. 
+            Erstellt auch alle übergeordneten Verzeichnisse.
+            </summary>
+            <param name="path">Der Pfad zur Datei.</param>
+        </member>
+        <member name="M:Utility.FileUtil.CreateSubDirs(System.String)">
+            <summary>
+            Erstellt rekursiv alle Verzeichnisse bis alle Verzeichnisse im Pfad <paramref name="path"/> existieren.
+            </summary>
+            <param name="path">Der zu erstellende Pfad.</param>
+        </member>
+    </members>
+</doc>

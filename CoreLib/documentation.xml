@@ -1,0 +1,494 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>CoreLib</name>
+    </assembly>
+    <members>
+        <member name="T:KeyLocker.AppSettings">
+            <summary>
+            Stellt die App-Einstellungen dar.
+            </summary>
+        </member>
+        <member name="M:KeyLocker.AppSettings.#ctor">
+            <summary>
+            Erzeugt eine neue Instanz 
+            </summary>
+        </member>
+        <member name="P:KeyLocker.AppSettings.SaltedPasswordHash">
+            <summary>
+            Holt den Passwort-Hash mit Salt.
+            </summary>
+        </member>
+        <member name="P:KeyLocker.AppSettings.Salt">
+            <summary>
+            Holt das Salt.
+            </summary>
+        </member>
+        <member name="T:KeyLocker.Crypto">
+            <summary>
+            Stellt verschiedene Cryptografische Funktionen zur Verfügung.
+            </summary>
+        </member>
+        <member name="F:KeyLocker.Crypto.SaltLength">
+            <summary>
+            Die Länge des Salts.
+            </summary>
+        </member>
+        <member name="F:KeyLocker.Crypto.Keysize">
+            <summary>
+            Abzahl Bits im Schlüssel.
+            </summary>
+        </member>
+        <member name="F:KeyLocker.Crypto.DerivationIterations">
+            <summary>
+            Die Anzahl der Iterationen für die Passworterzeugung.
+            </summary>
+        </member>
+        <member name="M:KeyLocker.Crypto.GeneratePassword(KeyLocker.PasswordSettings)">
+            <summary>
+            Erzeugt ein zufälliges Passwort nach den Einstellungen von <paramref name="settings"/>.
+            </summary>
+            <param name="settings">Die zu nutzenden Einstellungen.</param>
+            <returns>Ein zufälliges Passwort nach den Einstellungen von <paramref name="settings"/>.</returns>
+        </member>
+        <member name="M:KeyLocker.Crypto.ComputeSaltedHash(System.String,KeyLocker.AppSettings)">
+            <summary>
+            Berechnet einen Hash mit Salt.
+            </summary>
+            <param name="text">Der zu hashende Text.</param>
+            <param name="appSettings">Die zu nutzenden Einstellungen.</param>
+            <returns></returns>
+        </member>
+        <member name="M:KeyLocker.Crypto.ComputeRandomSalt">
+            <summary>
+            Berechnet einen Salt-String.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:KeyLocker.Crypto.Encode(System.String,KeyLocker.AppSettings)">
+            <summary>
+            Codiert <paramref name="text"/>.
+            </summary>
+            <param name="text">Der zu verschlüsselnde Text.</param>
+            <param name="appSettings">Die zu nutzenden Einstellungen.</param>
+            <returns>Der codierte String.</returns>
+        </member>
+        <member name="M:KeyLocker.Crypto.Decode(System.String,KeyLocker.AppSettings)">
+            <summary>
+            Decodiert <paramref name="text"/>.
+            </summary>
+            <param name="text">Der zu entschlüsselnde Text.</param>
+            <param name="appSettings">Die zu nutzenden Einstellungen.</param>
+            <returns>Der decodierte String.</returns>
+        </member>
+        <member name="M:KeyLocker.Crypto.Encrypt(System.String,System.String)">
+            <summary>
+            Verschlüsselt <paramref name="plainText"/> und nutzt <paramref name="passPhrase"/> als Schlüssel.
+            </summary>
+            <param name="plainText">Der zu verschlüsselnde Text.</param>
+            <param name="passPhrase">Der Schlüssel.</param>
+            <returns>Der verschlüsselte Text.</returns>
+        </member>
+        <member name="M:KeyLocker.Crypto.Decrypt(System.String,System.String)">
+            <summary>
+            Entschlüsselt <paramref name="cipherText"/> mit <paramref name="passPhrase"/> als Schlüssel.
+            </summary>
+            <param name="cipherText">Der verschlüsselte Text.</param>
+            <param name="passPhrase">Der Schlüssel.</param>
+            <returns>Den entschlüsselten Text.</returns>
+        </member>
+        <member name="M:KeyLocker.Crypto.Generate256BitsOfRandomEntropy">
+            <summary>
+            Erzeugt 256 zufällige Bits.
+            </summary>
+            <returns>256 zufällige Bits.</returns>
+        </member>
+        <member name="T:KeyLocker.Definitions">
+            <summary>
+            Enthält Definitionen für Buchstabenfruppen.
+            </summary>
+        </member>
+        <member name="F:KeyLocker.Definitions.UpperCaseChars">
+            <summary>
+            Enthält Kleinbuchstaben.
+            </summary>
+        </member>
+        <member name="F:KeyLocker.Definitions.LowerCaseChars">
+            <summary>
+            Enthält Großbuchstaben.
+            </summary>
+        </member>
+        <member name="F:KeyLocker.Definitions.Digits">
+            <summary>
+            Enthält Ziffern.
+            </summary>
+        </member>
+        <member name="F:KeyLocker.Definitions.SpecialCharacters">
+            <summary>
+            Enthält Sonderzeichen.
+            </summary>
+        </member>
+        <member name="T:KeyLocker.Entry">
+            <summary>
+            Stellt einen Eintrag der Passwortliste dar.
+            </summary>
+        </member>
+        <member name="F:KeyLocker.Entry.name">
+            <summary>
+            Der Name.
+            </summary>
+        </member>
+        <member name="F:KeyLocker.Entry.comment">
+            <summary>
+            Der Kommentar.
+            </summary>
+        </member>
+        <member name="F:KeyLocker.Entry.encryptedPassword">
+            <summary>
+            Das verschlüsselte Passwort.
+            </summary>
+        </member>
+        <member name="F:KeyLocker.Entry.login">
+            <summary>
+            Der Login-Name.
+            </summary>
+        </member>
+        <member name="F:KeyLocker.Entry.lastUpdateDate">
+            <summary>
+            Das Datum der letzten Änderung.
+            </summary>
+        </member>
+        <member name="F:KeyLocker.Entry.customSettings">
+            <summary>
+            Besondere Einstellungen für dieses Passwort.
+            </summary>
+        </member>
+        <member name="M:KeyLocker.Entry.#ctor">
+            <summary>
+            Initialisiert eine neue Instanz der Klasse.
+            </summary>
+        </member>
+        <member name="P:KeyLocker.Entry.Name">
+            <summary>
+            Holt oder setzt den Namen des Eintrags.
+            </summary>
+        </member>
+        <member name="P:KeyLocker.Entry.Login">
+            <summary>
+            Holt oder setzt den Login-Namen.
+            </summary>
+        </member>
+        <member name="P:KeyLocker.Entry.EncryptedPassword">
+            <summary>
+            Holt oder setzt das verschlüsselte Passwort.
+            </summary>
+        </member>
+        <member name="P:KeyLocker.Entry.Comment">
+            <summary>
+            Holt oder setzt den Kommentar.
+            </summary>
+        </member>
+        <member name="P:KeyLocker.Entry.LastUpdateDate">
+            <summary>
+            Holt oder setzt das Datum an dem das Passwort des Eintrags zum letzten Mal geändert wurde.
+            </summary>
+        </member>
+        <member name="P:KeyLocker.Entry.CustomSettings">
+            <summary>
+            Holt die Einstellungen dieses Passworts.
+            </summary>
+        </member>
+        <member name="T:KeyLocker.CoreLib.KeyLockerCore">
+            <summary>
+            Diese Klasse stellt die Schnittstelle zur KeyLocker-Bibliothek dar.
+            </summary>
+        </member>
+        <member name="M:KeyLocker.CoreLib.KeyLockerCore.#ctor(KeyLocker.AppSettings)">
+            <summary>
+            Initialisiert eine neue Instanz der Klasse.
+            </summary>
+            <param name="settings"></param>
+        </member>
+        <member name="P:KeyLocker.CoreLib.KeyLockerCore.Settings">
+            <summary>
+            Holt die Einstellungen der Bibliothek.
+            </summary>
+        </member>
+        <member name="T:KeyLocker.CoreLib.Validation.EntryValidator">
+            <summary>
+            Validiert eine <see cref="T:KeyLocker.Entry"/>-Instanz.
+            </summary>
+        </member>
+        <member name="M:KeyLocker.CoreLib.Validation.EntryValidator.Validate(KeyLocker.Entry,KeyLocker.PasswordSettings,System.DateTime)">
+            <summary>
+            Validiert eine <see cref="T:KeyLocker.Entry"/>-Instanz entsprechend den Einstellungen in 
+            <see cref="P:KeyLocker.Entry.CustomSettings"/> und <paramref name="settings"/>.
+            </summary>
+            <param name="entry">Der zu validierende Eintrag.</param>
+            <param name="settings">Die Standardeinstellungen.</param>
+            <param name="now">Der Zeitpunkt an dem die Validierung ausgerichtet werden soll.</param>
+            <returns>Eine Liste von Validierungsergebnissen.</returns>
+        </member>
+        <member name="M:KeyLocker.CoreLib.Validation.EntryValidator.CheckForbiddenChars(System.String,System.Char[],System.Collections.Generic.List{KeyLocker.CoreLib.Validation.IValidationResult})">
+            <summary>
+            Prüft, ob <paramref name="password"/> keines der Zeichen in <paramref name="chars"/> enthält und fügt 
+            <see cref="T:KeyLocker.CoreLib.Validation.InvalidCharacterResult"/> zu <paramref name="results"/> hinzu, falls dies nicht der Fall ist.
+            </summary>
+            <param name="password">Das zu prüfende Passwort.</param>
+            <param name="chars">Eine Sammlung von Zeichen, die nicht enthalten sein dürfen.</param>
+            <param name="results">Die Liste von Validierungsergebnissen.</param>
+        </member>
+        <member name="M:KeyLocker.CoreLib.Validation.EntryValidator.CheckRequiredChars(System.String,System.Char[],System.Collections.Generic.List{KeyLocker.CoreLib.Validation.IValidationResult})">
+            <summary>
+            Prüft, ob <paramref name="password"/> mindestens eines der Zeichen in <paramref name="chars"/> enthält und fügt 
+            <see cref="T:KeyLocker.CoreLib.Validation.MissingRequiredCharacterResult"/> zu <paramref name="results"/> hinzu, falls dies nicht der Fall ist.
+            </summary>
+            <param name="password">Das zu prüfende Passwort.</param>
+            <param name="chars">Eine Sammlung von Zeichen, die enthalten sein müssen.</param>
+            <param name="results">Die Liste von Validierungsergebnissen.</param>
+        </member>
+        <member name="T:KeyLocker.CoreLib.Validation.InvalidCharacterResult">
+            <summary>
+            Implementierung von <see cref="T:KeyLocker.CoreLib.Validation.IValidationResult"/>, die anzeigt, dass ein ungültiges Zeichen in einem Passwort enthalten war.
+            </summary>
+        </member>
+        <member name="M:KeyLocker.CoreLib.Validation.InvalidCharacterResult.#ctor(System.Char)">
+            <summary>
+            Initialisiert eine neue Instanz der Klasse.
+            </summary>
+            <param name="c">The invalid character.</param>
+        </member>
+        <member name="P:KeyLocker.CoreLib.Validation.InvalidCharacterResult.Description">
+            <inheritdoc />
+        </member>
+        <member name="T:KeyLocker.CoreLib.Validation.IValidationResult">
+            <summary>
+            Stellt das Ergebnis einer Validierung dar.
+            </summary>
+        </member>
+        <member name="P:KeyLocker.CoreLib.Validation.IValidationResult.Description">
+            <summary>
+            Holt die Beschreibung des Validierungsergebnisses.
+            </summary>
+        </member>
+        <member name="T:KeyLocker.CoreLib.Validation.MissingRequiredCharacterResult">
+            <summary>
+            Implementierung von <see cref="T:KeyLocker.CoreLib.Validation.IValidationResult"/>, die anzeigt, dass kein Zeichen aus einem Set von benötigten Zeichen im Passwort enthalten war.
+            </summary>
+        </member>
+        <member name="M:KeyLocker.CoreLib.Validation.MissingRequiredCharacterResult.#ctor(System.Char[])">
+            <summary>
+            Initialisiert eine neue Instanz der Klasse.
+            </summary>
+            <param name="requiredCharacters">Die benötigten Zeichen, von denen keines enthalten war.</param>
+        </member>
+        <member name="P:KeyLocker.CoreLib.Validation.MissingRequiredCharacterResult.Description">
+            <inheritdoc/>
+        </member>
+        <member name="T:KeyLocker.CoreLib.Validation.OutdatedResult">
+            <summary>
+            Eine Implementierung von <see cref="T:KeyLocker.CoreLib.Validation.IValidationResult"/>, die anzeigt
+            </summary>
+        </member>
+        <member name="M:KeyLocker.CoreLib.Validation.OutdatedResult.#ctor(System.TimeSpan)">
+            <summary>
+            Initialisiert eine neue Instanz der Klasse.
+            </summary>
+            <param name="outdatedSince">Die Zeit, seit der das Passwort veraltet ist.</param>
+        </member>
+        <member name="P:KeyLocker.CoreLib.Validation.OutdatedResult.Description">
+            <inheritdoc/>
+        </member>
+        <member name="T:KeyLocker.CoreLib.Validation.TooLongResult">
+            <summary>
+            Eine Implementierung von <see cref="T:KeyLocker.CoreLib.Validation.IValidationResult"/>, die anzeigt, dass das Passwort zu lang ist.
+            </summary>
+        </member>
+        <member name="M:KeyLocker.CoreLib.Validation.TooLongResult.#ctor(System.Int32,System.Int32)">
+            <summary>
+            Initialisiert eine neue Instanz der Klasse.
+            </summary>
+            <param name="max">Die maximale Länge für das Passwort.</param>
+            <param name="actual">Die tatsächliche Länge des Passworts.</param>
+        </member>
+        <member name="P:KeyLocker.CoreLib.Validation.TooLongResult.Description">
+            <inheritdoc/>
+        </member>
+        <member name="T:KeyLocker.CoreLib.Validation.TooShortResult">
+            <summary>
+            Eine Implementierung von <see cref="T:KeyLocker.CoreLib.Validation.IValidationResult"/>, die anzeigt, dass das Passwort zu kurz ist.
+            </summary>
+        </member>
+        <member name="M:KeyLocker.CoreLib.Validation.TooShortResult.#ctor(System.Int32,System.Int32)">
+            <summary>
+            Initialisiert eine neue Instanz der Klasse.
+            </summary>
+            <param name="min">Die minimale Länge für das Passwort.</param>
+            <param name="actual">Die tatsächliche Länge des Passworts.</param>
+        </member>
+        <member name="P:KeyLocker.CoreLib.Validation.TooShortResult.Description">
+            <inheritdoc/>
+        </member>
+        <member name="T:KeyLocker.PartialPasswordSettings">
+            <summary>
+            Stellt Einstellungen für ein Passwort dar.
+            </summary>
+        </member>
+        <member name="M:KeyLocker.PartialPasswordSettings.#ctor">
+            <summary>
+            Initialisiert eine neue Instanz der Klasse.
+            </summary>
+        </member>
+        <member name="P:KeyLocker.PartialPasswordSettings.UpperCaseChars">
+            <summary>
+            Holt oder setzt die Nutzungsrichtlinie für Großbuchstaben.
+            </summary>
+        </member>
+        <member name="P:KeyLocker.PartialPasswordSettings.LowerCaseChars">
+            <summary>
+            Holt oder setzt die Nutzungsrichtlinie für Kleinbuchstaben.
+            </summary>
+        </member>
+        <member name="P:KeyLocker.PartialPasswordSettings.Digits">
+            <summary>
+            Holt oder setzt die Nutzungsrichtlinie für Ziffern.
+            </summary>
+        </member>
+        <member name="P:KeyLocker.PartialPasswordSettings.SpecialCharacters">
+            <summary>
+            Holt oder setzt die Nutzungsrichtlinie für Sonderzeichen
+            </summary>
+        </member>
+        <member name="P:KeyLocker.PartialPasswordSettings.MinLength">
+            <summary>
+            Holt oder setzt die Mindestlänge des Passworts. 
+            </summary>
+        </member>
+        <member name="P:KeyLocker.PartialPasswordSettings.MaxLength">
+            <summary>
+            Holt oder setzt die Maximallänge des Passworts.
+            </summary>
+        </member>
+        <member name="P:KeyLocker.PartialPasswordSettings.ForbiddenCharacters">
+            <summary>
+            Holt oder setzt eine Liste von verbotenen Zeichen.
+            </summary>
+        </member>
+        <member name="P:KeyLocker.PartialPasswordSettings.AllowedSpecialCharacters">
+            <summary>
+            Holt oder setzt eine Liste von erlaubten Sonderzeichen.
+            </summary>
+        </member>
+        <member name="P:KeyLocker.PartialPasswordSettings.DecayTime">
+            <summary>
+            Holt oder setzt die Zeitspanne, nach der das Passwort als veraltet gilt.
+            </summary>
+        </member>
+        <member name="M:KeyLocker.PartialPasswordSettings.Clone">
+            <summary>
+            Erstellt eine Kopie der aktuellen Instanz.
+            </summary>
+            <returns>Eine flache Kopie der aktuellen Instanz.</returns>
+        </member>
+        <member name="T:KeyLocker.PasswordSettings">
+            <summary>
+            Stellt Einstellungen für ein Passwort dar.
+            </summary>
+        </member>
+        <member name="M:KeyLocker.PasswordSettings.#ctor">
+            <summary>
+            Initialisiert eine neue Instanz der Klasse.
+            </summary>
+        </member>
+        <member name="P:KeyLocker.PasswordSettings.UpperCaseChars">
+            <summary>
+            Holt oder setzt die Nutzungsrichtlinie für Großbuchstaben.
+            </summary>
+        </member>
+        <member name="P:KeyLocker.PasswordSettings.LowerCaseChars">
+            <summary>
+            Holt oder setzt die Nutzungsrichtlinie für Kleinbuchstaben.
+            </summary>
+        </member>
+        <member name="P:KeyLocker.PasswordSettings.Digits">
+            <summary>
+            Holt oder setzt die Nutzungsrichtlinie für Ziffern.
+            </summary>
+        </member>
+        <member name="P:KeyLocker.PasswordSettings.SpecialCharacters">
+            <summary>
+            Holt oder setzt die Nutzungsrichtlinie für Sonderzeichen
+            </summary>
+        </member>
+        <member name="P:KeyLocker.PasswordSettings.MinLength">
+            <summary>
+            Holt oder setzt die Mindestlänge des Passworts. 
+            </summary>
+        </member>
+        <member name="P:KeyLocker.PasswordSettings.MaxLength">
+            <summary>
+            Holt oder setzt die Maximallänge des Passworts.
+            </summary>
+        </member>
+        <member name="P:KeyLocker.PasswordSettings.ForbiddenCharacters">
+            <summary>
+            Holt oder setzt eine Liste von verbotenen Zeichen.
+            </summary>
+        </member>
+        <member name="P:KeyLocker.PasswordSettings.AllowedSpecialCharacters">
+            <summary>
+            Holt oder setzt eine Liste von erlaubten Sonderzeichen.
+            </summary>
+        </member>
+        <member name="P:KeyLocker.PasswordSettings.DecayTime">
+            <summary>
+            Holt oder setzt die Zeitspanne, nach der das Passwort als veraltet gilt.
+            </summary>
+        </member>
+        <member name="M:KeyLocker.PasswordSettings.GetAllowedCharacters">
+            <summary>
+            Holt eine Array mit allen Zeichen, die für ein Passwort mit den Einstellungen der aktuellen Instanz erlaubt sind.
+            </summary>
+            <returns>Ein Array aller erlaubten Zeichen.</returns>
+        </member>
+        <member name="M:KeyLocker.PasswordSettings.Clone">
+            <summary>
+            Erstellt eine Kopie der aktuellen Instanz.
+            </summary>
+            <returns>Eine flache Kopie der aktuellen Instanz.</returns>
+        </member>
+        <member name="M:KeyLocker.PasswordSettings.CopyAsPartial">
+            <summary>
+            Erzeugt eine neue <see cref="T:KeyLocker.PartialPasswordSettings"/>-Instanz mit den Werten der aktuellen Instanz.
+            </summary>
+            <returns>Eine <see cref="T:KeyLocker.PartialPasswordSettings"/>-Instanz mit den Werten der aktuellen Instanz.</returns>
+        </member>
+        <member name="M:KeyLocker.PasswordSettings.Fill(KeyLocker.PartialPasswordSettings)">
+            <summary>
+            Erzeugt eine neue <see cref="T:KeyLocker.PasswordSettings"/>-Instanz die die Daten von <paramref name="partial"/> enthält und alle null-Werte
+            mit den entsprechenden Werten der aktuellen Instanz auffüllt.
+            </summary>
+            <returns>Eine neue <see cref="T:KeyLocker.PasswordSettings"/>-Instanz.</returns>
+        </member>
+        <member name="T:KeyLocker.Usage">
+            <summary>
+            Verschiedene Arten der Benutzung von Zeichengruppen.
+            </summary>
+        </member>
+        <member name="F:KeyLocker.Usage.Allow">
+            <summary>
+            Zeichengruppe ist erlaubt, aber optional.
+            </summary>
+        </member>
+        <member name="F:KeyLocker.Usage.Forbid">
+            <summary>
+            Zeichengruppe ist nicht erlaubt, keines der Zeichen darf enthalten sein.
+            </summary>
+        </member>
+        <member name="F:KeyLocker.Usage.Require">
+            <summary>
+            Zeichengruppe ist benötigt, mindestens eines der Zeichen muss enthalten sein.
+            </summary>
+        </member>
+    </members>
+</doc>

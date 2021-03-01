@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Console</name>
+    </assembly>
+    <members>
+        <member name="T:KeyLocker.Console.ConsoleHelper">
+            <summary>
+            Eine Hilfsklasse für Ein- und Ausgabe auf der Konsole.
+            </summary>
+        </member>
+        <member name="M:KeyLocker.Console.ConsoleHelper.Prompt">
+            <summary>
+            Beginnt eine neue Zeile, schreibt ein "> ", liest eine Zeile der Nutzereingabe und gibt diese zurück.
+            </summary>
+            <returns>Die Nutzereingabe.</returns>
+        </member>
+        <member name="M:KeyLocker.Console.ConsoleHelper.Prompt(System.String)">
+            <summary>
+            Beginnt eine neue Zeile, schreibt <paramref name="question"/>,liest eine Zeile der Nutzereingabe und gibt diese zurück.
+            </summary>
+            <param name="question">Der Text, der vor der Eingabe angezeigt werden soll.</param>
+            <returns>Die Nutzereingabe.</returns>
+        </member>
+        <member name="M:KeyLocker.Console.ConsoleHelper.HiddenPrompt">
+            <summary>
+            Beginnt eine neue Zeile, schreibt ein "> ", liest eine Zeile der Nutzereingabe, wobei 
+            die Eingabe abgefangen wird, sodass die Eingabe nicht angezeigt wird und gibt diese zurück.
+            </summary>
+            <returns>Die Nutzereingabe.</returns>
+        </member>
+        <member name="M:KeyLocker.Console.ConsoleHelper.HiddenPrompt(System.String)">
+            <summary>
+            Beginnt eine neue Zeile, schreibt <paramref name="question"/>, liest eine Zeile der Nutzereingabe, wobei 
+            die Eingabe abgefangen wird, sodass die Eingabe nicht angezeigt wird und gibt diese zurück.
+            </summary>
+            <param name="question">Der Text, der vor der Eingabe angezeigt werden soll.</param>
+            <returns>Die Nutzereingabe.</returns>
+        </member>
+        <member name="M:KeyLocker.Console.ConsoleHelper.HiddenReadLine">
+            <summary>
+            Liest eine Zeile der Nutzereingabe ein, ohne die Zeichen im Terminal anzuzeigen.
+            </summary>
+            <returns>Die Nutzereingabe.</returns>
+        </member>
+        <member name="T:KeyLocker.Console.Program">
+            <summary>
+            Hauptklasse des Konsolenprogramms.
+            </summary>
+        </member>
+        <member name="M:KeyLocker.Console.Program.Main(System.String[])">
+            <summary>
+            Haupteinsprungspunkt des Konsolenprogramms.
+            </summary>
+            <param name="args">Die Aufrufparameter.</param>
+        </member>
+    </members>
+</doc>

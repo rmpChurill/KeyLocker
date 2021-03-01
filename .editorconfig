@@ -1,0 +1,86 @@
+﻿[*.cs]
+
+# Leerzeichen statt Tabs nutzen
+indent_style = space:error
+
+# [else] immer auf neuer Zeile
+csharp_new_line_before_else = true:warning
+# Mehrere Elemente von Objekt-Initialisierern dürfen nicht auf einer Zeile sein.
+csharp_new_line_before_members_in_object_initializers = true:warning
+# Klammern auf neuer Zeile für praktisch alles
+csharp_new_line_before_open_brace = all
+
+# [using System.*] muss immer zuerst kommen
+csharp_sort_system_directives_first = true:warning
+# [using]s immer im Namespace.
+csharp_using_directive_placement = inside_namespace:warning
+
+# KEIN Leerzeichen zwischen cast und gecastetem Ausdruck
+csharp_space_after_cast = false:warning
+# Leerzeichen vor und nach : bei Vererbung
+csharp_space_after_colon_in_inheritance_clause = true:warning
+csharp_space_before_colon_in_inheritance_clause = true:warning
+# Leerzeichen nach for, while, if, etc.
+csharp_space_after_keywords_in_control_flow_statements = true:warning
+# Leerzeichen bei Funktionsaufrufen: [foo()] statt [foo ()] oder [foo ( )] und [foo(param)] statt [foo( param )]. Gleiches für Deklaration der Methode.
+csharp_space_between_method_call_empty_parameter_list_parentheses = false:warning
+csharp_space_between_method_call_name_and_opening_parenthesis = false:warning
+csharp_space_between_method_call_parameter_list_parentheses = false:warning
+csharp_space_between_method_declaration_empty_parameter_list_parentheses = false:warning
+csharp_space_between_method_declaration_parameter_list_parentheses = false:warning
+
+# Keine Einzeiler bei if, while, for, etc.
+csharp_preserve_single_line_blocks = false:warning
+
+# Geschweifte Klammern nach if, while, for, switch, etc. erzwingen.
+csharp_prefer_braces = true:error
+
+# Block-Funktionskörper [public int Foo { get { retrun this.foo; } }] über Ausdrucksfunktionskörper [public int Foo { get => this.foo }]bevorzugen.
+csharp_style_expression_bodied_accessors = false:warning
+csharp_style_expression_bodied_constructors = false:warning
+csharp_style_expression_bodied_methods = false:warning
+csharp_style_expression_bodied_properties = false:warning
+
+# Bevozuge Inline-Variablen, z.B. [int.TryParse(value, out var i)] statt [int i; int.TryParse(value, out i);] 
+csharp_style_inlined_variable_declaration = true:warning
+
+# einfaches [default] wird gegenüber [default(Typ)] bevorzugt.
+csharp_prefer_simple_default_expression = false:warning
+
+# Objekt-Initialisierer bevorzugen, z.B. [var a = new Klasse() {A = 0};] statt [var a = new Klasse(); a.A = 0;].
+dotnet_style_object_initializer = true:warning
+
+# var soll genutzt werden wann immer möglich
+csharp_style_var_when_type_is_apparent = true:warning
+csharp_style_var_elsewhere = true:warning
+
+# Schlüsselwörter statt Klassen nutzen, z.B. [string] statt [String] oder [object] statt [Object]
+dotnet_style_predefined_type_for_locals_parameters_members = true:warning
+dotnet_style_predefined_type_for_member_access = true:warning
+
+# Legt die Ordnung für Sichtbarkeits- und Zugriffsmodifikatoren fest
+csharp_preferred_modifier_order = public,private,internal,protected,readonly,static,abstract:warning
+
+#Pattern-Matching [variable is Type] wird bevorzugt.
+csharp_style_pattern_matching_over_as_with_null_check = true:warning
+
+# Methoden, Felder und Properties müssen mit [this] begonnen werden.
+dotnet_style_qualification_for_field = true:error
+dotnet_style_qualification_for_method = true:error
+dotnet_style_qualification_for_property = true:error
+dotnet_style_qualification_for_event = true:error
+
+# Sichtbarkeitsmodifikatoren, [private], [public], etc. müssen vorhanden sein.
+dotnet_style_require_accessibility_modifiers = always:error
+
+# coalesce-Asudrücke verwenden, z.B. [x ?? y] statt [x == null ? x : y].
+dotnet_style_coalesce_expression = true:warning
+
+# null-propagation nutzen, z.B. [x?.Foo()] statt [if(x != null) x.Foo()].
+dotnet_style_null_propagation = true:warning
+
+# Bevorzuge [x is null] über [x == null] oder [object.ReferenceEquals(x, null)]
+dotnet_style_prefer_is_null_check_over_reference_equality_method = true:warning
+
+# Delegaten über null-coalescing aufrufen, z.B. [func?.Invoke(...)] statt [if(func != null) { func(...) }].
+csharp_style_conditional_delegate_call = true:warning
