@@ -1,26 +1,20 @@
 ﻿namespace KeyLocker.Console.Commands
 {
-    using System;
     using System.Collections.Generic;
 
-    /// <summary>
-    /// Stellt den Hilfebefehl dar.
-    /// </summary>
-    public class HelpCommand : ICommand
-    {
-        /// <summary>
-        /// Initialisiert eine neue Instanz der Klasse.
-        /// </summary>
-        public HelpCommand()
-        {
-        }
+    using KeyLocker.Console.States;
 
+    /// <summary>
+    /// Stellt den Befehl zur Erzeugung eines neuen Eintrags dar.
+    /// </summary>
+    public class NewEntryCommand : ICommand
+    {
         /// <inheritdoc/>
         public string HelpDescritpion
         {
             get
             {
-                return "Shows the help.";
+                return "Erzeugt einen neuen Eintrag.";
             }
         }
 
@@ -38,7 +32,7 @@
         {
             get
             {
-                return "help";
+                return "new";
             }
         }
 
@@ -47,23 +41,15 @@
         {
             get
             {
-                yield return "h";
-                yield return "?";
+                yield return "n";
+                yield return "+";
             }
         }
 
         /// <inheritdoc/>
         public void Execute(ConsoleCore core, string arg)
         {
-            foreach (var command in core.AllCommands)
-            {
-                Console.Write(command.Command);
-                Console.Write(", ");
-                ConsoleHelper.WriteAll(command.Aliases ?? Array.Empty<string>());
-                Console.Write(": ");
-                Console.WriteLine(command.HelpDescritpion);
-                Console.WriteLine();
-            }
+            core.PushState(KnownStates.);
         }
     }
 }

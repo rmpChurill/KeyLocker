@@ -120,7 +120,7 @@
             <param name="question">Der Text, der vor der Eingabe angezeigt werden soll.</param>
             <returns>Die Nutzereingabe.</returns>
         </member>
-        <member name="M:KeyLocker.Console.ConsoleHelper.WriteLine``1(System.Collections.Generic.IEnumerable{``0},System.String)">
+        <member name="M:KeyLocker.Console.ConsoleHelper.WriteAll``1(System.Collections.Generic.IEnumerable{``0},System.String)">
             <summary>
             Schreibt eine Auflistung von Elementen in die Konsole.
             </summary>

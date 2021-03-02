@@ -16,7 +16,6 @@
         public ConsoleCore()
         {
             this.StateStack = new Stack<State>();
-            this.AllCommands = new List<ICommand>();
         }
 
         /// <summary>
@@ -26,15 +25,6 @@
         public Stack<State> StateStack
         {
             get;
-        }
-
-        /// <summary>
-        /// Holt eine Auflistung aller registrirten Befehle.
-        /// </summary>
-        public IEnumerable<ICommand> AllCommands
-        {
-            get;
-            set;
         }
 
         /// <summary>

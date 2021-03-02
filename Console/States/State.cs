@@ -13,18 +13,9 @@
     public abstract class State
     {
         /// <summary>
-        /// Initialisiert eine neue Instanz der Klasse.
-        /// </summary>
-        /// <param name="allowedCommands">Die in diesem Zustand ausführbaren Befehle.</param>
-        public State(IEnumerable<ICommand> allowedCommands)
-        {
-            this.AllowedCommands = new List<ICommand>(allowedCommands);
-        }
-
-        /// <summary>
         /// Holt eine Auflistung von Befehlen, die in diesem Zustand ausgeführt werden können.
         /// </summary>
-        protected IEnumerable<ICommand> AllowedCommands
+        protected abstract IEnumerable<ICommand> AllowedCommands
         {
             get;
         }

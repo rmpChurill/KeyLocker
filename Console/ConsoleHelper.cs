@@ -42,7 +42,7 @@
         /// <typeparam name="T">Der Typ der auszugebenden Items.</typeparam>
         /// <param name="items">Die auszugebenden Items.</param>
         /// <param name="seperator">Der string, der nach jedem Element, außer dem letzten, aus <paramref name="items"/> ausgegeben wird.</param>
-        public static void WriteLine<T>(IEnumerable<T> items, string seperator = ", ")
+        public static void WriteAll<T>(IEnumerable<T> items, string seperator = ", ")
         {
             var itemEnumerator = items.GetEnumerator();
 
@@ -56,8 +56,6 @@
                 Console.Write(seperator);
                 Console.Write(itemEnumerator.Current);
             }
-
-            Console.WriteLine();
         }
 
         /// <summary>

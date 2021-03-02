@@ -9,12 +9,13 @@ namespace KeyLocker.Console.States
     /// </summary>
     public class BasicState : State
     {
-        /// <summary>
-        /// Initialisiert eine neue Instanz der Klasse.
-        /// </summary>
-        /// <param name="allowedCommands">Die in diesem Zustand ausführbaren Befehle.</param>
-        public BasicState(IEnumerable<ICommand> allowedCommands) : base(allowedCommands)
+        protected override IEnumerable<ICommand> AllowedCommands
         {
+            get
+            {
+                yield return KnownCommands.HelpCommand;
+                yield return KnownCommands.NewEntryCommand;
+            }
         }
     }
 }
