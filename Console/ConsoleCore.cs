@@ -4,6 +4,7 @@
 
     using KeyLocker.Console.Commands;
     using KeyLocker.Console.States;
+    using KeyLocker.CoreLib;
 
     /// <summary>
     /// Stellt den Kern der Anwendung dar.
@@ -16,6 +17,7 @@
         public ConsoleCore()
         {
             this.StateStack = new Stack<State>();
+            this.KeyLockerCore = new KeyLockerCore(new AppSettings());
         }
 
         /// <summary>
@@ -23,6 +25,14 @@
         /// Der oberste Eintrag ist der aktuelle Zustand.
         /// </summary>
         public Stack<State> StateStack
+        {
+            get;
+        }
+
+        /// <summary>
+        /// Holt den Kern der Bibliothek, über den die Transaktionen ausgeführt werden.
+        /// </summary>
+        public KeyLockerCore KeyLockerCore
         {
             get;
         }

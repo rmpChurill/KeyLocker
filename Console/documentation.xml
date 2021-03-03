@@ -23,7 +23,7 @@
         <member name="P:KeyLocker.Console.Commands.HelpCommand.Command">
             <inheritdoc/>
         </member>
-        <member name="P:KeyLocker.Console.Commands.HelpCommand.Aliases">
+        <member name="P:KeyLocker.Console.Commands.HelpCommand.Alias">
             <inheritdoc/>
         </member>
         <member name="M:KeyLocker.Console.Commands.HelpCommand.Execute(KeyLocker.Console.ConsoleCore,System.String)">
@@ -43,7 +43,7 @@
         <member name="P:KeyLocker.Console.Commands.ICommand.IsCaseSensitive">
             <summary>
             Holt einen Wert, der angibt, ob bei dem Vergleich einer Nutzereingabe mit <see cref="P:KeyLocker.Console.Commands.ICommand.Command"/> oder 
-            einem Element aus <see cref="P:KeyLocker.Console.Commands.ICommand.Aliases"/> die Groß-/Kleinschreibung beachtet werden soll oder nicht.
+            <see cref="P:KeyLocker.Console.Commands.ICommand.Alias"/> die Groß-/Kleinschreibung beachtet werden soll oder nicht.
             </summary>
         </member>
         <member name="P:KeyLocker.Console.Commands.ICommand.Command">
@@ -51,7 +51,7 @@
             Holt den Befehl, der mit dieser Aktion verknüpft werden soll.
             </summary>
         </member>
-        <member name="P:KeyLocker.Console.Commands.ICommand.Aliases">
+        <member name="P:KeyLocker.Console.Commands.ICommand.Alias">
             <summary>
             Holt eine Auflistung von alternativen Befehlen für diese Aktion.
             </summary>
@@ -62,6 +62,46 @@
             </summary>
             <param name="core">Die ausführende <see cref="T:KeyLocker.Console.ConsoleCore"/>-Instanz.</param>
             <param name="arg">Der Teil der Nutzereingabe, der dem Namen des Befehls (oder einem Alias) folgte.</param>
+        </member>
+        <member name="T:KeyLocker.Console.Commands.KnownCommands">
+            <summary>
+            Stellt eine Sammlung aller bekannten Zustände bereit.
+            </summary>
+        </member>
+        <member name="F:KeyLocker.Console.Commands.KnownCommands.HelpCommand">
+            <summary>
+            Die Instanz des Hilfsbefehls.
+            </summary>
+        </member>
+        <member name="F:KeyLocker.Console.Commands.KnownCommands.NewEntryCommand">
+            <summary>
+            Die Instanz des Befehls zur Erzeugung eines neuen Eintrags.
+            </summary>
+        </member>
+        <member name="P:KeyLocker.Console.Commands.KnownCommands.All">
+            <summary>
+            Holt eine Auflistung aller bekannten Befehle.
+            </summary>
+        </member>
+        <member name="T:KeyLocker.Console.Commands.NewEntryCommand">
+            <summary>
+            Stellt den Befehl zur Erzeugung eines neuen Eintrags dar.
+            </summary>
+        </member>
+        <member name="P:KeyLocker.Console.Commands.NewEntryCommand.HelpDescritpion">
+            <inheritdoc/>
+        </member>
+        <member name="P:KeyLocker.Console.Commands.NewEntryCommand.IsCaseSensitive">
+            <inheritdoc/>
+        </member>
+        <member name="P:KeyLocker.Console.Commands.NewEntryCommand.Command">
+            <inheritdoc/>
+        </member>
+        <member name="P:KeyLocker.Console.Commands.NewEntryCommand.Alias">
+            <inheritdoc/>
+        </member>
+        <member name="M:KeyLocker.Console.Commands.NewEntryCommand.Execute(KeyLocker.Console.ConsoleCore,System.String)">
+            <inheritdoc/>
         </member>
         <member name="T:KeyLocker.Console.ConsoleCore">
             <summary>
@@ -79,9 +119,9 @@
             Der oberste Eintrag ist der aktuelle Zustand.
             </summary>
         </member>
-        <member name="P:KeyLocker.Console.ConsoleCore.AllCommands">
+        <member name="P:KeyLocker.Console.ConsoleCore.KeyLockerCore">
             <summary>
-            Holt eine Auflistung aller registrirten Befehle.
+            Holt den Kern der Bibliothek, über den die Transaktionen ausgeführt werden.
             </summary>
         </member>
         <member name="M:KeyLocker.Console.ConsoleCore.PushState(KeyLocker.Console.States.State)">
@@ -111,6 +151,24 @@
             </summary>
             <param name="question">Der Text, der vor der Eingabe angezeigt werden soll.</param>
             <returns>Die Nutzereingabe.</returns>
+        </member>
+        <member name="M:KeyLocker.Console.ConsoleHelper.ValidatedPrompt(KeyLocker.Console.Validation.IInputValidator,System.String)">
+            <summary>
+            Beginnt eine neue Zeile, schreibt <paramref name="question"/> (Standardwert ist "> "), liest eine Zeile der Nutzereingabe.
+            Diese Eingabe wird durch <paramref name="validator"/> validiert und die Eingabe wird solange wiederholt, bis
+            die Validierung erfolgreich ist.
+            </summary>
+            <param name="validator">Der zu nutzende <see cref="T:KeyLocker.Console.Validation.IInputValidator"/></param>
+            <param name="question">Der Text, der vor der Eingabe angezeigt werden soll.</param>
+            <returns>Die Nutzereingabe.</returns>
+        </member>
+        <member name="M:KeyLocker.Console.ConsoleHelper.PromptBool(System.String)">
+            <summary>
+            Beginnt eine neue Zeile, schreibt <paramref name="question"/> (Standardwert ist "> ") und liest eine Zeile der Nutzereingabe, 
+            die als boolescher Wert interpretiert wird.
+            </summary>
+            <param name="question">Der Text, der vor der Eingabe angezeigt werden soll.</param>
+            <returns></returns>
         </member>
         <member name="M:KeyLocker.Console.ConsoleHelper.HiddenPrompt(System.String)">
             <summary>
@@ -150,11 +208,24 @@
             Der Grundzustand des Programms.
             </summary>
         </member>
-        <member name="M:KeyLocker.Console.States.BasicState.#ctor(System.Collections.Generic.IEnumerable{KeyLocker.Console.Commands.ICommand})">
+        <member name="P:KeyLocker.Console.States.BasicState.AllowedCommands">
+            <inheritdoc/>
+        </member>
+        <member name="T:KeyLocker.Console.States.KnownStates">
             <summary>
-            Initialisiert eine neue Instanz der Klasse.
+            Eine Sammlung aller bekannten Zustände.
             </summary>
-            <param name="allowedCommands">Die in diesem Zustand ausführbaren Befehle.</param>
+        </member>
+        <member name="F:KeyLocker.Console.States.KnownStates.BasicState">
+            <summary>
+            Der Grundzustand der Anwendung.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:KeyLocker.Console.States.KnownStates.All">
+            <summary>
+            Holt alle bekannnte Zustände.
+            </summary>
         </member>
         <member name="T:KeyLocker.Console.States.State">
             <summary>
@@ -162,12 +233,6 @@
             Implementierende Klassen stellen Methoden und Eigenschaften zur Identifikation der Zustände und 
             der Behandlung von Übergängen dar.
             </summary>
-        </member>
-        <member name="M:KeyLocker.Console.States.State.#ctor(System.Collections.Generic.IEnumerable{KeyLocker.Console.Commands.ICommand})">
-            <summary>
-            Initialisiert eine neue Instanz der Klasse.
-            </summary>
-            <param name="allowedCommands">Die in diesem Zustand ausführbaren Befehle.</param>
         </member>
         <member name="P:KeyLocker.Console.States.State.AllowedCommands">
             <summary>
@@ -214,6 +279,86 @@
             Wird aufgerufen wenn der Zustand beendet wird, also wenn die Instanz von <see cref="P:KeyLocker.Console.ConsoleCore.StateStack"/> entfernt wird.
             </summary>
             <param name="core">Die ausführende <see cref="T:KeyLocker.Console.ConsoleCore"/>-Instanz.</param>
+        </member>
+        <member name="T:KeyLocker.Console.Validation.IInputValidator">
+            <summary>
+            Implementierende Klassen stellen Methoden bereit, um eine Nutzereingabe zu validieren.
+            </summary>
+        </member>
+        <member name="M:KeyLocker.Console.Validation.IInputValidator.IsValid(System.String)">
+            <summary>
+            Validiert eine Nutzereingabe.
+            </summary>
+            <param name="userInput">Die zu validierende Eingabe.</param>
+            <returns>True, wenn die Eingabe gültig ist, sonst false.</returns>
+        </member>
+        <member name="T:KeyLocker.Console.Validation.IsYesNoValidator">
+            <summary>
+            Implementierung von <see cref="T:KeyLocker.Console.Validation.IInputValidator"/>, die prüft, ob die Eingabe y, Y, n oder N ist. (Ja/Nein)
+            </summary>
+        </member>
+        <member name="M:KeyLocker.Console.Validation.IsYesNoValidator.IsValid(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="T:KeyLocker.Console.Validation.MultiValidator">
+            <summary>
+            Eine Implementierung von <see cref="T:KeyLocker.Console.Validation.IInputValidator"/>, die mehrere andere <see cref="T:KeyLocker.Console.Validation.IInputValidator"/>
+            verknüpft.
+            </summary>
+        </member>
+        <member name="F:KeyLocker.Console.Validation.MultiValidator.validators">
+            <summary>
+            Die zu prüfenden <see cref="T:KeyLocker.Console.Validation.IInputValidator"/>-Instanzen.
+            </summary>
+        </member>
+        <member name="M:KeyLocker.Console.Validation.MultiValidator.#ctor(System.Collections.Generic.IEnumerable{KeyLocker.Console.Validation.IInputValidator})">
+            <summary>
+            Initialisiert eine neue Instanz der Klasse.
+            </summary>
+            <param name="validators">Die zu prüfenden <see cref="T:KeyLocker.Console.Validation.IInputValidator"/>-Instanzen.</param>
+        </member>
+        <member name="M:KeyLocker.Console.Validation.MultiValidator.IsValid(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="T:KeyLocker.Console.Validation.NotEmptyValidator">
+            <summary>
+            Implementierung von <see cref="T:KeyLocker.Console.Validation.IInputValidator"/>, die prüft, ob die Eingabe nicht leer ist.
+            </summary>
+        </member>
+        <member name="F:KeyLocker.Console.Validation.NotEmptyValidator.target">
+            <summary>
+            Das zu validierende Ziel. 
+            Wird am Anfangg einer potentiellen Fehlermeldung ausgegeben.
+            </summary>
+        </member>
+        <member name="M:KeyLocker.Console.Validation.NotEmptyValidator.#ctor(System.String)">
+            <summary>
+            Initialisiert eine neue Instanz.
+            </summary>
+            <param name="target">Das zu validierende Ziel. Wird am Anfangg einer potentiellen Fehlermeldung ausgegeben.</param>
+        </member>
+        <member name="M:KeyLocker.Console.Validation.NotEmptyValidator.IsValid(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="T:KeyLocker.Console.Validation.UniqueNameValidator">
+            <summary>
+            Implementierung von <see cref="T:KeyLocker.Console.Validation.IInputValidator"/>, die prüft, ob keine andere Instanz 
+            von <see cref="T:KeyLocker.Entry"/> denselben Namen nutzt.
+            </summary>
+        </member>
+        <member name="F:KeyLocker.Console.Validation.UniqueNameValidator.core">
+            <summary>
+            Die ausführende <see cref="T:KeyLocker.CoreLib.KeyLockerCore"/>-Instanz.
+            </summary>
+        </member>
+        <member name="M:KeyLocker.Console.Validation.UniqueNameValidator.#ctor(KeyLocker.CoreLib.KeyLockerCore)">
+            <summary>
+            Initialisiert eine neue Instanz.
+            </summary>
+            <param name="core">Die ausführende <see cref="T:KeyLocker.CoreLib.KeyLockerCore"/>-Instanz.</param>
+        </member>
+        <member name="M:KeyLocker.Console.Validation.UniqueNameValidator.IsValid(System.String)">
+            <inheritdoc/>
         </member>
     </members>
 </doc>

@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Text;
+    using KeyLocker.Console.Validation;
 
     /// <summary>
     /// Eine Hilfsklasse für Ein- und Ausgabe auf der Konsole.
@@ -20,6 +21,48 @@
             Console.Write(question);
 
             return Console.ReadLine() ?? string.Empty;
+        }
+
+        /// <summary>
+        /// Beginnt eine neue Zeile, schreibt <paramref name="question"/> (Standardwert ist "> "), liest eine Zeile der Nutzereingabe.
+        /// Diese Eingabe wird durch <paramref name="validator"/> validiert und die Eingabe wird solange wiederholt, bis
+        /// die Validierung erfolgreich ist.
+        /// </summary>
+        /// <param name="validator">Der zu nutzende <see cref="IInputValidator"/></param>
+        /// <param name="question">Der Text, der vor der Eingabe angezeigt werden soll.</param>
+        /// <returns>Die Nutzereingabe.</returns>
+        public static string ValidatedPrompt(IInputValidator validator, string question = "> ")
+        {
+            var res = string.Empty;
+
+            while (true)
+            {
+                Console.WriteLine();
+                Console.Write(question);
+
+                res = Console.ReadLine() ?? string.Empty;
+
+                if (validator.IsValid(res))
+                {
+                    break;
+                }
+            }
+
+            return res;
+        }
+
+        /// <summary>
+        /// Beginnt eine neue Zeile, schreibt <paramref name="question"/> (Standardwert ist "> ") und liest eine Zeile der Nutzereingabe, 
+        /// die als boolescher Wert interpretiert wird.
+        /// </summary>
+        /// <param name="question">Der Text, der vor der Eingabe angezeigt werden soll.</param>
+
+        /// <returns></returns>
+        public static bool PromptBool(string question = "> ")
+        {
+            var res = ValidatedPrompt(new IsYesNoValidator());
+
+            return res == "y" || res == "Y";
         }
 
         /// <summary>

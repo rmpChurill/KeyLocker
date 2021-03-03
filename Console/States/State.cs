@@ -46,17 +46,11 @@
                     break;
                 }
 
-                var aliases = action.Aliases;
+                var alias = action.Alias?.ToString();
 
-                if (aliases != default)
+                if (alias != default && alias.Equals(command, comparison))
                 {
-                    foreach (var alias in aliases)
-                    {
-                        if (alias.Equals(command, comparison))
-                        {
-                            actionToRun = action;
-                        }
-                    }
+                    actionToRun = action;
                 }
 
                 if (actionToRun != default)

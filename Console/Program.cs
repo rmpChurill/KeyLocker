@@ -15,12 +15,8 @@
         public static void Main(string[] args)
         {
             var core = new ConsoleCore();
-            var helpCommand = new HelpCommand();
-            var basicState = new BasicState(new ICommand[] { helpCommand });
 
-            core.AllCommands = new ICommand[] { helpCommand };
-
-            core.PushState(basicState);
+            core.PushState(KnownStates.BasicState);
             core.Run();
         }
     }

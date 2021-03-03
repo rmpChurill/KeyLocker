@@ -18,7 +18,7 @@
 
         /// <summary>
         /// Holt einen Wert, der angibt, ob bei dem Vergleich einer Nutzereingabe mit <see cref="Command"/> oder 
-        /// einem Element aus <see cref="Aliases"/> die Groß-/Kleinschreibung beachtet werden soll oder nicht.
+        /// <see cref="Alias"/> die Groß-/Kleinschreibung beachtet werden soll oder nicht.
         /// </summary>
         public bool IsCaseSensitive
         {

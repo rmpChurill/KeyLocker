@@ -7,17 +7,20 @@
     /// </summary>
     public static class KnownStates
     {
-        private static BasicState BasicState = new BasicState();
-
+        /// <summary>
+        /// Der Grundzustand der Anwendung.
+        /// </summary>
+        /// <returns></returns>
+        public static readonly BasicState BasicState = new BasicState();
 
         /// <summary>
-        /// 
+        /// Holt alle bekannnte Zustände.
         /// </summary>
         public static IEnumerable<State> All
         {
             get
             {
-
+                yield return BasicState;
             }
         }
     }

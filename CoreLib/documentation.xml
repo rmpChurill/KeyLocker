@@ -203,6 +203,11 @@
             Diese Klasse stellt die Schnittstelle zur KeyLocker-Bibliothek dar.
             </summary>
         </member>
+        <member name="F:KeyLocker.CoreLib.KeyLockerCore.entries">
+            <summary>
+            Die registrierten Einträge.
+            </summary>
+        </member>
         <member name="M:KeyLocker.CoreLib.KeyLockerCore.#ctor(KeyLocker.AppSettings)">
             <summary>
             Initialisiert eine neue Instanz der Klasse.
@@ -213,6 +218,20 @@
             <summary>
             Holt die Einstellungen der Bibliothek.
             </summary>
+        </member>
+        <member name="P:KeyLocker.CoreLib.KeyLockerCore.Entries">
+            <summary>
+            Holt alle registrierten Einträge.
+            </summary>
+            <value></value>
+        </member>
+        <member name="M:KeyLocker.CoreLib.KeyLockerCore.Register(KeyLocker.Entry,System.String)">
+            <summary>
+            Registriert einen neuen Eintrag.
+            Das Passwort wird verschlüsselt und gesetzt.
+            </summary>
+            <param name="entry">Der Eintrag.</param>
+            <param name="rawPassword">Das unverschlüsselte Passwort.</param>
         </member>
         <member name="T:KeyLocker.CoreLib.Validation.EntryValidator">
             <summary>
