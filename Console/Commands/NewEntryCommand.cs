@@ -37,12 +37,11 @@
         }
 
         /// <inheritdoc/>
-        public IEnumerable<string>? Aliases
+        public char? Alias
         {
             get
             {
-                yield return "n";
-                yield return "+";
+                return 'n';
             }
         }
 

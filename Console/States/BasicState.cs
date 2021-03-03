@@ -9,6 +9,7 @@ namespace KeyLocker.Console.States
     /// </summary>
     public class BasicState : State
     {
+        /// <inheritdoc/>
         protected override IEnumerable<ICommand> AllowedCommands
         {
             get

@@ -36,7 +36,7 @@
         /// <summary>
         /// Holt eine Auflistung von alternativen Befehlen für diese Aktion.
         /// </summary>
-        public IEnumerable<string>? Aliases
+        public char? Alias
         {
             get;
         }

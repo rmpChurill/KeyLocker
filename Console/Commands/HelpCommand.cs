@@ -43,23 +43,33 @@
         }
 
         /// <inheritdoc/>
-        public IEnumerable<string>? Aliases
+        public char? Alias
         {
             get
             {
-                yield return "h";
-                yield return "?";
+                return 'h';
             }
         }
 
         /// <inheritdoc/>
         public void Execute(ConsoleCore core, string arg)
         {
-            foreach (var command in core.AllCommands)
+            foreach (var command in KnownCommands.All)
             {
+                var alias = command.Alias;
+
+                if(alias != null)
+                {
+                    Console.Write(alias);
+                    Console.Write(", ");
+                }
+                else 
+                {
+                    Console.Write("   ");
+                }
+
                 Console.Write(command.Command);
                 Console.Write(", ");
-                ConsoleHelper.WriteAll(command.Aliases ?? Array.Empty<string>());
                 Console.Write(": ");
                 Console.WriteLine(command.HelpDescritpion);
                 Console.WriteLine();
