@@ -11,20 +11,19 @@
     public static class ConsoleHelper
     {
         /// <summary>
-        /// Beginnt eine neue Zeile, schreibt <paramref name="question"/> (Standardwert ist "> "), liest eine Zeile der Nutzereingabe und gibt diese zurück.
+        /// Schreibt <paramref name="question"/> (Standardwert ist "> "), liest eine Zeile der Nutzereingabe und gibt diese zurück.
         /// </summary>
         /// <param name="question">Der Text, der vor der Eingabe angezeigt werden soll.</param>
         /// <returns>Die Nutzereingabe.</returns>
         public static string Prompt(string question = "> ")
         {
-            Console.WriteLine();
             Console.Write(question);
 
             return Console.ReadLine() ?? string.Empty;
         }
 
         /// <summary>
-        /// Beginnt eine neue Zeile, schreibt <paramref name="question"/> (Standardwert ist "> "), liest eine Zeile der Nutzereingabe.
+        /// Schreibt <paramref name="question"/> (Standardwert ist "> "), liest eine Zeile der Nutzereingabe.
         /// Diese Eingabe wird durch <paramref name="validator"/> validiert und die Eingabe wird solange wiederholt, bis
         /// die Validierung erfolgreich ist.
         /// </summary>
@@ -37,7 +36,6 @@
 
             while (true)
             {
-                Console.WriteLine();
                 Console.Write(question);
 
                 res = Console.ReadLine() ?? string.Empty;
@@ -52,7 +50,7 @@
         }
 
         /// <summary>
-        /// Beginnt eine neue Zeile, schreibt <paramref name="question"/> (Standardwert ist "> ") und liest eine Zeile der Nutzereingabe, 
+        /// Schreibt <paramref name="question"/> (Standardwert ist "> ") und liest eine Zeile der Nutzereingabe, 
         /// die als boolescher Wert interpretiert wird.
         /// </summary>
         /// <param name="question">Der Text, der vor der Eingabe angezeigt werden soll.</param>
@@ -60,20 +58,19 @@
         /// <returns></returns>
         public static bool PromptBool(string question = "> ")
         {
-            var res = ValidatedPrompt(new IsYesNoValidator());
+            var res = ValidatedPrompt(new IsYesNoValidator(), question);
 
             return res == "y" || res == "Y";
         }
 
         /// <summary>
-        /// Beginnt eine neue Zeile, schreibt <paramref name="question"/> (Standardwert ist "> "), liest eine Zeile der Nutzereingabe, wobei 
+        /// Schreibt <paramref name="question"/> (Standardwert ist "> "), liest eine Zeile der Nutzereingabe, wobei 
         /// die Eingabe abgefangen wird, sodass die Eingabe nicht angezeigt wird und gibt diese zurück.
         /// </summary>
         /// <param name="question">Der Text, der vor der Eingabe angezeigt werden soll.</param>
         /// <returns>Die Nutzereingabe.</returns>
         public static string HiddenPrompt(string question = "> ")
         {
-            Console.WriteLine();
             Console.Write(question);
 
             return HiddenReadLine();

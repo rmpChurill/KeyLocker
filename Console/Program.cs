@@ -1,6 +1,6 @@
 ﻿namespace KeyLocker.Console
 {
-    using KeyLocker.Console.Commands;
+    using System;
     using KeyLocker.Console.States;
 
     /// <summary>
@@ -15,6 +15,8 @@
         public static void Main(string[] args)
         {
             var core = new ConsoleCore();
+
+            Console.WriteLine("Welcome to KeyLocker\nVersion 0.1");
 
             core.PushState(KnownStates.BasicState);
             core.Run();

@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     /// <summary>
     /// Stellt den Hilfebefehl dar.
@@ -54,25 +55,31 @@
         /// <inheritdoc/>
         public void Execute(ConsoleCore core, string arg)
         {
+            var longestCommand = 0;
+
+            foreach (var command in KnownCommands.All)
+            {
+                longestCommand = Math.Max(longestCommand, command.Command.Length);
+            }
+
             foreach (var command in KnownCommands.All)
             {
                 var alias = command.Alias;
 
-                if(alias != null)
+                if (alias != null)
                 {
                     Console.Write(alias);
                     Console.Write(", ");
                 }
-                else 
+                else
                 {
                     Console.Write("   ");
                 }
 
                 Console.Write(command.Command);
-                Console.Write(", ");
+                Console.Write(string.Concat(Enumerable.Repeat(' ', longestCommand - command.Command.Length)));
                 Console.Write(": ");
                 Console.WriteLine(command.HelpDescritpion);
-                Console.WriteLine();
             }
         }
     }

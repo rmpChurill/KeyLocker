@@ -147,14 +147,14 @@
         </member>
         <member name="M:KeyLocker.Console.ConsoleHelper.Prompt(System.String)">
             <summary>
-            Beginnt eine neue Zeile, schreibt <paramref name="question"/> (Standardwert ist "> "), liest eine Zeile der Nutzereingabe und gibt diese zurück.
+            Schreibt <paramref name="question"/> (Standardwert ist "> "), liest eine Zeile der Nutzereingabe und gibt diese zurück.
             </summary>
             <param name="question">Der Text, der vor der Eingabe angezeigt werden soll.</param>
             <returns>Die Nutzereingabe.</returns>
         </member>
         <member name="M:KeyLocker.Console.ConsoleHelper.ValidatedPrompt(KeyLocker.Console.Validation.IInputValidator,System.String)">
             <summary>
-            Beginnt eine neue Zeile, schreibt <paramref name="question"/> (Standardwert ist "> "), liest eine Zeile der Nutzereingabe.
+            Schreibt <paramref name="question"/> (Standardwert ist "> "), liest eine Zeile der Nutzereingabe.
             Diese Eingabe wird durch <paramref name="validator"/> validiert und die Eingabe wird solange wiederholt, bis
             die Validierung erfolgreich ist.
             </summary>
@@ -164,7 +164,7 @@
         </member>
         <member name="M:KeyLocker.Console.ConsoleHelper.PromptBool(System.String)">
             <summary>
-            Beginnt eine neue Zeile, schreibt <paramref name="question"/> (Standardwert ist "> ") und liest eine Zeile der Nutzereingabe, 
+            Schreibt <paramref name="question"/> (Standardwert ist "> ") und liest eine Zeile der Nutzereingabe, 
             die als boolescher Wert interpretiert wird.
             </summary>
             <param name="question">Der Text, der vor der Eingabe angezeigt werden soll.</param>
@@ -172,7 +172,7 @@
         </member>
         <member name="M:KeyLocker.Console.ConsoleHelper.HiddenPrompt(System.String)">
             <summary>
-            Beginnt eine neue Zeile, schreibt <paramref name="question"/> (Standardwert ist "> "), liest eine Zeile der Nutzereingabe, wobei 
+            Schreibt <paramref name="question"/> (Standardwert ist "> "), liest eine Zeile der Nutzereingabe, wobei 
             die Eingabe abgefangen wird, sodass die Eingabe nicht angezeigt wird und gibt diese zurück.
             </summary>
             <param name="question">Der Text, der vor der Eingabe angezeigt werden soll.</param>
