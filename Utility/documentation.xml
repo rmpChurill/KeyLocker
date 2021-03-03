@@ -47,6 +47,88 @@
             </summary>
             <returns>Ein zufälliger <see cref="T:System.UInt32"/>.</returns>
         </member>
+        <member name="T:KeyLocker.Utility.CustomTimeSpan">
+            <summary>
+            Stellt eine einfache Zeitspanne dar.
+            </summary>
+        </member>
+        <member name="M:KeyLocker.Utility.CustomTimeSpan.#ctor(System.Double,KeyLocker.Utility.CustomTimeSpanKind)">
+            <summary>
+            Initialisiert eine neue Instanz der Klasse.
+            </summary>
+            <param name="amount">Die Länge der Spanne.</param>
+            <param name="kind">Die Art der Spanne.</param>
+        </member>
+        <member name="P:KeyLocker.Utility.CustomTimeSpan.Amount">
+            <summary>
+            Holt die Länge der Spanne.
+            </summary>
+        </member>
+        <member name="P:KeyLocker.Utility.CustomTimeSpan.Kind">
+            <summary>
+            Holt die Art der Spanne.
+            </summary>
+        </member>
+        <member name="P:KeyLocker.Utility.CustomTimeSpan.Zero">
+            <summary>
+            Gibt eine Zeitspann zurück, die eine Zeit von 0 beschreibt.
+            </summary>
+        </member>
+        <member name="M:KeyLocker.Utility.CustomTimeSpan.TryParse(System.String,KeyLocker.Utility.CustomTimeSpan@)">
+            <summary>
+            Versucht den String <paramref name="s"/> als einfache Zeitspanne im Format [Zahl][s|m|h|d|W|M|Y] zu lesen.
+            </summary>
+            <param name="s">Der zu parsende String.</param>
+            <param name="result">Das Ergebnis des Parsings oder <see cref="P:KeyLocker.Utility.CustomTimeSpan.Zero"/> bei Fehlschlag.</param>
+            <returns>True, wenn das Parsing erfolgreich war, sonst false.</returns>
+        </member>
+        <member name="M:KeyLocker.Utility.CustomTimeSpan.Parse(System.String)">
+            <summary>
+            Liest den String <paramref name="s"/> als einfache Zeitspanne im Format [Zahl][s|m|h|d|W|M|Y].
+            </summary>
+            <param name="s">Der zu parsende String.</param>
+            <returns>Eine neue Instanz von <see cref="T:KeyLocker.Utility.CustomTimeSpan"/>.</returns>
+        </member>
+        <member name="T:KeyLocker.Utility.CustomTimeSpanKind">
+            <summary>
+            Beschreibt die Art einer Zeitspanne.
+            </summary>
+        </member>
+        <member name="F:KeyLocker.Utility.CustomTimeSpanKind.Seconds">
+            <summary>
+            Die Zeitspanne beschreibt Sekunden.
+            </summary>
+        </member>
+        <member name="F:KeyLocker.Utility.CustomTimeSpanKind.Minutes">
+            <summary>
+            Die Zeitspanne beschreibt Minuten.
+            </summary>
+        </member>
+        <member name="F:KeyLocker.Utility.CustomTimeSpanKind.Hours">
+            <summary>
+            Die Zeitspanne beschreibt Stunden.
+            </summary>
+        </member>
+        <member name="F:KeyLocker.Utility.CustomTimeSpanKind.Days">
+            <summary>
+            Die Zeitspanne beschreibt Tage.
+            </summary>
+        </member>
+        <member name="F:KeyLocker.Utility.CustomTimeSpanKind.Weeks">
+            <summary>
+            Die Zeitspanne beschreibt Wochen.
+            </summary>
+        </member>
+        <member name="F:KeyLocker.Utility.CustomTimeSpanKind.Months">
+            <summary>
+            Die Zeitspanne beschreibt Sekunden.
+            </summary>
+        </member>
+        <member name="F:KeyLocker.Utility.CustomTimeSpanKind.Years">
+            <summary>
+            Die Zeitspanne beschreibt Jahre.
+            </summary>
+        </member>
         <member name="T:KeyLocker.Utility.NotifyPropertyChangedBase">
             <summary>
             Basisklasse für Objekte, die eine Änderung einer Eigenschaft publizieren wollen.

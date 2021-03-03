@@ -2,6 +2,8 @@
 {
     using System;
 
+    using KeyLocker.Utility;
+
     /// <summary>
     /// Stellt Einstellungen für ein Passwort dar.
     /// </summary>
@@ -89,7 +91,7 @@
         /// <summary>
         /// Holt oder setzt die Zeitspanne, nach der das Passwort als veraltet gilt.
         /// </summary>
-        public TimeSpan? DecayTime
+        public CustomTimeSpan? DecayTime
         {
             get;
             set;

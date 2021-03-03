@@ -24,6 +24,11 @@
             Holt das Salt.
             </summary>
         </member>
+        <member name="P:KeyLocker.AppSettings.PasswordSettings">
+            <summary>
+            Holt oder setzt die allgemeingültigen Passworteinstellungen.
+            </summary>
+        </member>
         <member name="T:KeyLocker.Crypto">
             <summary>
             Stellt verschiedene Cryptografische Funktionen zur Verfügung.

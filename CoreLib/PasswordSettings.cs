@@ -2,6 +2,8 @@
 {
     using System;
 
+    using KeyLocker.Utility;
+
     /// <summary>
     /// Stellt Einstellungen für ein Passwort dar.
     /// </summary>
@@ -18,7 +20,7 @@
             this.SpecialCharacters = Usage.Allow;
             this.MinLength = 8;
             this.MaxLength = 32;
-            this.DecayTime = new TimeSpan(90, 0, 0, 0);
+            this.DecayTime = new CustomTimeSpan(90, CustomTimeSpanKind.Days);
             this.ForbiddenCharacters = Array.Empty<char>();
             this.AllowedSpecialCharacters = Definitions.Digits;
         }
@@ -98,7 +100,7 @@
         /// <summary>
         /// Holt oder setzt die Zeitspanne, nach der das Passwort als veraltet gilt.
         /// </summary>
-        public TimeSpan DecayTime
+        public CustomTimeSpan DecayTime
         {
             get;
             set;

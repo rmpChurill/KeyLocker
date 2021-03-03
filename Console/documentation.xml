@@ -145,6 +145,15 @@
             Eine Hilfsklasse für Ein- und Ausgabe auf der Konsole.
             </summary>
         </member>
+        <member name="M:KeyLocker.Console.ConsoleHelper.PrintColor(System.String,System.ConsoleColor,System.Nullable{System.ConsoleColor})">
+            <summary>
+            Gibt <paramref name="text"/> aus und ändert dazu die Textfarbe zu <paramref name="foreground"/> und
+            die Hintergrundfarbe zu <paramref name="background"/>. Nach der Ausgabe werden die Farben zurückgesetzt.
+            </summary>
+            <param name="text">Der auszugebende Text.</param>
+            <param name="foreground">Die zu nutzende Textfarbe.</param>
+            <param name="background">Die zu nutzende Hintergrundfarbe. Ist der Parameter null wird die Hintegrundfarbe nicht geändert.</param>
+        </member>
         <member name="M:KeyLocker.Console.ConsoleHelper.Prompt(System.String)">
             <summary>
             Schreibt <paramref name="question"/> (Standardwert ist "> "), liest eine Zeile der Nutzereingabe und gibt diese zurück.
@@ -161,6 +170,17 @@
             <param name="validator">Der zu nutzende <see cref="T:KeyLocker.Console.Validation.IInputValidator"/></param>
             <param name="question">Der Text, der vor der Eingabe angezeigt werden soll.</param>
             <returns>Die Nutzereingabe.</returns>
+        </member>
+        <member name="M:KeyLocker.Console.ConsoleHelper.ValidatedPromptOrEmpty(KeyLocker.Console.Validation.IInputValidator,System.String)">
+            <summary>
+            Schreibt <paramref name="question"/> (Standardwert ist "> "), liest eine Zeile der Nutzereingabe.
+            Diese Eingabe wird durch <paramref name="validator"/> validiert und die Eingabe wird solange wiederholt, bis
+            die Validierung erfolgreich ist.
+            Außerdem sind leere Eingaben erlaubt. Diese werden nicht validiert sondern führen direkt zu einer Rückgabe von null.
+            </summary>
+            <param name="validator">Der zu nutzende <see cref="T:KeyLocker.Console.Validation.IInputValidator"/></param>
+            <param name="question">Der Text, der vor der Eingabe angezeigt werden soll.</param>
+            <returns>Die Nutzereingabe oder null bei einer leeren Eingabe.</returns>
         </member>
         <member name="M:KeyLocker.Console.ConsoleHelper.PromptBool(System.String)">
             <summary>
@@ -280,6 +300,32 @@
             </summary>
             <param name="core">Die ausführende <see cref="T:KeyLocker.Console.ConsoleCore"/>-Instanz.</param>
         </member>
+        <member name="T:KeyLocker.Console.Validation.CustomTimeSpanValidator">
+            <summary>
+            Implementierung von <see cref="T:KeyLocker.Console.Validation.IInputValidator"/>, die prüft, ob die Eingabe eine Zeitspanne darstellt.
+            </summary>
+        </member>
+        <member name="M:KeyLocker.Console.Validation.CustomTimeSpanValidator.IsValid(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="T:KeyLocker.Console.Validation.EnumValidator`1">
+            <summary>
+            Implementierung von <see cref="T:KeyLocker.Console.Validation.IInputValidator"/>, die prüft, ob die Eingabe einem Wert einer Enum entspricht.
+            </summary>
+        </member>
+        <member name="F:KeyLocker.Console.Validation.EnumValidator`1.names">
+            <summary>
+            Die Namen der Enum-Werte.
+            </summary>
+        </member>
+        <member name="M:KeyLocker.Console.Validation.EnumValidator`1.#ctor">
+            <summary>
+            Inituialisiert eine neue Instanz.
+            </summary>
+        </member>
+        <member name="M:KeyLocker.Console.Validation.EnumValidator`1.IsValid(System.String)">
+            <inheritdoc/>
+        </member>
         <member name="T:KeyLocker.Console.Validation.IInputValidator">
             <summary>
             Implementierende Klassen stellen Methoden bereit, um eine Nutzereingabe zu validieren.
@@ -292,6 +338,52 @@
             <param name="userInput">Die zu validierende Eingabe.</param>
             <returns>True, wenn die Eingabe gültig ist, sonst false.</returns>
         </member>
+        <member name="T:KeyLocker.Console.Validation.IntValidator">
+            <summary>
+            Implementierung von <see cref="T:KeyLocker.Console.Validation.IInputValidator"/>, die prüft, ob die Eingabe eine Zahl ist.
+            </summary>
+        </member>
+        <member name="F:KeyLocker.Console.Validation.IntValidator.min">
+            <summary>
+            Das erlaubte inklusive Minimum.
+            </summary>
+        </member>
+        <member name="F:KeyLocker.Console.Validation.IntValidator.max">
+            <summary>
+            Das erlaubte inklusive Maximum.
+            </summary>
+        </member>
+        <member name="M:KeyLocker.Console.Validation.IntValidator.#ctor">
+            <summary>
+            Initialisiert eine neue Instanz, die sämtliche Eingaben erlaubt, die einen Integer darstellen.
+            </summary>
+        </member>
+        <member name="M:KeyLocker.Console.Validation.IntValidator.#ctor(System.Int32)">
+            <summary>
+            Initialisiert eine neue Instanz, die sämtliche Eingaben erlaubt, die einen 
+            Integer zwischen 0 und <paramref name="max"/> (inklusive) darstellen.
+            </summary>
+            <param name="max">Das inklusive Maximum.</param>
+        </member>
+        <member name="M:KeyLocker.Console.Validation.IntValidator.#ctor(System.Int32,System.Int32)">
+            <summary>
+            Initialisiert eine neue Instanz, die sämtliche Eingaben erlaubt, die einen 
+            Integer zwischen <paramref name="min"/> und <paramref name="max"/> (beide inklusive) darstellen.
+            </summary>
+            <param name="min">Das inklusive Minimum</param>
+            <param name="max">Das inklusive Maximum.</param>
+        </member>
+        <member name="M:KeyLocker.Console.Validation.IntValidator.IsValid(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="T:KeyLocker.Console.Validation.IsOnlySpecialCharactersValidator">
+            <summary>
+            Implementierung von <see cref="T:KeyLocker.Console.Validation.IInputValidator"/>, die prüft, ob die Eingabe nur aus Sonderzeichen besteht.
+            </summary>
+        </member>
+        <member name="M:KeyLocker.Console.Validation.IsOnlySpecialCharactersValidator.IsValid(System.String)">
+            <inheritdoc/>
+        </member>
         <member name="T:KeyLocker.Console.Validation.IsYesNoValidator">
             <summary>
             Implementierung von <see cref="T:KeyLocker.Console.Validation.IInputValidator"/>, die prüft, ob die Eingabe y, Y, n oder N ist. (Ja/Nein)
@@ -300,24 +392,44 @@
         <member name="M:KeyLocker.Console.Validation.IsYesNoValidator.IsValid(System.String)">
             <inheritdoc/>
         </member>
-        <member name="T:KeyLocker.Console.Validation.MultiValidator">
+        <member name="T:KeyLocker.Console.Validation.LogicalAndValidator">
             <summary>
             Eine Implementierung von <see cref="T:KeyLocker.Console.Validation.IInputValidator"/>, die mehrere andere <see cref="T:KeyLocker.Console.Validation.IInputValidator"/>
-            verknüpft.
+            durch logisches UND verknüpft.
             </summary>
         </member>
-        <member name="F:KeyLocker.Console.Validation.MultiValidator.validators">
+        <member name="F:KeyLocker.Console.Validation.LogicalAndValidator.validators">
             <summary>
             Die zu prüfenden <see cref="T:KeyLocker.Console.Validation.IInputValidator"/>-Instanzen.
             </summary>
         </member>
-        <member name="M:KeyLocker.Console.Validation.MultiValidator.#ctor(System.Collections.Generic.IEnumerable{KeyLocker.Console.Validation.IInputValidator})">
+        <member name="M:KeyLocker.Console.Validation.LogicalAndValidator.#ctor(System.Collections.Generic.IEnumerable{KeyLocker.Console.Validation.IInputValidator})">
             <summary>
             Initialisiert eine neue Instanz der Klasse.
             </summary>
             <param name="validators">Die zu prüfenden <see cref="T:KeyLocker.Console.Validation.IInputValidator"/>-Instanzen.</param>
         </member>
-        <member name="M:KeyLocker.Console.Validation.MultiValidator.IsValid(System.String)">
+        <member name="M:KeyLocker.Console.Validation.LogicalAndValidator.IsValid(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="T:KeyLocker.Console.Validation.LogicalOrValidator">
+            <summary>
+            Eine Implementierung von <see cref="T:KeyLocker.Console.Validation.IInputValidator"/>, die mehrere andere <see cref="T:KeyLocker.Console.Validation.IInputValidator"/>
+            durch logisches ODER verknüpft.
+            </summary>
+        </member>
+        <member name="F:KeyLocker.Console.Validation.LogicalOrValidator.validators">
+            <summary>
+            Die zu prüfenden <see cref="T:KeyLocker.Console.Validation.IInputValidator"/>-Instanzen.
+            </summary>
+        </member>
+        <member name="M:KeyLocker.Console.Validation.LogicalOrValidator.#ctor(System.Collections.Generic.IEnumerable{KeyLocker.Console.Validation.IInputValidator})">
+            <summary>
+            Initialisiert eine neue Instanz der Klasse.
+            </summary>
+            <param name="validators">Die zu prüfenden <see cref="T:KeyLocker.Console.Validation.IInputValidator"/>-Instanzen.</param>
+        </member>
+        <member name="M:KeyLocker.Console.Validation.LogicalOrValidator.IsValid(System.String)">
             <inheritdoc/>
         </member>
         <member name="T:KeyLocker.Console.Validation.NotEmptyValidator">

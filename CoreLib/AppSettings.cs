@@ -9,9 +9,10 @@
         /// Erzeugt eine neue Instanz 
         /// </summary>
         public AppSettings()
-        { 
+        {
             this.SaltedPasswordHash = string.Empty;
             this.Salt = string.Empty;
+            this.PasswordSettings = new PasswordSettings();
         }
 
         /// <summary>
@@ -27,6 +28,15 @@
         /// Holt das Salt.
         /// </summary>
         public string Salt
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Holt oder setzt die allgemeingültigen Passworteinstellungen.
+        /// </summary>
+        public PasswordSettings PasswordSettings
         {
             get;
             set;

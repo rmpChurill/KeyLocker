@@ -5,9 +5,9 @@ namespace KeyLocker.Console.Validation
 
     /// <summary>
     /// Eine Implementierung von <see cref="IInputValidator"/>, die mehrere andere <see cref="IInputValidator"/>
-    /// verknüpft.
+    /// durch logisches UND verknüpft.
     /// </summary>
-    public class MultiValidator : IInputValidator
+    public class LogicalAndValidator : IInputValidator
     {
         /// <summary>
         /// Die zu prüfenden <see cref="IInputValidator"/>-Instanzen.
@@ -18,7 +18,7 @@ namespace KeyLocker.Console.Validation
         /// Initialisiert eine neue Instanz der Klasse.
         /// </summary>
         /// <param name="validators">Die zu prüfenden <see cref="IInputValidator"/>-Instanzen.</param>
-        public MultiValidator(IEnumerable<IInputValidator> validators)
+        public LogicalAndValidator(IEnumerable<IInputValidator> validators)
         {
             this.validators = validators;
         }

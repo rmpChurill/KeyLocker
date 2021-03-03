@@ -20,12 +20,12 @@
         {
             var validationResults = new List<IValidationResult>();
             var filledSettings = settings.Fill(entry.CustomSettings);
-            var timeSinceLastUpdate = now - entry.LastUpdateDate;
 
-            if (timeSinceLastUpdate > filledSettings.DecayTime)
-            {
-                validationResults.Add(new OutdatedResult(timeSinceLastUpdate));
-            }
+            // TODO
+            //if (filledSettings.DecayTime < CustomDateTime.Difference(now, entry.LastUpdateDate))
+            //{
+            //    validationResults.Add(new OutdatedResult(timeSinceLastUpdate));
+            //}
 
             switch (filledSettings.LowerCaseChars)
             {

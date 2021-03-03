@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Text;
+
     using KeyLocker.Console.Validation;
 
     /// <summary>
@@ -10,6 +11,27 @@
     /// </summary>
     public static class ConsoleHelper
     {
+        /// <summary>
+        /// Gibt <paramref name="text"/> aus und ändert dazu die Textfarbe zu <paramref name="foreground"/> und
+        /// die Hintergrundfarbe zu <paramref name="background"/>. Nach der Ausgabe werden die Farben zurückgesetzt.
+        /// </summary>
+        /// <param name="text">Der auszugebende Text.</param>
+        /// <param name="foreground">Die zu nutzende Textfarbe.</param>
+        /// <param name="background">Die zu nutzende Hintergrundfarbe. Ist der Parameter null wird die Hintegrundfarbe nicht geändert.</param>
+        public static void PrintColor(string text, ConsoleColor foreground, ConsoleColor? background)
+        {
+            var oldFg = Console.ForegroundColor;
+            var oldBg = Console.BackgroundColor;
+
+            Console.ForegroundColor = foreground;
+            Console.BackgroundColor = background ?? oldBg;
+
+            Console.Write(text);
+
+            Console.ForegroundColor = oldFg;
+            Console.BackgroundColor = oldBg;
+        }
+
         /// <summary>
         /// Schreibt <paramref name="question"/> (Standardwert ist "> "), liest eine Zeile der Nutzereingabe und gibt diese zurück.
         /// </summary>
@@ -32,13 +54,46 @@
         /// <returns>Die Nutzereingabe.</returns>
         public static string ValidatedPrompt(IInputValidator validator, string question = "> ")
         {
-            var res = string.Empty;
+            string? res;
 
             while (true)
             {
                 Console.Write(question);
 
                 res = Console.ReadLine() ?? string.Empty;
+
+                if (validator.IsValid(res))
+                {
+                    break;
+                }
+            }
+
+            return res;
+        }
+
+        /// <summary>
+        /// Schreibt <paramref name="question"/> (Standardwert ist "> "), liest eine Zeile der Nutzereingabe.
+        /// Diese Eingabe wird durch <paramref name="validator"/> validiert und die Eingabe wird solange wiederholt, bis
+        /// die Validierung erfolgreich ist.
+        /// Außerdem sind leere Eingaben erlaubt. Diese werden nicht validiert sondern führen direkt zu einer Rückgabe von null.
+        /// </summary>
+        /// <param name="validator">Der zu nutzende <see cref="IInputValidator"/></param>
+        /// <param name="question">Der Text, der vor der Eingabe angezeigt werden soll.</param>
+        /// <returns>Die Nutzereingabe oder null bei einer leeren Eingabe.</returns>
+        public static string? ValidatedPromptOrEmpty(IInputValidator validator, string question = "> ")
+        {
+            string? res;
+
+            while (true)
+            {
+                Console.Write(question);
+
+                res = Console.ReadLine();
+
+                if (string.IsNullOrEmpty(res))
+                {
+                    return null;
+                }
 
                 if (validator.IsValid(res))
                 {
