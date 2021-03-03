@@ -52,20 +52,20 @@
                 {
                     actionToRun = action;
                 }
+            }
 
-                if (actionToRun != default)
-                {
-                    var arg = input[i..];
+            if (actionToRun != default)
+            {
+                var arg = input[i..];
 
-                    if (this.OnActionRun(core, actionToRun, arg))
-                    {
-                        actionToRun.Execute(core, arg);
-                    }
-                }
-                else
+                if (this.OnActionRun(core, actionToRun, arg))
                 {
-                    this.OnActionNotFound(core, input);
+                    actionToRun.Execute(core, arg);
                 }
+            }
+            else
+            {
+                this.OnActionNotFound(core, input);
             }
         }
 
