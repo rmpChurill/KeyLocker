@@ -12,13 +12,22 @@
     public static class ConsoleHelper
     {
         /// <summary>
+        /// Füllt eine Zeile des Terminals mit <paramref name="seperator"/>.
+        /// </summary>
+        /// <param name="seperator">Das auszugebende Zeichen.</param>
+        public static void WriteSeperator(char seperator = '-')
+        {
+            Console.WriteLine(new string(seperator, Console.WindowWidth));
+        }
+
+        /// <summary>
         /// Gibt <paramref name="text"/> aus und ändert dazu die Textfarbe zu <paramref name="foreground"/> und
         /// die Hintergrundfarbe zu <paramref name="background"/>. Nach der Ausgabe werden die Farben zurückgesetzt.
         /// </summary>
         /// <param name="text">Der auszugebende Text.</param>
         /// <param name="foreground">Die zu nutzende Textfarbe.</param>
         /// <param name="background">Die zu nutzende Hintergrundfarbe. Ist der Parameter null wird die Hintegrundfarbe nicht geändert.</param>
-        public static void PrintColor(string text, ConsoleColor foreground, ConsoleColor? background)
+        public static void WriteColor(string text, ConsoleColor foreground, ConsoleColor? background)
         {
             var oldFg = Console.ForegroundColor;
             var oldBg = Console.BackgroundColor;

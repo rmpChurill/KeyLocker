@@ -50,6 +50,8 @@
         /// <param name="rawPassword">Das unverschlüsselte Passwort.</param>
         public void Register(Entry entry, string rawPassword)
         {
+            entry.EncryptedPassword = Crypto.Encrypt(rawPassword, this.Settings.SaltedPasswordHash);
+
             this.entries.Add(entry);
         }
     }

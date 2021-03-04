@@ -1,6 +1,7 @@
 ﻿namespace KeyLocker
 {
     using KeyLocker.Utility;
+
     using System;
     using System.IO;
     using System.Linq;
@@ -152,15 +153,15 @@
 
             // Salt and IV is randomly generated each time, but is preprended to encrypted cipher text
             // so that the same Salt and IV values can be used when decrypting.  
-            var saltStringBytes = Generate256BitsOfRandomEntropy();
-            var ivStringBytes = Generate256BitsOfRandomEntropy();
+            var saltStringBytes = GenerateEntropyBits(128);
+            var ivStringBytes = GenerateEntropyBits(128);
             var plainTextBytes = Encoding.UTF8.GetBytes(plainText);
             using (var password = new Rfc2898DeriveBytes(passPhrase, saltStringBytes, DerivationIterations))
             {
                 var keyBytes = password.GetBytes(Keysize / 8);
                 using (var symmetricKey = new RijndaelManaged())
                 {
-                    symmetricKey.BlockSize = 256;
+                    symmetricKey.BlockSize = 128;
                     symmetricKey.Mode = CipherMode.CBC;
                     symmetricKey.Padding = PaddingMode.PKCS7;
                     using (var encryptor = symmetricKey.CreateEncryptor(keyBytes, ivStringBytes))
@@ -235,12 +236,13 @@
         }
 
         /// <summary>
-        /// Erzeugt 256 zufällige Bits.
+        /// Erzeugt <paramref name="length"/> zufällige Bits.
         /// </summary>
+        /// <param name="length">Die Anzahl der zu erzeugenden Bits. Nur durch 8 teilbare Werte sind zulässig.</param>
         /// <returns>256 zufällige Bits.</returns>
-        private static byte[] Generate256BitsOfRandomEntropy()
+        private static byte[] GenerateEntropyBits(int length)
         {
-            var randomBytes = new byte[32];
+            var randomBytes = new byte[length / 8];
 
             using var rngCsp = new RNGCryptoServiceProvider();
 

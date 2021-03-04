@@ -54,38 +54,39 @@
             var nameValidator = new LogicalAndValidator(new IInputValidator[] { nameNotEmtpyValidator, nameUniqeValidator });
             var loginNotEmtpyValidator = new NotEmptyValidator("Login");
 
-            Console.WriteLine("Enter the required data");
+            Console.WriteLine("Creating a new entry");
+            ConsoleHelper.WriteSeperator();
 
             var entry = new Entry()
             {
                 Name = ConsoleHelper.ValidatedPrompt(nameValidator, "Enter entry name: "),
-                Login = ConsoleHelper.ValidatedPrompt(loginNotEmtpyValidator, "enter login: "),
+                Login = ConsoleHelper.ValidatedPrompt(loginNotEmtpyValidator, "Enter login: "),
                 Comment = ConsoleHelper.Prompt("Enter comment (optional):"),
             };
 
             if (ConsoleHelper.PromptBool("Do you want to set special settings for this entry? (y/n): "))
             {
-                Console.WriteLine("Enter required values or skip to use default settings:");
+                Console.WriteLine("\nEnter required values or skip to use default settings:");
 
                 var usageValidator = new EnumValidator<Usage>();
                 var settings = new PartialPasswordSettings();
 
-                Console.Write("Enter usages for different categories. Valid values are ");
+                Console.Write("  Enter usages for different categories. Valid values are ");
                 ConsoleHelper.WriteAll(Enum.GetNames(typeof(Usage)));
                 Console.WriteLine();
 
-                var upperCaseChars = ConsoleHelper.ValidatedPromptOrEmpty(usageValidator, "Upper case characters: ");
-                var lowerCaseChars = ConsoleHelper.ValidatedPromptOrEmpty(usageValidator, "Lower case characters: ");
-                var digits = ConsoleHelper.ValidatedPromptOrEmpty(usageValidator, "digits: ");
-                var specialCharacters = ConsoleHelper.ValidatedPromptOrEmpty(usageValidator, "Special characters: ");
+                var upperCaseChars = ConsoleHelper.ValidatedPromptOrEmpty(usageValidator, "    Upper case characters: ");
+                var lowerCaseChars = ConsoleHelper.ValidatedPromptOrEmpty(usageValidator, "    Lower case characters: ");
+                var digits = ConsoleHelper.ValidatedPromptOrEmpty(usageValidator, "    Digits: ");
+                var specialCharacters = ConsoleHelper.ValidatedPromptOrEmpty(usageValidator, "    Special characters: ");
 
-                Console.WriteLine("Enter the following additional values: ");
+                Console.WriteLine("  Enter the following additional values: ");
 
-                var minLength = ConsoleHelper.ValidatedPromptOrEmpty(new IntValidator(0, int.MaxValue), "Min length: ");
-                var maxLength = ConsoleHelper.ValidatedPromptOrEmpty(new IntValidator(minLength != null ? int.Parse(minLength) : 1, int.MaxValue), "Max length: ");
-                var forbiddenCharacters = ConsoleHelper.Prompt("List of forbidden characters: ");
-                var allowedSpecialCharacters = ConsoleHelper.ValidatedPromptOrEmpty(new IsOnlySpecialCharactersValidator(), "Allowed special characters: ");
-                var decayTime = ConsoleHelper.ValidatedPromptOrEmpty(new CustomTimeSpanValidator(), "Time until invalidation: ");
+                var minLength = ConsoleHelper.ValidatedPromptOrEmpty(new IntValidator(0, int.MaxValue), "    Min length: ");
+                var maxLength = ConsoleHelper.ValidatedPromptOrEmpty(new IntValidator(minLength != null ? int.Parse(minLength) : 1, int.MaxValue), "    Max length: ");
+                var forbiddenCharacters = ConsoleHelper.Prompt("    List of forbidden characters: ");
+                var allowedSpecialCharacters = ConsoleHelper.ValidatedPromptOrEmpty(new IsOnlySpecialCharactersValidator(), "    Allowed special characters: ");
+                var decayTime = ConsoleHelper.ValidatedPromptOrEmpty(new CustomTimeSpanValidator(), "    Time until invalidation: ");
 
                 if (upperCaseChars != null)
                 {
@@ -136,6 +137,11 @@
             if (ConsoleHelper.PromptBool("Do you want to auto-generate a password for this entry? (y/n): "))
             {
                 entry.EncryptedPassword = Crypto.GeneratePassword(core.KeyLockerCore.Settings.PasswordSettings.Fill(entry.CustomSettings));
+
+                if (ConsoleHelper.PromptBool("Do you want to show to password right now? (y/n): "))
+                {
+                    Console.WriteLine(entry.EncryptedPassword);
+                }
             }
             else
             {

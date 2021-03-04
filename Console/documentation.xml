@@ -145,7 +145,13 @@
             Eine Hilfsklasse für Ein- und Ausgabe auf der Konsole.
             </summary>
         </member>
-        <member name="M:KeyLocker.Console.ConsoleHelper.PrintColor(System.String,System.ConsoleColor,System.Nullable{System.ConsoleColor})">
+        <member name="M:KeyLocker.Console.ConsoleHelper.WriteSeperator(System.Char)">
+            <summary>
+            Füllt eine Zeile des Terminals mit <paramref name="seperator"/>.
+            </summary>
+            <param name="seperator">Das auszugebende Zeichen.</param>
+        </member>
+        <member name="M:KeyLocker.Console.ConsoleHelper.WriteColor(System.String,System.ConsoleColor,System.Nullable{System.ConsoleColor})">
             <summary>
             Gibt <paramref name="text"/> aus und ändert dazu die Textfarbe zu <paramref name="foreground"/> und
             die Hintergrundfarbe zu <paramref name="background"/>. Nach der Ausgabe werden die Farben zurückgesetzt.

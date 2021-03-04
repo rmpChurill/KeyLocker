@@ -102,10 +102,11 @@
             <param name="passPhrase">Der Schlüssel.</param>
             <returns>Den entschlüsselten Text.</returns>
         </member>
-        <member name="M:KeyLocker.Crypto.Generate256BitsOfRandomEntropy">
+        <member name="M:KeyLocker.Crypto.GenerateEntropyBits(System.Int32)">
             <summary>
-            Erzeugt 256 zufällige Bits.
+            Erzeugt <paramref name="length"/> zufällige Bits.
             </summary>
+            <param name="length">Die Anzahl der zu erzeugenden Bits. Nur durch 8 teilbare Werte sind zulässig.</param>
             <returns>256 zufällige Bits.</returns>
         </member>
         <member name="T:KeyLocker.Definitions">
