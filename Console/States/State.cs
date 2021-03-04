@@ -76,7 +76,7 @@
         /// <param name="input">Die Nutzereingabe.</param>
         public virtual void OnActionNotFound(ConsoleCore core, string input)
         {
-            Console.WriteLine($"\"{input}\" is no valid command!");
+            Console.WriteLine($"\"{input}\" is no valid command! Use help to show available commands!");
         }
 
         /// <summary>
