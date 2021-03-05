@@ -1,6 +1,7 @@
 ﻿namespace KeyLocker
 {
     using System;
+    using System.Text.Json;
 
     using KeyLocker.Utility;
 
@@ -23,6 +24,27 @@
             this.DecayTime = new CustomTimeSpan(90, CustomTimeSpanKind.Days);
             this.ForbiddenCharacters = Array.Empty<char>();
             this.AllowedSpecialCharacters = Definitions.Digits;
+        }
+
+        /// <summary>
+        /// Liest ein <see cref="PasswordSettings"/> aus einem <see cref="JsonElement"/>.
+        /// </summary>
+        /// <param name="element">Die Datenquelle.</param>
+        /// <returns>Die gelesene Instanz.</returns>
+        public static PasswordSettings Read(JsonElement element)
+        {
+            return new PasswordSettings
+            {
+                AllowedSpecialCharacters = element.GetProperty(nameof(PartialPasswordSettings.AllowedSpecialCharacters)).GetString()?.ToCharArray() ?? throw new Exception(),
+                ForbiddenCharacters = element.GetProperty(nameof(PartialPasswordSettings.ForbiddenCharacters)).GetString()?.ToCharArray() ?? throw new Exception(),
+                DecayTime = CustomTimeSpan.Parse(element.GetProperty(nameof(PartialPasswordSettings.DecayTime)).GetString() ?? throw new Exception()),
+                Digits = Enum.Parse<Usage>(element.GetProperty(nameof(PartialPasswordSettings.Digits)).GetString() ?? throw new Exception()),
+                LowerCaseChars = Enum.Parse<Usage>(element.GetProperty(nameof(PartialPasswordSettings.LowerCaseChars)).GetString() ?? throw new Exception()),
+                SpecialCharacters = Enum.Parse<Usage>(element.GetProperty(nameof(PartialPasswordSettings.SpecialCharacters)).GetString() ?? throw new Exception()),
+                UpperCaseChars = Enum.Parse<Usage>(element.GetProperty(nameof(PartialPasswordSettings.UpperCaseChars)).GetString() ?? throw new Exception()),
+                MaxLength = element.GetProperty(nameof(PartialPasswordSettings.MaxLength)).GetUInt32(),
+                MinLength = element.GetProperty(nameof(PartialPasswordSettings.MinLength)).GetUInt32()
+            };
         }
 
         /// <summary>
@@ -206,6 +228,27 @@
                 SpecialCharacters = partial.SpecialCharacters ?? this.SpecialCharacters,
                 UpperCaseChars = partial.UpperCaseChars ?? this.UpperCaseChars,
             };
+        }
+
+        /// <summary>
+        /// Schreibt die Daten der Instanz nach <paramref name="writer"/>.
+        /// </summary>
+        /// <param name="writer">Das Ausgabeziel.</param>
+        public void Save(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+
+            writer.WriteString(nameof(this.AllowedSpecialCharacters), this.AllowedSpecialCharacters);
+            writer.WriteString(nameof(this.DecayTime), this.DecayTime.ToString());
+            writer.WriteString(nameof(this.Digits), Enum.GetName(this.Digits));
+            writer.WriteString(nameof(this.LowerCaseChars), Enum.GetName(this.LowerCaseChars));
+            writer.WriteString(nameof(this.SpecialCharacters), Enum.GetName(this.SpecialCharacters));
+            writer.WriteString(nameof(this.UpperCaseChars), Enum.GetName(this.UpperCaseChars));
+            writer.WriteString(nameof(this.ForbiddenCharacters), this.ForbiddenCharacters);
+            writer.WriteNumber(nameof(this.MaxLength), this.MaxLength);
+            writer.WriteNumber(nameof(this.MinLength), this.MinLength);
+
+            writer.WriteEndObject();
         }
     }
 }

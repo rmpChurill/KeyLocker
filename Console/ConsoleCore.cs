@@ -1,9 +1,8 @@
 ﻿namespace KeyLocker.Console
 {
-    using System.Collections.Generic;
+    using System;
 
     using KeyLocker.Console.Commands;
-    using KeyLocker.Console.States;
     using KeyLocker.CoreLib;
 
     /// <summary>
@@ -12,48 +11,30 @@
     public class ConsoleCore
     {
         /// <summary>
-        /// Initialisiert eine neue Instanz der Klasse.
-        /// </summary>
-        public ConsoleCore()
-        {
-            this.StateStack = new Stack<State>();
-            this.KeyLockerCore = new KeyLockerCore(new AppSettings());
-        }
-
-        /// <summary>
-        /// Holt einen Stack, der eine Reihe von Zuständen speichert.
-        /// Der oberste Eintrag ist der aktuelle Zustand.
-        /// </summary>
-        public Stack<State> StateStack
-        {
-            get;
-        }
-
-        /// <summary>
         /// Holt den Kern der Bibliothek, über den die Transaktionen ausgeführt werden.
         /// </summary>
-        public KeyLockerCore KeyLockerCore
+        public KeyLockerCore? KeyLockerCore
         {
             get;
+            set;
         }
 
         /// <summary>
-        /// Betritt einen neuen Zustand.
+        /// Der Pfad zur aktuell geladenen Datei.
         /// </summary>
-        /// <param name="state">Der neue Zustand.</param>
-        public void PushState(State state)
+        public string? FileName
         {
-            state.OnBegin(this);
-
-            this.StateStack.Push(state);
+            get;
+            set;
         }
 
         /// <summary>
-        /// Beendet den letzten Zustand.
+        /// Holt oder setzt einen Wert, der angibt, ob die Anwendung weiterlaufen soll oder nicht.
         /// </summary>
-        public void PopState()
+        public bool Loop
         {
-            this.StateStack.Pop().OnEnd(this);
+            get;
+            set;
         }
 
         /// <summary>
@@ -61,9 +42,47 @@
         /// </summary>
         public void Run()
         {
-            while (this.StateStack.Count > 0)
+            while (true)
             {
-                this.StateStack.Peek().OnTick(this);
+                var input = ConsoleHelper.Prompt();
+
+                var i = 0;
+
+                while (i < input.Length && !char.IsWhiteSpace(input[i])) { i++; }
+
+                var command = input[0..i];
+                var actionToRun = default(ICommand);
+
+                foreach (var action in KnownCommands.All)
+                {
+                    var comparison = action.IsCaseSensitive
+                                   ? StringComparison.Ordinal
+                                   : StringComparison.OrdinalIgnoreCase;
+
+                    if (action.Command.Equals(command, comparison))
+                    {
+                        actionToRun = action;
+                        break;
+                    }
+
+                    var alias = action.Alias?.ToString();
+
+                    if (alias != default && alias.Equals(command, comparison))
+                    {
+                        actionToRun = action;
+                    }
+                }
+
+                if (actionToRun != default)
+                {
+                    var arg = input[i..];
+
+                    actionToRun.Execute(this, arg);
+                }
+                else
+                {
+                    Console.WriteLine($"\"{input}\" is no valid command! Use help to show available commands!");
+                }
             }
         }
     }

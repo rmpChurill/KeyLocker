@@ -1,8 +1,10 @@
 ﻿namespace KeyLocker
 {
     using KeyLocker.Utility;
+
     using System;
     using System.Diagnostics;
+    using System.Text.Json;
 
     /// <summary>
     /// Stellt einen Eintrag der Passwortliste dar.
@@ -51,6 +53,26 @@
             this.login = string.Empty;
             this.lastUpdateDate = DateTime.MinValue;
             this.customSettings = new PartialPasswordSettings();
+        }
+
+        /// <summary>
+        /// Lädt eine <see cref="Entry"/>-Instanz aus einem <see cref="JsonElement"/>.
+        /// </summary>
+        /// <param name="element">Die Datenquelle.</param>
+        /// <returns>Das geladene Element.</returns>
+        public static Entry Load(JsonElement element)
+        {
+            var res = new Entry
+            {
+                name = element.GetProperty(nameof(Entry.Name)).GetString() ?? throw new Exception(),
+                comment = element.GetProperty(nameof(Entry.Comment)).GetString() ?? string.Empty,
+                encryptedPassword = element.GetProperty(nameof(Entry.EncryptedPassword)).GetString() ?? throw new Exception(),
+                login = element.GetProperty(nameof(Entry.Login)).GetString() ?? throw new Exception(),
+                lastUpdateDate = element.GetProperty(nameof(Entry.LastUpdateDate)).GetDateTime(),
+                customSettings = PartialPasswordSettings.Read(element.GetProperty(nameof(Entry.CustomSettings))),
+            };
+
+            return res;
         }
 
         /// <summary>
@@ -171,6 +193,26 @@
                     this.OnPropertyChanged();
                 }
             }
+        }
+
+        /// <summary>
+        /// Schreibt die Daten der Instanz in <paramref name="writer"/>.
+        /// </summary>
+        /// <param name="writer">Das Ausgabeziel.</param>
+        public void Save(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+
+            writer.WriteString(nameof(this.Name), this.name);
+            writer.WriteString(nameof(this.Login), this.login);
+            writer.WriteString(nameof(this.Comment), this.comment);
+            writer.WriteString(nameof(this.EncryptedPassword), this.encryptedPassword);
+            writer.WriteString(nameof(this.LastUpdateDate), this.lastUpdateDate);
+            writer.WritePropertyName(nameof(this.CustomSettings));
+
+            this.customSettings.Save(writer);
+
+            writer.WriteEndObject();
         }
     }
 }

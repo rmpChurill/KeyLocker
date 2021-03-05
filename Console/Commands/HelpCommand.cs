@@ -1,7 +1,6 @@
 ﻿namespace KeyLocker.Console.Commands
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -9,13 +8,6 @@
     /// </summary>
     public class HelpCommand : ICommand
     {
-        /// <summary>
-        /// Initialisiert eine neue Instanz der Klasse.
-        /// </summary>
-        public HelpCommand()
-        {
-        }
-
         /// <inheritdoc/>
         public string HelpDescritpion
         {

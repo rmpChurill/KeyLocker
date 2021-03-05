@@ -9,11 +9,6 @@
             Stellt den Hilfebefehl dar.
             </summary>
         </member>
-        <member name="M:KeyLocker.Console.Commands.HelpCommand.#ctor">
-            <summary>
-            Initialisiert eine neue Instanz der Klasse.
-            </summary>
-        </member>
         <member name="P:KeyLocker.Console.Commands.HelpCommand.HelpDescritpion">
             <inheritdoc/>
         </member>
@@ -78,10 +73,45 @@
             Die Instanz des Befehls zur Erzeugung eines neuen Eintrags.
             </summary>
         </member>
+        <member name="F:KeyLocker.Console.Commands.KnownCommands.LoadCommand">
+            <summary>
+            Die Instanz des Befehls zum Laden einer Passwortdatei.
+            </summary>
+        </member>
+        <member name="F:KeyLocker.Console.Commands.KnownCommands.SaveCommand">
+            <summary>
+            Die Instanz des Befehls zum Speichern einer Passwortdatei.
+            </summary>
+        </member>
+        <member name="F:KeyLocker.Console.Commands.KnownCommands.NewFileCommand">
+            <summary>
+            Die Instanz des Befehls zum Erstellen einer neuen Passwortdatei.
+            </summary>
+        </member>
         <member name="P:KeyLocker.Console.Commands.KnownCommands.All">
             <summary>
             Holt eine Auflistung aller bekannten Befehle.
             </summary>
+        </member>
+        <member name="T:KeyLocker.Console.Commands.LoadCommand">
+            <summary>
+            Eine Implementierung von <see cref="T:KeyLocker.Console.Commands.ICommand"/>, die das Laden 
+            </summary>
+        </member>
+        <member name="P:KeyLocker.Console.Commands.LoadCommand.HelpDescritpion">
+            <inheritdoc/>
+        </member>
+        <member name="P:KeyLocker.Console.Commands.LoadCommand.IsCaseSensitive">
+            <inheritdoc/>
+        </member>
+        <member name="P:KeyLocker.Console.Commands.LoadCommand.Command">
+            <inheritdoc/>
+        </member>
+        <member name="P:KeyLocker.Console.Commands.LoadCommand.Alias">
+            <inheritdoc/>
+        </member>
+        <member name="M:KeyLocker.Console.Commands.LoadCommand.Execute(KeyLocker.Console.ConsoleCore,System.String)">
+            <inheritdoc/>
         </member>
         <member name="T:KeyLocker.Console.Commands.NewEntryCommand">
             <summary>
@@ -101,6 +131,46 @@
             <inheritdoc/>
         </member>
         <member name="M:KeyLocker.Console.Commands.NewEntryCommand.Execute(KeyLocker.Console.ConsoleCore,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="T:KeyLocker.Console.Commands.NewFileCommand">
+            <summary>
+            Eine Implementierung von <see cref="T:KeyLocker.Console.Commands.ICommand"/>, die die Erstellung einer neuen Passwortliste darstellt.
+            </summary>
+        </member>
+        <member name="P:KeyLocker.Console.Commands.NewFileCommand.HelpDescritpion">
+            <inheritdoc/>
+        </member>
+        <member name="P:KeyLocker.Console.Commands.NewFileCommand.IsCaseSensitive">
+            <inheritdoc/>
+        </member>
+        <member name="P:KeyLocker.Console.Commands.NewFileCommand.Command">
+            <inheritdoc/>
+        </member>
+        <member name="P:KeyLocker.Console.Commands.NewFileCommand.Alias">
+            <inheritdoc/>
+        </member>
+        <member name="M:KeyLocker.Console.Commands.NewFileCommand.Execute(KeyLocker.Console.ConsoleCore,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="T:KeyLocker.Console.Commands.SaveCommand">
+            <summary>
+            Speichert eine geöffnete Datei.
+            </summary>
+        </member>
+        <member name="P:KeyLocker.Console.Commands.SaveCommand.HelpDescritpion">
+            <inheritdoc/>
+        </member>
+        <member name="P:KeyLocker.Console.Commands.SaveCommand.IsCaseSensitive">
+            <inheritdoc/>
+        </member>
+        <member name="P:KeyLocker.Console.Commands.SaveCommand.Command">
+            <inheritdoc/>
+        </member>
+        <member name="P:KeyLocker.Console.Commands.SaveCommand.Alias">
+            <inheritdoc/>
+        </member>
+        <member name="M:KeyLocker.Console.Commands.SaveCommand.Execute(KeyLocker.Console.ConsoleCore,System.String)">
             <inheritdoc/>
         </member>
         <member name="T:KeyLocker.Console.ConsoleCore">
@@ -235,6 +305,25 @@
             </summary>
         </member>
         <member name="P:KeyLocker.Console.States.BasicState.AllowedCommands">
+            <inheritdoc/>
+        </member>
+        <member name="T:KeyLocker.Console.States.DataOpenedState">
+            <summary>
+            Stellt den Zustand dar, der eintritt, nachdem eine Passwordliste geöffnet wurde.
+            </summary>
+        </member>
+        <member name="F:KeyLocker.Console.States.DataOpenedState.path">
+            <summary>
+            Der Pfad zur geöffneten Passwortliste.
+            </summary>
+        </member>
+        <member name="M:KeyLocker.Console.States.DataOpenedState.#ctor(System.String)">
+            <summary>
+            Initialisiert eine neue Instanz der Klasse.
+            </summary>
+            <param name="path">Der Pfad zur zu öffnenden Datei.</param>
+        </member>
+        <member name="P:KeyLocker.Console.States.DataOpenedState.AllowedCommands">
             <inheritdoc/>
         </member>
         <member name="T:KeyLocker.Console.States.KnownStates">
