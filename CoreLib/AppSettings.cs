@@ -22,7 +22,7 @@
         /// </summary>
         /// <param name="element">Die Datenquelle.</param>
         /// <returns>Die gelesene Instanz.</returns>
-        public static AppSettings Parse(JsonElement element)
+        public static AppSettings Load(JsonElement element)
         {
             var res = new AppSettings();
 
@@ -62,12 +62,16 @@
         /// <param name="writer">Das Ausgabziel.</param>
         public void Save(Utf8JsonWriter writer)
         {
+            writer.WriteStartObject();
+
             writer.WriteString(nameof(this.Salt), this.Salt);
             writer.WriteString(nameof(this.SaltedPasswordHash), this.SaltedPasswordHash);
 
             writer.WritePropertyName(nameof(this.PasswordSettings));
-
             this.PasswordSettings.Save(writer);
+
+
+            writer.WriteEndObject();
         }
     }
 }

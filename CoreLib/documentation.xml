@@ -14,9 +14,16 @@
             Erzeugt eine neue Instanz 
             </summary>
         </member>
+        <member name="M:KeyLocker.AppSettings.Load(System.Text.Json.JsonElement)">
+            <summary>
+            Erzeugt eine <see cref="T:KeyLocker.AppSettings"/>-Instanz aus den Daten in <paramref name="element"/>.
+            </summary>
+            <param name="element">Die Datenquelle.</param>
+            <returns>Die gelesene Instanz.</returns>
+        </member>
         <member name="P:KeyLocker.AppSettings.SaltedPasswordHash">
             <summary>
-            Holt den Passwort-Hash mit Salt.
+            Holt den Hash des Passworts mit Salt.
             </summary>
         </member>
         <member name="P:KeyLocker.AppSettings.Salt">
@@ -28,6 +35,12 @@
             <summary>
             Holt oder setzt die allgemeingültigen Passworteinstellungen.
             </summary>
+        </member>
+        <member name="M:KeyLocker.AppSettings.Save(System.Text.Json.Utf8JsonWriter)">
+            <summary>
+            Schreibt die Daten der aktuellen Instanz nach <paramref name="writer"/>.
+            </summary>
+            <param name="writer">Das Ausgabziel.</param>
         </member>
         <member name="T:KeyLocker.Crypto">
             <summary>
@@ -56,12 +69,12 @@
             <param name="settings">Die zu nutzenden Einstellungen.</param>
             <returns>Ein zufälliges Passwort nach den Einstellungen von <paramref name="settings"/>.</returns>
         </member>
-        <member name="M:KeyLocker.Crypto.ComputeSaltedHash(System.String,KeyLocker.AppSettings)">
+        <member name="M:KeyLocker.Crypto.ComputeSaltedHash(System.String,System.String)">
             <summary>
             Berechnet einen Hash mit Salt.
             </summary>
             <param name="text">Der zu hashende Text.</param>
-            <param name="appSettings">Die zu nutzenden Einstellungen.</param>
+            <param name="salt">Das "Salt".</param>
             <returns></returns>
         </member>
         <member name="M:KeyLocker.Crypto.ComputeRandomSalt">
@@ -232,6 +245,19 @@
             Initialisiert eine neue Instanz der Klasse.
             </summary>
         </member>
+        <member name="M:KeyLocker.CoreLib.KeyLockerCore.#ctor(System.String)">
+            <summary>
+            Initialisiert eine neue Instanz der Klasse.
+            </summary>
+            <param name="password">Das Passwort für die neu erstellte Passwortdatei.</param>
+        </member>
+        <member name="M:KeyLocker.CoreLib.KeyLockerCore.Load(System.Text.Json.JsonElement)">
+            <summary>
+            Erzeugt eine <see cref="N:KeyLocker"/>-Instanz aus den Daten von <paramref name="element"/>.
+            </summary>
+            <param name="element">Die Datenquelle.</param>
+            <returns>Die erezugte Instanz.</returns>
+        </member>
         <member name="P:KeyLocker.CoreLib.KeyLockerCore.Settings">
             <summary>
             Holt die Einstellungen der Bibliothek.
@@ -250,6 +276,19 @@
             </summary>
             <param name="entry">Der Eintrag.</param>
             <param name="rawPassword">Das unverschlüsselte Passwort.</param>
+        </member>
+        <member name="M:KeyLocker.CoreLib.KeyLockerCore.ConfirmPassword(System.String)">
+            <summary>
+            Prüft, ob <paramref name="password"/> das Passwort der aktuellen Instanz ist.
+            </summary>
+            <param name="password">Das zu prüfende Passwort.</param>
+            <returns>True, wenn das Passwort stimmt, sonst false.</returns>
+        </member>
+        <member name="M:KeyLocker.CoreLib.KeyLockerCore.Save(System.Text.Json.Utf8JsonWriter)">
+            <summary>
+            Schreibt die Daten in 
+            </summary>
+            <param name="writer"></param>
         </member>
         <member name="T:KeyLocker.CoreLib.Validation.EntryValidator">
             <summary>
@@ -445,6 +484,13 @@
             Initialisiert eine neue Instanz der Klasse.
             </summary>
         </member>
+        <member name="M:KeyLocker.PasswordSettings.Read(System.Text.Json.JsonElement)">
+            <summary>
+            Liest ein <see cref="T:KeyLocker.PasswordSettings"/> aus einem <see cref="T:System.Text.Json.JsonElement"/>.
+            </summary>
+            <param name="element">Die Datenquelle.</param>
+            <returns>Die gelesene Instanz.</returns>
+        </member>
         <member name="P:KeyLocker.PasswordSettings.UpperCaseChars">
             <summary>
             Holt oder setzt die Nutzungsrichtlinie für Großbuchstaben.
@@ -514,6 +560,12 @@
             mit den entsprechenden Werten der aktuellen Instanz auffüllt.
             </summary>
             <returns>Eine neue <see cref="T:KeyLocker.PasswordSettings"/>-Instanz.</returns>
+        </member>
+        <member name="M:KeyLocker.PasswordSettings.Save(System.Text.Json.Utf8JsonWriter)">
+            <summary>
+            Schreibt die Daten der Instanz nach <paramref name="writer"/>.
+            </summary>
+            <param name="writer">Das Ausgabeziel.</param>
         </member>
         <member name="T:KeyLocker.Usage">
             <summary>

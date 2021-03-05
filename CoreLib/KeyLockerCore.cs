@@ -39,11 +39,18 @@
         /// Erzeugt eine <see cref="KeyLocker"/>-Instanz aus den Daten von <paramref name="element"/>.
         /// </summary>
         /// <param name="element">Die Datenquelle.</param>
-        /// <param name="password">Das Passwort zur Datei.</param>
         /// <returns>Die erezugte Instanz.</returns>
-        public static KeyLockerCore Read(JsonElement element)
+        public static KeyLockerCore Load(JsonElement element)
         {
-            var res = new KeyLockerCore();
+            var res = new KeyLockerCore()
+            {
+                Settings = AppSettings.Load(element.GetProperty(nameof(KeyLockerCore.Settings))),
+            };
+
+            foreach (var entryElement in element.GetProperty(nameof(KeyLockerCore.Entries)).EnumerateArray())
+            {
+                res.entries.Add(Entry.Load(entryElement));
+            }
 
             return res;
         }
@@ -54,6 +61,7 @@
         public AppSettings Settings
         {
             get;
+            private init;
         }
 
         /// <summary>
@@ -88,7 +96,7 @@
         /// <returns>True, wenn das Passwort stimmt, sonst false.</returns>
         public bool ConfirmPassword(string password)
         {
-            return Crypto.ComputeSaltedHash(password, this.Salt) == this.SaltedPasswordHash;
+            return Crypto.ComputeSaltedHash(password, this.Settings.Salt) == this.Settings.SaltedPasswordHash;
         }
 
         /// <summary>

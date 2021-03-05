@@ -73,7 +73,7 @@
             Die Instanz des Befehls zur Erzeugung eines neuen Eintrags.
             </summary>
         </member>
-        <member name="F:KeyLocker.Console.Commands.KnownCommands.LoadCommand">
+        <member name="F:KeyLocker.Console.Commands.KnownCommands.LoadFileCommand">
             <summary>
             Die Instanz des Befehls zum Laden einer Passwortdatei.
             </summary>
@@ -93,24 +93,24 @@
             Holt eine Auflistung aller bekannten Befehle.
             </summary>
         </member>
-        <member name="T:KeyLocker.Console.Commands.LoadCommand">
+        <member name="T:KeyLocker.Console.Commands.LoadFileCommand">
             <summary>
             Eine Implementierung von <see cref="T:KeyLocker.Console.Commands.ICommand"/>, die das Laden 
             </summary>
         </member>
-        <member name="P:KeyLocker.Console.Commands.LoadCommand.HelpDescritpion">
+        <member name="P:KeyLocker.Console.Commands.LoadFileCommand.HelpDescritpion">
             <inheritdoc/>
         </member>
-        <member name="P:KeyLocker.Console.Commands.LoadCommand.IsCaseSensitive">
+        <member name="P:KeyLocker.Console.Commands.LoadFileCommand.IsCaseSensitive">
             <inheritdoc/>
         </member>
-        <member name="P:KeyLocker.Console.Commands.LoadCommand.Command">
+        <member name="P:KeyLocker.Console.Commands.LoadFileCommand.Command">
             <inheritdoc/>
         </member>
-        <member name="P:KeyLocker.Console.Commands.LoadCommand.Alias">
+        <member name="P:KeyLocker.Console.Commands.LoadFileCommand.Alias">
             <inheritdoc/>
         </member>
-        <member name="M:KeyLocker.Console.Commands.LoadCommand.Execute(KeyLocker.Console.ConsoleCore,System.String)">
+        <member name="M:KeyLocker.Console.Commands.LoadFileCommand.Execute(KeyLocker.Console.ConsoleCore,System.String)">
             <inheritdoc/>
         </member>
         <member name="T:KeyLocker.Console.Commands.NewEntryCommand">
@@ -153,24 +153,24 @@
         <member name="M:KeyLocker.Console.Commands.NewFileCommand.Execute(KeyLocker.Console.ConsoleCore,System.String)">
             <inheritdoc/>
         </member>
-        <member name="T:KeyLocker.Console.Commands.SaveCommand">
+        <member name="T:KeyLocker.Console.Commands.SaveFileCommand">
             <summary>
             Speichert eine geöffnete Datei.
             </summary>
         </member>
-        <member name="P:KeyLocker.Console.Commands.SaveCommand.HelpDescritpion">
+        <member name="P:KeyLocker.Console.Commands.SaveFileCommand.HelpDescritpion">
             <inheritdoc/>
         </member>
-        <member name="P:KeyLocker.Console.Commands.SaveCommand.IsCaseSensitive">
+        <member name="P:KeyLocker.Console.Commands.SaveFileCommand.IsCaseSensitive">
             <inheritdoc/>
         </member>
-        <member name="P:KeyLocker.Console.Commands.SaveCommand.Command">
+        <member name="P:KeyLocker.Console.Commands.SaveFileCommand.Command">
             <inheritdoc/>
         </member>
-        <member name="P:KeyLocker.Console.Commands.SaveCommand.Alias">
+        <member name="P:KeyLocker.Console.Commands.SaveFileCommand.Alias">
             <inheritdoc/>
         </member>
-        <member name="M:KeyLocker.Console.Commands.SaveCommand.Execute(KeyLocker.Console.ConsoleCore,System.String)">
+        <member name="M:KeyLocker.Console.Commands.SaveFileCommand.Execute(KeyLocker.Console.ConsoleCore,System.String)">
             <inheritdoc/>
         </member>
         <member name="T:KeyLocker.Console.ConsoleCore">
@@ -178,31 +178,19 @@
             Stellt den Kern der Anwendung dar.
             </summary>
         </member>
-        <member name="M:KeyLocker.Console.ConsoleCore.#ctor">
-            <summary>
-            Initialisiert eine neue Instanz der Klasse.
-            </summary>
-        </member>
-        <member name="P:KeyLocker.Console.ConsoleCore.StateStack">
-            <summary>
-            Holt einen Stack, der eine Reihe von Zuständen speichert.
-            Der oberste Eintrag ist der aktuelle Zustand.
-            </summary>
-        </member>
         <member name="P:KeyLocker.Console.ConsoleCore.KeyLockerCore">
             <summary>
             Holt den Kern der Bibliothek, über den die Transaktionen ausgeführt werden.
             </summary>
         </member>
-        <member name="M:KeyLocker.Console.ConsoleCore.PushState(KeyLocker.Console.States.State)">
+        <member name="P:KeyLocker.Console.ConsoleCore.FileName">
             <summary>
-            Betritt einen neuen Zustand.
+            Der Pfad zur aktuell geladenen Datei.
             </summary>
-            <param name="state">Der neue Zustand.</param>
         </member>
-        <member name="M:KeyLocker.Console.ConsoleCore.PopState">
+        <member name="P:KeyLocker.Console.ConsoleCore.Loop">
             <summary>
-            Beendet den letzten Zustand.
+            Holt oder setzt einen Wert, der angibt, ob die Anwendung weiterlaufen soll oder nicht.
             </summary>
         </member>
         <member name="M:KeyLocker.Console.ConsoleCore.Run">
@@ -298,102 +286,6 @@
             Haupteinsprungspunkt des Konsolenprogramms.
             </summary>
             <param name="args">Die Aufrufparameter.</param>
-        </member>
-        <member name="T:KeyLocker.Console.States.BasicState">
-            <summary>
-            Der Grundzustand des Programms.
-            </summary>
-        </member>
-        <member name="P:KeyLocker.Console.States.BasicState.AllowedCommands">
-            <inheritdoc/>
-        </member>
-        <member name="T:KeyLocker.Console.States.DataOpenedState">
-            <summary>
-            Stellt den Zustand dar, der eintritt, nachdem eine Passwordliste geöffnet wurde.
-            </summary>
-        </member>
-        <member name="F:KeyLocker.Console.States.DataOpenedState.path">
-            <summary>
-            Der Pfad zur geöffneten Passwortliste.
-            </summary>
-        </member>
-        <member name="M:KeyLocker.Console.States.DataOpenedState.#ctor(System.String)">
-            <summary>
-            Initialisiert eine neue Instanz der Klasse.
-            </summary>
-            <param name="path">Der Pfad zur zu öffnenden Datei.</param>
-        </member>
-        <member name="P:KeyLocker.Console.States.DataOpenedState.AllowedCommands">
-            <inheritdoc/>
-        </member>
-        <member name="T:KeyLocker.Console.States.KnownStates">
-            <summary>
-            Eine Sammlung aller bekannten Zustände.
-            </summary>
-        </member>
-        <member name="F:KeyLocker.Console.States.KnownStates.BasicState">
-            <summary>
-            Der Grundzustand der Anwendung.
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="P:KeyLocker.Console.States.KnownStates.All">
-            <summary>
-            Holt alle bekannnte Zustände.
-            </summary>
-        </member>
-        <member name="T:KeyLocker.Console.States.State">
-            <summary>
-            Stellt einen Zustand des Programms dar.
-            Implementierende Klassen stellen Methoden und Eigenschaften zur Identifikation der Zustände und 
-            der Behandlung von Übergängen dar.
-            </summary>
-        </member>
-        <member name="P:KeyLocker.Console.States.State.AllowedCommands">
-            <summary>
-            Holt eine Auflistung von Befehlen, die in diesem Zustand ausgeführt werden können.
-            </summary>
-        </member>
-        <member name="M:KeyLocker.Console.States.State.HandleUserInput(KeyLocker.Console.ConsoleCore,System.String)">
-            <summary>
-            Behandelt die Eingabe eines Nutzers.
-            </summary>
-            <param name="core">Die ausführende <see cref="T:KeyLocker.Console.ConsoleCore"/>-Instanz.</param>
-            <param name="input">Die Nutzereingabe.</param>
-        </member>
-        <member name="M:KeyLocker.Console.States.State.OnActionNotFound(KeyLocker.Console.ConsoleCore,System.String)">
-            <summary>
-            Wird aufgerufen wenn für eine Eingabe keine Aktion gefunden wurden.
-            </summary>
-            <param name="core">Die ausführende <see cref="T:KeyLocker.Console.ConsoleCore"/>-Instanz.</param>
-            <param name="input">Die Nutzereingabe.</param>
-        </member>
-        <member name="M:KeyLocker.Console.States.State.OnActionRun(KeyLocker.Console.ConsoleCore,KeyLocker.Console.Commands.ICommand,System.String)">
-            <summary>
-            Wird aufgerufen wenn eine Aktion begonnen wird.
-            </summary>
-            <param name="core">Die ausführende <see cref="T:KeyLocker.Console.ConsoleCore"/>-Instanz.</param>
-            <param name="action">Die Aktion, die als nächstes ausgeführt wird.</param>
-            <param name="argument">Die Eingabe für diese Aktion.</param>
-            <returns>True, wenn die Aktion ausgeführt soll, sonst false.</returns>
-        </member>
-        <member name="M:KeyLocker.Console.States.State.OnBegin(KeyLocker.Console.ConsoleCore)">
-            <summary>
-            Wird aufgerufen wenn der Zustand begonnen wird, also wenn die Instanz zu <see cref="P:KeyLocker.Console.ConsoleCore.StateStack"/> hinzugefügt wird.
-            </summary>
-            <param name="core">Die ausführende <see cref="T:KeyLocker.Console.ConsoleCore"/>-Instanz.</param>
-        </member>
-        <member name="M:KeyLocker.Console.States.State.OnTick(KeyLocker.Console.ConsoleCore)">
-            <summary>
-            Behandelt einen Ausführungsschritt.
-            </summary>
-            <param name="core">Die ausführende <see cref="T:KeyLocker.Console.ConsoleCore"/>-Instanz.</param>
-        </member>
-        <member name="M:KeyLocker.Console.States.State.OnEnd(KeyLocker.Console.ConsoleCore)">
-            <summary>
-            Wird aufgerufen wenn der Zustand beendet wird, also wenn die Instanz von <see cref="P:KeyLocker.Console.ConsoleCore.StateStack"/> entfernt wird.
-            </summary>
-            <param name="core">Die ausführende <see cref="T:KeyLocker.Console.ConsoleCore"/>-Instanz.</param>
         </member>
         <member name="T:KeyLocker.Console.Validation.CustomTimeSpanValidator">
             <summary>

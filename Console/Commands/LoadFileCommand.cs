@@ -57,7 +57,7 @@
                 using var inStream = File.OpenRead(arg) ?? throw new FileNotFoundException();
                 using var json = JsonDocument.Parse(inStream);
 
-                var keylockerCore = KeyLockerCore.Read(json.RootElement);
+                var keylockerCore = KeyLockerCore.Load(json.RootElement);
 
                 int tries = 0;
                 const int maxTries = 3;

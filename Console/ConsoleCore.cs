@@ -42,7 +42,11 @@
         /// </summary>
         public void Run()
         {
-            while (true)
+            Console.WriteLine("Welcome to KeyLocker V 0.1");
+
+            this.Loop = true;
+
+            while (this.Loop)
             {
                 var input = ConsoleHelper.Prompt();
 

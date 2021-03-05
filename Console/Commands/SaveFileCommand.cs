@@ -1,10 +1,10 @@
-﻿using System.IO;
-using System.Text.Json;
-
-using KeyLocker.Console.Validation;
-
-namespace KeyLocker.Console.Commands
+﻿namespace KeyLocker.Console.Commands
 {
+    using System.IO;
+    using System.Text.Json;
+
+    using KeyLocker.Console.Validation;
+
     /// <summary>
     /// Speichert eine geöffnete Datei.
     /// </summary>

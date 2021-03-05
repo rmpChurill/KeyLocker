@@ -32,7 +32,7 @@
         {
             get
             {
-                return "new";
+                return "init";
             }
         }
 
@@ -41,7 +41,7 @@
         {
             get
             {
-                return 'n';
+                return 'i';
             }
         }
 
@@ -54,9 +54,9 @@
 
             while (true)
             {
-                password = ConsoleHelper.HiddenPrompt("  Enter a passowrd for this file: ");
+                password = ConsoleHelper.HiddenPrompt("  Enter a password for this file: ");
 
-                if (password == ConsoleHelper.HiddenPrompt("  Confirm passowrd: "))
+                if (password == ConsoleHelper.HiddenPrompt("  Confirm password: "))
                 {
                     break;
                 }

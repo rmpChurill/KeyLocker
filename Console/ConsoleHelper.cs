@@ -137,7 +137,11 @@
         {
             Console.Write(question);
 
-            return HiddenReadLine();
+            var res = HiddenReadLine();
+
+            Console.WriteLine();
+
+            return res;
         }
 
         /// <summary>

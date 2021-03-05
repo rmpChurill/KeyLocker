@@ -49,8 +49,17 @@
         /// <inheritdoc/>
         public void Execute(ConsoleCore core, string arg)
         {
+            var keyLockerCore = core.KeyLockerCore;
+
+            if (keyLockerCore == null)
+            {
+                Console.WriteLine("Can't add an entry, no opened password file!");
+
+                return;
+            }
+
             var nameNotEmtpyValidator = new NotEmptyValidator("Name");
-            var nameUniqeValidator = new UniqueNameValidator(core.KeyLockerCore);
+            var nameUniqeValidator = new UniqueNameValidator(keyLockerCore);
             var nameValidator = new LogicalAndValidator(new IInputValidator[] { nameNotEmtpyValidator, nameUniqeValidator });
             var loginNotEmtpyValidator = new NotEmptyValidator("Login");
 
@@ -136,7 +145,7 @@
 
             if (ConsoleHelper.PromptBool("Do you want to auto-generate a password for this entry? (y/n): "))
             {
-                entry.EncryptedPassword = Crypto.GeneratePassword(core.KeyLockerCore.Settings.PasswordSettings.Fill(entry.CustomSettings));
+                entry.EncryptedPassword = Crypto.GeneratePassword(keyLockerCore.Settings.PasswordSettings.Fill(entry.CustomSettings));
 
                 if (ConsoleHelper.PromptBool("Do you want to show to password right now? (y/n): "))
                 {
@@ -165,7 +174,7 @@
             Console.WriteLine($"Successfully created entry {entry.Name}!");
 
             entry.LastUpdateDate = DateTime.Now;
-            core.KeyLockerCore.Register(entry, entry.EncryptedPassword);
+            keyLockerCore.Register(entry, entry.EncryptedPassword);
         }
     }
 }
