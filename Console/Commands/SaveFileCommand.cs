@@ -20,15 +20,6 @@
         }
 
         /// <inheritdoc/>
-        public bool IsCaseSensitive
-        {
-            get
-            {
-                return false;
-            }
-        }
-
-        /// <inheritdoc/>
         public string Command
         {
             get
@@ -60,7 +51,7 @@
 
             if (string.IsNullOrEmpty(core.FileName))
             {
-                core.FileName = ConsoleHelper.ValidatedPrompt(new NotEmptyValidator("file name"), "Enter filename to save to: ");
+                core.FileName = ConsoleHelper.Prompt("Enter filename to save to: ", new ConsolePromptOptions() { Validator = new NotEmptyValidator("file name") });
             }
             else
             {

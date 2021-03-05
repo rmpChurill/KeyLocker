@@ -21,15 +21,6 @@
         }
 
         /// <inheritdoc/>
-        public bool IsCaseSensitive
-        {
-            get
-            {
-                return false;
-            }
-        }
-
-        /// <inheritdoc/>
         public string Command
         {
             get
@@ -64,7 +55,7 @@
 
                 while (tries < maxTries)
                 {
-                    var password = ConsoleHelper.HiddenPrompt("Enter password: ");
+                    var password = ConsoleHelper.Prompt("Enter password: ", new ConsolePromptOptions() { Hidden = true });
 
                     if (keylockerCore.ConfirmPassword(password))
                     {

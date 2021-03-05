@@ -19,15 +19,6 @@
         }
 
         /// <inheritdoc/>
-        public bool IsCaseSensitive
-        {
-            get
-            {
-                return false;
-            }
-        }
-
-        /// <inheritdoc/>
         public string Command
         {
             get
@@ -54,9 +45,9 @@
 
             while (true)
             {
-                password = ConsoleHelper.HiddenPrompt("  Enter a password for this file: ");
+                password = ConsoleHelper.Prompt("  Enter a password for this file: ", new ConsolePromptOptions() { Hidden = true });
 
-                if (password == ConsoleHelper.HiddenPrompt("  Confirm password: "))
+                if (password == ConsoleHelper.Prompt("  Confirm password: ", new ConsolePromptOptions() { Hidden = true }))
                 {
                     break;
                 }

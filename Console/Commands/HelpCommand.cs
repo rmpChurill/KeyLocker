@@ -18,15 +18,6 @@
         }
 
         /// <inheritdoc/>
-        public bool IsCaseSensitive
-        {
-            get
-            {
-                return false;
-            }
-        }
-
-        /// <inheritdoc/>
         public string Command
         {
             get

@@ -10,8 +10,7 @@
         /// <summary>
         /// Haupteinsprungspunkt des Konsolenprogramms.
         /// </summary>
-        /// <param name="args">Die Aufrufparameter.</param>
-        public static void Main(string[] args)
+        public static void Main()
         {
             new ConsoleCore().Run();
         }

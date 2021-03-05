@@ -59,9 +59,7 @@
 
                 foreach (var action in KnownCommands.All)
                 {
-                    var comparison = action.IsCaseSensitive
-                                   ? StringComparison.Ordinal
-                                   : StringComparison.OrdinalIgnoreCase;
+                    var comparison = StringComparison.OrdinalIgnoreCase;
 
                     if (action.Command.Equals(command, comparison))
                     {

@@ -12,7 +12,7 @@ namespace KeyLocker.Console.Validation
         /// <summary>
         /// Die zu prüfenden <see cref="IInputValidator"/>-Instanzen.
         /// </summary>
-        private IEnumerable<IInputValidator> validators;
+        private readonly IEnumerable<IInputValidator> validators;
 
         /// <summary>
         /// Initialisiert eine neue Instanz der Klasse.
@@ -20,7 +20,16 @@ namespace KeyLocker.Console.Validation
         /// <param name="validators">Die zu prüfenden <see cref="IInputValidator"/>-Instanzen.</param>
         public LogicalAndValidator(IEnumerable<IInputValidator> validators)
         {
-            this.validators = validators;
+            this.validators = new List<IInputValidator>(validators);
+        }
+
+        /// <summary>
+        /// Initialisiert eine neue Instanz der Klasse.
+        /// </summary>
+        /// <param name="validators">Die zu prüfenden <see cref="IInputValidator"/>-Instanzen.</param>
+        public LogicalAndValidator(params IInputValidator[] validators)
+        {
+            this.validators = new List<IInputValidator>(validators);
         }
 
         /// <inheritdoc/>

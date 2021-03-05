@@ -21,19 +21,19 @@
         }
 
         /// <summary>
-        /// Gibt <paramref name="text"/> aus und ändert dazu die Textfarbe zu <paramref name="foreground"/> und
-        /// die Hintergrundfarbe zu <paramref name="background"/>. Nach der Ausgabe werden die Farben zurückgesetzt.
+        /// Gibt <paramref name="text"/> aus und wendet die Optionen <paramref name="options"/> an.
         /// </summary>
         /// <param name="text">Der auszugebende Text.</param>
-        /// <param name="foreground">Die zu nutzende Textfarbe.</param>
-        /// <param name="background">Die zu nutzende Hintergrundfarbe. Ist der Parameter null wird die Hintegrundfarbe nicht geändert.</param>
-        public static void WriteColor(string text, ConsoleColor foreground, ConsoleColor? background)
+        /// <param name="options">Die anzuwendenden Optionen</param>
+        public static void Write(string text, ConsoleWriteOptions? options = null)
         {
+            options ??= new ConsoleWriteOptions();
+
             var oldFg = Console.ForegroundColor;
             var oldBg = Console.BackgroundColor;
 
-            Console.ForegroundColor = foreground;
-            Console.BackgroundColor = background ?? oldBg;
+            Console.ForegroundColor = options.TextColor ?? oldFg;
+            Console.BackgroundColor = options.BackgroundColor ?? oldBg;
 
             Console.Write(text);
 
@@ -45,72 +45,40 @@
         /// Schreibt <paramref name="question"/> (Standardwert ist "> "), liest eine Zeile der Nutzereingabe und gibt diese zurück.
         /// </summary>
         /// <param name="question">Der Text, der vor der Eingabe angezeigt werden soll.</param>
+        /// <param name="options">Die anzuwendenden Optionen.</param>
         /// <returns>Die Nutzereingabe.</returns>
-        public static string Prompt(string question = "> ")
+        public static string Prompt(string question = "> ", ConsolePromptOptions? options = null)
         {
-            Console.Write(question);
+            options ??= new ConsolePromptOptions();
 
-            return Console.ReadLine() ?? string.Empty;
-        }
-
-        /// <summary>
-        /// Schreibt <paramref name="question"/> (Standardwert ist "> "), liest eine Zeile der Nutzereingabe.
-        /// Diese Eingabe wird durch <paramref name="validator"/> validiert und die Eingabe wird solange wiederholt, bis
-        /// die Validierung erfolgreich ist.
-        /// </summary>
-        /// <param name="validator">Der zu nutzende <see cref="IInputValidator"/></param>
-        /// <param name="question">Der Text, der vor der Eingabe angezeigt werden soll.</param>
-        /// <returns>Die Nutzereingabe.</returns>
-        public static string ValidatedPrompt(IInputValidator validator, string question = "> ")
-        {
             string? res;
 
             while (true)
             {
                 Console.Write(question);
 
-                res = Console.ReadLine() ?? string.Empty;
+                res = options.Hidden
+                    ? Console.ReadLine()
+                    : HiddenReadLine();
 
-                if (validator.IsValid(res))
+                if (options.Validator != null)
                 {
-                    break;
+                    if (options.AllowSkip &&
+                        string.IsNullOrEmpty(res))
+                    {
+                        return string.Empty;
+                    }
+                    else
+                    {
+                        res ??= string.Empty;
+
+                        if (options.Validator.IsValid(res))
+                        {
+                            return res;
+                        }
+                    }
                 }
             }
-
-            return res;
-        }
-
-        /// <summary>
-        /// Schreibt <paramref name="question"/> (Standardwert ist "> "), liest eine Zeile der Nutzereingabe.
-        /// Diese Eingabe wird durch <paramref name="validator"/> validiert und die Eingabe wird solange wiederholt, bis
-        /// die Validierung erfolgreich ist.
-        /// Außerdem sind leere Eingaben erlaubt. Diese werden nicht validiert sondern führen direkt zu einer Rückgabe von null.
-        /// </summary>
-        /// <param name="validator">Der zu nutzende <see cref="IInputValidator"/></param>
-        /// <param name="question">Der Text, der vor der Eingabe angezeigt werden soll.</param>
-        /// <returns>Die Nutzereingabe oder null bei einer leeren Eingabe.</returns>
-        public static string? ValidatedPromptOrEmpty(IInputValidator validator, string question = "> ")
-        {
-            string? res;
-
-            while (true)
-            {
-                Console.Write(question);
-
-                res = Console.ReadLine();
-
-                if (string.IsNullOrEmpty(res))
-                {
-                    return null;
-                }
-
-                if (validator.IsValid(res))
-                {
-                    break;
-                }
-            }
-
-            return res;
         }
 
         /// <summary>
@@ -118,30 +86,19 @@
         /// die als boolescher Wert interpretiert wird.
         /// </summary>
         /// <param name="question">Der Text, der vor der Eingabe angezeigt werden soll.</param>
-
-        /// <returns></returns>
-        public static bool PromptBool(string question = "> ")
+        /// <param name="options">Die anzuwendenden Optionen.</param>
+        /// <returns>True, wenn die Eingabe y oder Y war, false wenn die Eingabe n oder N war.</returns>
+        public static bool PromptBool(string question = "> ", ConsolePromptOptions? options = null)
         {
-            var res = ValidatedPrompt(new IsYesNoValidator(), question);
+            options ??= new ConsolePromptOptions();
+
+            options.Validator = options.Validator == null
+                              ? new IsYesNoValidator()
+                              : new LogicalAndValidator(options.Validator, new IsYesNoValidator());
+
+            var res = Prompt(question, options);
 
             return res == "y" || res == "Y";
-        }
-
-        /// <summary>
-        /// Schreibt <paramref name="question"/> (Standardwert ist "> "), liest eine Zeile der Nutzereingabe, wobei 
-        /// die Eingabe abgefangen wird, sodass die Eingabe nicht angezeigt wird und gibt diese zurück.
-        /// </summary>
-        /// <param name="question">Der Text, der vor der Eingabe angezeigt werden soll.</param>
-        /// <returns>Die Nutzereingabe.</returns>
-        public static string HiddenPrompt(string question = "> ")
-        {
-            Console.Write(question);
-
-            var res = HiddenReadLine();
-
-            Console.WriteLine();
-
-            return res;
         }
 
         /// <summary>

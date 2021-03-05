@@ -1,5 +1,6 @@
 ﻿namespace KeyLocker
 {
+    using System;
     using System.Text.Json;
 
     /// <summary>
@@ -24,9 +25,12 @@
         /// <returns>Die gelesene Instanz.</returns>
         public static AppSettings Load(JsonElement element)
         {
-            var res = new AppSettings();
-
-            return res;
+            return new AppSettings
+            {
+                Salt = element.GetProperty(nameof(AppSettings.Salt)).GetString() ?? throw new Exception(),
+                SaltedPasswordHash = element.GetProperty(nameof(AppSettings.SaltedPasswordHash)).GetString() ?? throw new Exception(),
+                PasswordSettings = PasswordSettings.Read(element.GetProperty(nameof(AppSettings.PasswordSettings))),
+            };
         }
 
         /// <summary>
@@ -39,7 +43,7 @@
         }
 
         /// <summary>
-        /// Holt das Salt.
+        /// Holt das Salt.5
         /// </summary>
         public string Salt
         {

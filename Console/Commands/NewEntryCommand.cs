@@ -20,15 +20,6 @@
         }
 
         /// <inheritdoc/>
-        public bool IsCaseSensitive
-        {
-            get
-            {
-                return false;
-            }
-        }
-
-        /// <inheritdoc/>
         public string Command
         {
             get
@@ -68,8 +59,8 @@
 
             var entry = new Entry()
             {
-                Name = ConsoleHelper.ValidatedPrompt(nameValidator, "Enter entry name: "),
-                Login = ConsoleHelper.ValidatedPrompt(loginNotEmtpyValidator, "Enter login: "),
+                Name = ConsoleHelper.Prompt("Enter entry name: ", new ConsolePromptOptions() { Validator = nameValidator }),
+                Login = ConsoleHelper.Prompt("Enter login: ", new ConsolePromptOptions() { Validator = loginNotEmtpyValidator }),
                 Comment = ConsoleHelper.Prompt("Enter comment (optional):"),
             };
 
@@ -79,65 +70,66 @@
 
                 var usageValidator = new EnumValidator<Usage>();
                 var settings = new PartialPasswordSettings();
+                var usageOptions = new ConsolePromptOptions() { AllowSkip = true, Validator = usageValidator };
 
                 Console.Write("  Enter usages for different categories. Valid values are ");
                 ConsoleHelper.WriteAll(Enum.GetNames(typeof(Usage)));
                 Console.WriteLine();
 
-                var upperCaseChars = ConsoleHelper.ValidatedPromptOrEmpty(usageValidator, "    Upper case characters: ");
-                var lowerCaseChars = ConsoleHelper.ValidatedPromptOrEmpty(usageValidator, "    Lower case characters: ");
-                var digits = ConsoleHelper.ValidatedPromptOrEmpty(usageValidator, "    Digits: ");
-                var specialCharacters = ConsoleHelper.ValidatedPromptOrEmpty(usageValidator, "    Special characters: ");
+                var upperCaseChars = ConsoleHelper.Prompt("    Upper case characters: ", usageOptions);
+                var lowerCaseChars = ConsoleHelper.Prompt("    Lower case characters: ", usageOptions);
+                var digits = ConsoleHelper.Prompt("    Digits: ", usageOptions);
+                var specialCharacters = ConsoleHelper.Prompt("    Special characters: ", usageOptions);
 
                 Console.WriteLine("  Enter the following additional values: ");
 
-                var minLength = ConsoleHelper.ValidatedPromptOrEmpty(new IntValidator(0, int.MaxValue), "    Min length: ");
-                var maxLength = ConsoleHelper.ValidatedPromptOrEmpty(new IntValidator(minLength != null ? int.Parse(minLength) : 1, int.MaxValue), "    Max length: ");
-                var forbiddenCharacters = ConsoleHelper.Prompt("    List of forbidden characters: ");
-                var allowedSpecialCharacters = ConsoleHelper.ValidatedPromptOrEmpty(new IsOnlySpecialCharactersValidator(), "    Allowed special characters: ");
-                var decayTime = ConsoleHelper.ValidatedPromptOrEmpty(new CustomTimeSpanValidator(), "    Time until invalidation: ");
+                var minLength = ConsoleHelper.Prompt("    Min length: ", new ConsolePromptOptions() { AllowSkip = true, Validator = new IntValidator(0, int.MaxValue) });
+                var maxLength = ConsoleHelper.Prompt("    Max length: ", new ConsolePromptOptions() { AllowSkip = true, Validator = new IntValidator(minLength != null ? int.Parse(minLength) : 1, int.MaxValue) });
+                var forbiddenCharacters = ConsoleHelper.Prompt("    List of forbidden characters: ", new ConsolePromptOptions() { AllowSkip = true });
+                var allowedSpecialCharacters = ConsoleHelper.Prompt("    Allowed special characters: ", new ConsolePromptOptions() { AllowSkip = true, Validator = new IsOnlySpecialCharactersValidator() });
+                var decayTime = ConsoleHelper.Prompt("    Time until invalidation: ", new ConsolePromptOptions() { AllowSkip = true, Validator = new CustomTimeSpanValidator() });
 
-                if (upperCaseChars != null)
+                if (!string.IsNullOrEmpty(upperCaseChars))
                 {
                     settings.UpperCaseChars = Enum.Parse<Usage>(upperCaseChars);
                 }
 
-                if (lowerCaseChars != null)
+                if (!string.IsNullOrEmpty(lowerCaseChars))
                 {
                     settings.LowerCaseChars = Enum.Parse<Usage>(lowerCaseChars);
                 }
 
-                if (specialCharacters != null)
+                if (!string.IsNullOrEmpty(specialCharacters))
                 {
                     settings.SpecialCharacters = Enum.Parse<Usage>(specialCharacters);
                 }
 
-                if (digits != null)
+                if (!string.IsNullOrEmpty(digits))
                 {
                     settings.Digits = Enum.Parse<Usage>(digits);
                 }
 
-                if (minLength != null)
+                if (!string.IsNullOrEmpty(minLength))
                 {
                     settings.MinLength = uint.Parse(minLength);
                 }
 
-                if (maxLength != null)
+                if (!string.IsNullOrEmpty(maxLength))
                 {
                     settings.MaxLength = uint.Parse(maxLength);
                 }
 
-                if (forbiddenCharacters != null && forbiddenCharacters != string.Empty)
+                if (!string.IsNullOrEmpty(forbiddenCharacters))
                 {
                     settings.ForbiddenCharacters = forbiddenCharacters.ToCharArray();
                 }
 
-                if (allowedSpecialCharacters != null)
+                if (!string.IsNullOrEmpty(allowedSpecialCharacters))
                 {
                     settings.AllowedSpecialCharacters = allowedSpecialCharacters.ToCharArray();
                 }
 
-                if (decayTime != null)
+                if (!string.IsNullOrEmpty(decayTime))
                 {
                     settings.DecayTime = CustomTimeSpan.Parse(decayTime);
                 }
@@ -156,8 +148,8 @@
             {
                 while (true)
                 {
-                    var password = ConsoleHelper.HiddenPrompt("Enter password: ");
-                    var confirmation = ConsoleHelper.HiddenPrompt("Confirm password: ");
+                    var password = ConsoleHelper.Prompt("Enter password: ", new ConsolePromptOptions() { Hidden = true });
+                    var confirmation = ConsoleHelper.Prompt("Confirm password: ", new ConsolePromptOptions() { Hidden = true });
 
                     if (password.Equals(confirmation))
                     {

@@ -17,15 +17,6 @@
         }
 
         /// <summary>
-        /// Holt einen Wert, der angibt, ob bei dem Vergleich einer Nutzereingabe mit <see cref="Command"/> oder 
-        /// <see cref="Alias"/> die Groß-/Kleinschreibung beachtet werden soll oder nicht.
-        /// </summary>
-        public bool IsCaseSensitive
-        {
-            get;
-        }
-
-        /// <summary>
         /// Holt den Befehl, der mit dieser Aktion verknüpft werden soll.
         /// </summary>
         public string Command

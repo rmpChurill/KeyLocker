@@ -209,58 +209,29 @@
             </summary>
             <param name="seperator">Das auszugebende Zeichen.</param>
         </member>
-        <member name="M:KeyLocker.Console.ConsoleHelper.WriteColor(System.String,System.ConsoleColor,System.Nullable{System.ConsoleColor})">
+        <member name="M:KeyLocker.Console.ConsoleHelper.Write(System.String,KeyLocker.Console.ConsoleWriteOptions)">
             <summary>
-            Gibt <paramref name="text"/> aus und ändert dazu die Textfarbe zu <paramref name="foreground"/> und
-            die Hintergrundfarbe zu <paramref name="background"/>. Nach der Ausgabe werden die Farben zurückgesetzt.
+            Gibt <paramref name="text"/> aus und wendet die Optionen <paramref name="options"/> an.
             </summary>
             <param name="text">Der auszugebende Text.</param>
-            <param name="foreground">Die zu nutzende Textfarbe.</param>
-            <param name="background">Die zu nutzende Hintergrundfarbe. Ist der Parameter null wird die Hintegrundfarbe nicht geändert.</param>
+            <param name="options">Die anzuwendenden Optionen</param>
         </member>
-        <member name="M:KeyLocker.Console.ConsoleHelper.Prompt(System.String)">
+        <member name="M:KeyLocker.Console.ConsoleHelper.Prompt(System.String,KeyLocker.Console.ConsolePromptOptions)">
             <summary>
             Schreibt <paramref name="question"/> (Standardwert ist "> "), liest eine Zeile der Nutzereingabe und gibt diese zurück.
             </summary>
             <param name="question">Der Text, der vor der Eingabe angezeigt werden soll.</param>
+            <param name="options">Die anzuwendenden Optionen.</param>
             <returns>Die Nutzereingabe.</returns>
         </member>
-        <member name="M:KeyLocker.Console.ConsoleHelper.ValidatedPrompt(KeyLocker.Console.Validation.IInputValidator,System.String)">
-            <summary>
-            Schreibt <paramref name="question"/> (Standardwert ist "> "), liest eine Zeile der Nutzereingabe.
-            Diese Eingabe wird durch <paramref name="validator"/> validiert und die Eingabe wird solange wiederholt, bis
-            die Validierung erfolgreich ist.
-            </summary>
-            <param name="validator">Der zu nutzende <see cref="T:KeyLocker.Console.Validation.IInputValidator"/></param>
-            <param name="question">Der Text, der vor der Eingabe angezeigt werden soll.</param>
-            <returns>Die Nutzereingabe.</returns>
-        </member>
-        <member name="M:KeyLocker.Console.ConsoleHelper.ValidatedPromptOrEmpty(KeyLocker.Console.Validation.IInputValidator,System.String)">
-            <summary>
-            Schreibt <paramref name="question"/> (Standardwert ist "> "), liest eine Zeile der Nutzereingabe.
-            Diese Eingabe wird durch <paramref name="validator"/> validiert und die Eingabe wird solange wiederholt, bis
-            die Validierung erfolgreich ist.
-            Außerdem sind leere Eingaben erlaubt. Diese werden nicht validiert sondern führen direkt zu einer Rückgabe von null.
-            </summary>
-            <param name="validator">Der zu nutzende <see cref="T:KeyLocker.Console.Validation.IInputValidator"/></param>
-            <param name="question">Der Text, der vor der Eingabe angezeigt werden soll.</param>
-            <returns>Die Nutzereingabe oder null bei einer leeren Eingabe.</returns>
-        </member>
-        <member name="M:KeyLocker.Console.ConsoleHelper.PromptBool(System.String)">
+        <member name="M:KeyLocker.Console.ConsoleHelper.PromptBool(System.String,KeyLocker.Console.ConsolePromptOptions)">
             <summary>
             Schreibt <paramref name="question"/> (Standardwert ist "> ") und liest eine Zeile der Nutzereingabe, 
             die als boolescher Wert interpretiert wird.
             </summary>
             <param name="question">Der Text, der vor der Eingabe angezeigt werden soll.</param>
-            <returns></returns>
-        </member>
-        <member name="M:KeyLocker.Console.ConsoleHelper.HiddenPrompt(System.String)">
-            <summary>
-            Schreibt <paramref name="question"/> (Standardwert ist "> "), liest eine Zeile der Nutzereingabe, wobei 
-            die Eingabe abgefangen wird, sodass die Eingabe nicht angezeigt wird und gibt diese zurück.
-            </summary>
-            <param name="question">Der Text, der vor der Eingabe angezeigt werden soll.</param>
-            <returns>Die Nutzereingabe.</returns>
+            <param name="options">Die anzuwendenden Optionen.</param>
+            <returns>True, wenn die Eingabe y oder Y war, false wenn die Eingabe n oder N war.</returns>
         </member>
         <member name="M:KeyLocker.Console.ConsoleHelper.WriteAll``1(System.Collections.Generic.IEnumerable{``0},System.String)">
             <summary>
@@ -276,16 +247,51 @@
             </summary>
             <returns>Die Nutzereingabe.</returns>
         </member>
+        <member name="T:KeyLocker.Console.ConsolePromptOptions">
+            <summary>
+            Optionen für eine Konsolenausgabe.
+            </summary>
+        </member>
+        <member name="P:KeyLocker.Console.ConsolePromptOptions.Hidden">
+            <summary>
+            Holt einen Wert, der angibt, ob die Eingabe versteckt werden soll oder nicht.
+            </summary>
+        </member>
+        <member name="P:KeyLocker.Console.ConsolePromptOptions.Validator">
+            <summary>
+            Holt den <see cref="T:KeyLocker.Console.Validation.IInputValidator"/> der die Eingabe validieren soll.
+            </summary>
+        </member>
+        <member name="P:KeyLocker.Console.ConsolePromptOptions.AllowSkip">
+            <summary>
+            Holt einen Wert, der angibt, ob eine leere Eingabe unabhängig von <see cref="P:KeyLocker.Console.ConsolePromptOptions.Validator"/>
+            akzeptiert werden soll und dann <code>default(string)</code> zurückgibt.
+            </summary>
+        </member>
+        <member name="T:KeyLocker.Console.ConsoleWriteOptions">
+            <summary>
+            Optionen für eine Konsolenausgabe.
+            </summary>
+        </member>
+        <member name="P:KeyLocker.Console.ConsoleWriteOptions.TextColor">
+            <summary>
+            Holt die Textfarbe.
+            </summary>
+        </member>
+        <member name="P:KeyLocker.Console.ConsoleWriteOptions.BackgroundColor">
+            <summary>
+            Holt die Hintergrundfarbe.
+            </summary>
+        </member>
         <member name="T:KeyLocker.Console.Program">
             <summary>
             Hauptklasse des Konsolenprogramms.
             </summary>
         </member>
-        <member name="M:KeyLocker.Console.Program.Main(System.String[])">
+        <member name="M:KeyLocker.Console.Program.Main">
             <summary>
             Haupteinsprungspunkt des Konsolenprogramms.
             </summary>
-            <param name="args">Die Aufrufparameter.</param>
         </member>
         <member name="T:KeyLocker.Console.Validation.CustomTimeSpanValidator">
             <summary>
@@ -391,6 +397,12 @@
             </summary>
         </member>
         <member name="M:KeyLocker.Console.Validation.LogicalAndValidator.#ctor(System.Collections.Generic.IEnumerable{KeyLocker.Console.Validation.IInputValidator})">
+            <summary>
+            Initialisiert eine neue Instanz der Klasse.
+            </summary>
+            <param name="validators">Die zu prüfenden <see cref="T:KeyLocker.Console.Validation.IInputValidator"/>-Instanzen.</param>
+        </member>
+        <member name="M:KeyLocker.Console.Validation.LogicalAndValidator.#ctor(KeyLocker.Console.Validation.IInputValidator[])">
             <summary>
             Initialisiert eine neue Instanz der Klasse.
             </summary>

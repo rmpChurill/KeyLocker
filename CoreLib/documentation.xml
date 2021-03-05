@@ -28,7 +28,7 @@
         </member>
         <member name="P:KeyLocker.AppSettings.Salt">
             <summary>
-            Holt das Salt.
+            Holt das Salt.5
             </summary>
         </member>
         <member name="P:KeyLocker.AppSettings.PasswordSettings">
