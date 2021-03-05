@@ -108,9 +108,9 @@
             writer.WriteStartObject();
 
             writer.WritePropertyName(nameof(this.Settings));
-
             this.Settings.Save(writer);
 
+            writer.WritePropertyName(nameof(this.Entries));
             writer.WriteStartArray();
 
             foreach (var entry in this.entries)

@@ -1,9 +1,12 @@
 ﻿namespace KeyLocker.Console
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
 
     using KeyLocker.Console.Commands;
     using KeyLocker.CoreLib;
+    using KeyLocker.Utility;
 
     /// <summary>
     /// Stellt den Kern der Anwendung dar.
@@ -77,7 +80,7 @@
 
                 if (actionToRun != default)
                 {
-                    var arg = input[i..];
+                    var arg = input[i..].Trim();
 
                     actionToRun.Execute(this, arg);
                 }
@@ -86,6 +89,28 @@
                     Console.WriteLine($"\"{input}\" is no valid command! Use help to show available commands!");
                 }
             }
+        }
+
+        /// <summary>
+        /// Sucht einen Eintrag mit Namen <paramref name="name"/>.
+        /// </summary>
+        /// <param name="name">Der Name des gesuchten Eintrags.</param>
+        public Entry? FindEntryByName(string name)
+        {
+            return this.KeyLockerCore?.Entries?.SingleOrDefault(i => i.Name.Equals(name));
+        }
+
+        /// <summary>
+        /// Gibt den Eintrag zurück, dessen Name die geringste Levenshtein-Distanz zu <paramref name="name"/> hat.
+        /// </summary>
+        /// <param name="name">Der gesuchte Name.</param>
+        /// <returns>Den Eintrag mit dem ähnlichsten Namen.</returns>
+        public Entry? FindPossibleAlternativeByName(string name)
+        {
+            return this.KeyLockerCore?.Entries?.Select(i => KeyValuePair.Create(LevenshteinDistance.Compute(i.Name, name), i))
+                    .OrderBy(i => i.Key)
+                    .Select(i => i.Value)
+                    .FirstOrDefault();
         }
     }
 }

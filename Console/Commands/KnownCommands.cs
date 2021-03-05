@@ -25,12 +25,22 @@
         /// <summary>
         /// Die Instanz des Befehls zum Speichern einer Passwortdatei.
         /// </summary>
-        public readonly static SaveFileCommand SaveCommand = new SaveFileCommand();
+        public readonly static SaveFileCommand SaveFileCommand = new SaveFileCommand();
 
         /// <summary>
         /// Die Instanz des Befehls zum Erstellen einer neuen Passwortdatei.
         /// </summary>
         public readonly static NewFileCommand NewFileCommand = new NewFileCommand();
+
+        /// <summary>
+        /// Die Instanz des Befehls zum Anzeigen eines Eintrags.
+        /// </summary>
+        public readonly static ViewEntryCommand ViewEntryCommand = new ViewEntryCommand();
+
+        /// <summary>
+        /// Die Instanz des Befehls zum Anzeigen eines Passworts.
+        /// </summary>
+        public readonly static ViewPasswordCommand ViewPasswordCommand = new ViewPasswordCommand();
 
         /// <summary>
         /// Holt eine Auflistung aller bekannten Befehle.
@@ -40,11 +50,12 @@
             get
             {
                 yield return HelpCommand;
-                yield return LoadFileCommand;
                 yield return NewFileCommand;
                 yield return LoadFileCommand;
-                yield return SaveCommand;
+                yield return SaveFileCommand;
                 yield return NewEntryCommand;
+                yield return ViewEntryCommand;
+                yield return ViewPasswordCommand;
             }
         }
     }

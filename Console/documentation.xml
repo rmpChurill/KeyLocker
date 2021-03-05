@@ -12,9 +12,6 @@
         <member name="P:KeyLocker.Console.Commands.HelpCommand.HelpDescritpion">
             <inheritdoc/>
         </member>
-        <member name="P:KeyLocker.Console.Commands.HelpCommand.IsCaseSensitive">
-            <inheritdoc/>
-        </member>
         <member name="P:KeyLocker.Console.Commands.HelpCommand.Command">
             <inheritdoc/>
         </member>
@@ -33,12 +30,6 @@
         <member name="P:KeyLocker.Console.Commands.ICommand.HelpDescritpion">
             <summary>
             Holt einen Text, der in der Hilfe als Beschreibung angezeigt werden soll.
-            </summary>
-        </member>
-        <member name="P:KeyLocker.Console.Commands.ICommand.IsCaseSensitive">
-            <summary>
-            Holt einen Wert, der angibt, ob bei dem Vergleich einer Nutzereingabe mit <see cref="P:KeyLocker.Console.Commands.ICommand.Command"/> oder 
-            <see cref="P:KeyLocker.Console.Commands.ICommand.Alias"/> die Groß-/Kleinschreibung beachtet werden soll oder nicht.
             </summary>
         </member>
         <member name="P:KeyLocker.Console.Commands.ICommand.Command">
@@ -78,7 +69,7 @@
             Die Instanz des Befehls zum Laden einer Passwortdatei.
             </summary>
         </member>
-        <member name="F:KeyLocker.Console.Commands.KnownCommands.SaveCommand">
+        <member name="F:KeyLocker.Console.Commands.KnownCommands.SaveFileCommand">
             <summary>
             Die Instanz des Befehls zum Speichern einer Passwortdatei.
             </summary>
@@ -86,6 +77,16 @@
         <member name="F:KeyLocker.Console.Commands.KnownCommands.NewFileCommand">
             <summary>
             Die Instanz des Befehls zum Erstellen einer neuen Passwortdatei.
+            </summary>
+        </member>
+        <member name="F:KeyLocker.Console.Commands.KnownCommands.ViewEntryCommand">
+            <summary>
+            Die Instanz des Befehls zum Anzeigen eines Eintrags.
+            </summary>
+        </member>
+        <member name="F:KeyLocker.Console.Commands.KnownCommands.ViewPasswordCommand">
+            <summary>
+            Die Instanz des Befehls zum Anzeigen eines Passworts.
             </summary>
         </member>
         <member name="P:KeyLocker.Console.Commands.KnownCommands.All">
@@ -99,9 +100,6 @@
             </summary>
         </member>
         <member name="P:KeyLocker.Console.Commands.LoadFileCommand.HelpDescritpion">
-            <inheritdoc/>
-        </member>
-        <member name="P:KeyLocker.Console.Commands.LoadFileCommand.IsCaseSensitive">
             <inheritdoc/>
         </member>
         <member name="P:KeyLocker.Console.Commands.LoadFileCommand.Command">
@@ -121,9 +119,6 @@
         <member name="P:KeyLocker.Console.Commands.NewEntryCommand.HelpDescritpion">
             <inheritdoc/>
         </member>
-        <member name="P:KeyLocker.Console.Commands.NewEntryCommand.IsCaseSensitive">
-            <inheritdoc/>
-        </member>
         <member name="P:KeyLocker.Console.Commands.NewEntryCommand.Command">
             <inheritdoc/>
         </member>
@@ -139,9 +134,6 @@
             </summary>
         </member>
         <member name="P:KeyLocker.Console.Commands.NewFileCommand.HelpDescritpion">
-            <inheritdoc/>
-        </member>
-        <member name="P:KeyLocker.Console.Commands.NewFileCommand.IsCaseSensitive">
             <inheritdoc/>
         </member>
         <member name="P:KeyLocker.Console.Commands.NewFileCommand.Command">
@@ -161,9 +153,6 @@
         <member name="P:KeyLocker.Console.Commands.SaveFileCommand.HelpDescritpion">
             <inheritdoc/>
         </member>
-        <member name="P:KeyLocker.Console.Commands.SaveFileCommand.IsCaseSensitive">
-            <inheritdoc/>
-        </member>
         <member name="P:KeyLocker.Console.Commands.SaveFileCommand.Command">
             <inheritdoc/>
         </member>
@@ -171,6 +160,40 @@
             <inheritdoc/>
         </member>
         <member name="M:KeyLocker.Console.Commands.SaveFileCommand.Execute(KeyLocker.Console.ConsoleCore,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="T:KeyLocker.Console.Commands.ViewEntryCommand">
+            <summary>
+            Eine Implementierung von <see cref="T:KeyLocker.Console.Commands.ICommand"/>, die den Befehl zur Anzeige eines Eintrags darstellt.
+            </summary>
+        </member>
+        <member name="P:KeyLocker.Console.Commands.ViewEntryCommand.HelpDescritpion">
+            <inheritdoc/>
+        </member>
+        <member name="P:KeyLocker.Console.Commands.ViewEntryCommand.Command">
+            <inheritdoc/>
+        </member>
+        <member name="P:KeyLocker.Console.Commands.ViewEntryCommand.Alias">
+            <inheritdoc/>
+        </member>
+        <member name="M:KeyLocker.Console.Commands.ViewEntryCommand.Execute(KeyLocker.Console.ConsoleCore,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="T:KeyLocker.Console.Commands.ViewPasswordCommand">
+            <summary>
+            Eine Implementierung von <see cref="T:KeyLocker.Console.Commands.ICommand"/>, die den Befehl zum Anzeigen eines Passworts anzeigt.
+            </summary>
+        </member>
+        <member name="P:KeyLocker.Console.Commands.ViewPasswordCommand.HelpDescritpion">
+            <inheritdoc/>
+        </member>
+        <member name="P:KeyLocker.Console.Commands.ViewPasswordCommand.Command">
+            <inheritdoc/>
+        </member>
+        <member name="P:KeyLocker.Console.Commands.ViewPasswordCommand.Alias">
+            <inheritdoc/>
+        </member>
+        <member name="M:KeyLocker.Console.Commands.ViewPasswordCommand.Execute(KeyLocker.Console.ConsoleCore,System.String)">
             <inheritdoc/>
         </member>
         <member name="T:KeyLocker.Console.ConsoleCore">
@@ -197,6 +220,19 @@
             <summary>
             Startet die Ausführung des Konsolenprogramms in einer Endlosschleife.
             </summary>
+        </member>
+        <member name="M:KeyLocker.Console.ConsoleCore.FindEntryByName(System.String)">
+            <summary>
+            Sucht einen Eintrag mit Namen <paramref name="name"/>.
+            </summary>
+            <param name="name">Der Name des gesuchten Eintrags.</param>
+        </member>
+        <member name="M:KeyLocker.Console.ConsoleCore.FindPossibleAlternativeByName(System.String)">
+            <summary>
+            Gibt den Eintrag zurück, dessen Name die geringste Levenshtein-Distanz zu <paramref name="name"/> hat.
+            </summary>
+            <param name="name">Der gesuchte Name.</param>
+            <returns>Den Eintrag mit dem ähnlichsten Namen.</returns>
         </member>
         <member name="T:KeyLocker.Console.ConsoleHelper">
             <summary>

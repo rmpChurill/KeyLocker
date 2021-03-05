@@ -58,25 +58,22 @@
                 Console.Write(question);
 
                 res = options.Hidden
-                    ? Console.ReadLine()
-                    : HiddenReadLine();
+                    ? HiddenReadLine()
+                    : Console.ReadLine();
 
-                if (options.Validator != null)
+                if (options.Validator != null &&
+                    options.AllowSkip &&
+                    string.IsNullOrEmpty(res))
                 {
-                    if (options.AllowSkip &&
-                        string.IsNullOrEmpty(res))
-                    {
-                        return string.Empty;
-                    }
-                    else
-                    {
-                        res ??= string.Empty;
+                    return string.Empty;
+                }
 
-                        if (options.Validator.IsValid(res))
-                        {
-                            return res;
-                        }
-                    }
+                res ??= string.Empty;
+
+                if (options.Validator == null ||
+                    options.Validator.IsValid(res))
+                {
+                    return res;
                 }
             }
         }
@@ -138,6 +135,8 @@
 
                 key = Console.ReadKey(true);
             }
+
+            Console.WriteLine();
 
             return sb.ToString();
         }

@@ -215,7 +215,7 @@
 
             using var symmetricKey = new RijndaelManaged
             {
-                BlockSize = 256,
+                BlockSize = 128,
                 Mode = CipherMode.CBC,
                 Padding = PaddingMode.PKCS7
             };

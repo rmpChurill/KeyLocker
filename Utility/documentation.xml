@@ -129,6 +129,19 @@
             Die Zeitspanne beschreibt Jahre.
             </summary>
         </member>
+        <member name="T:KeyLocker.Utility.LevenshteinDistance">
+            <summary>
+            Eine Klasse zur Berechnung der Levenshtein-Distanz.
+            </summary>
+        </member>
+        <member name="M:KeyLocker.Utility.LevenshteinDistance.Compute(System.String,System.String)">
+            <summary>
+            Berechnet die Levenshtein-Distanz zwischn <paramref name="s"/> und <paramref name="t"/>.
+            </summary>
+            <param name="s">Der erste zu vergleichende String.</param>
+            <param name="t">Der zweite zu vergleichende String.</param>
+            <returns>Die Levenshtein-Distanz.</returns>
+        </member>
         <member name="T:KeyLocker.Utility.NotifyPropertyChangedBase">
             <summary>
             Basisklasse für Objekte, die eine Änderung einer Eigenschaft publizieren wollen.
