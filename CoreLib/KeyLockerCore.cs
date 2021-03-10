@@ -175,6 +175,22 @@
         }
 
         /// <summary>
+        /// Ändert das Passwort der Datei.
+        /// </summary>
+        /// <param name="oldPassword">Das aktuelle Passwort.</param>
+        /// <param name="newPassword">Das neue Passwort.</param>
+        public void ChangeFilePassword(string oldPassword, string newPassword)
+        {
+            if (this.ConfirmPassword(oldPassword))
+            {
+                foreach (var entry in this.entries)
+                {
+                    entry.EncryptedPassword = Crypto.Encrypt(Crypto.Decrypt(entry.EncryptedPassword, oldPassword), newPassword);
+                }
+            }
+        }
+
+        /// <summary>
         /// Behandelt die Änderung eines Eintrags.
         /// </summary>
         /// <param name="sender">Der geänderte Eintrag.</param>

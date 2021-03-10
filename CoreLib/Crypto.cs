@@ -39,52 +39,29 @@
             var len = rng.GenerateRandomUint(settings.MinLength, settings.MaxLength + 1);
             var res = new char[len];
             var allowedChars = settings.GetAllowedCharacters();
-            var indices = new int[res.Length];
+            var i = 0;
 
-            for (var i = 0; i < indices.Length; i++)
+            if (settings.Digits == Usage.Require && i < res.Length)
             {
-                indices[i] = i;
+                res[i++] = rng.RandomCharFrom(Definitions.Digits);
             }
 
-            for (var i = 0; i < indices.Length - 1; i++)
+            if (settings.UpperCaseChars == Usage.Require && i < res.Length)
             {
-                var indexToSwap = rng.GenerateRandomUint((uint)i, (uint)indices.Length);
-                var buf = indices[indexToSwap];
-                indices[indexToSwap] = indices[i];
-                indices[i] = buf;
+                res[i++] = rng.RandomCharFrom(Definitions.UpperCaseChars);
             }
 
-            var index = 0;
-
-            if (settings.Digits == Usage.Require)
+            if (settings.SpecialCharacters == Usage.Require && i < res.Length)
             {
-                res[indices[index]] = rng.RandomCharFrom(Definitions.Digits);
-
-                index++;
+                res[i++] = rng.RandomCharFrom(Definitions.SpecialCharacters);
             }
 
-            if (settings.UpperCaseChars == Usage.Require)
+            while (i < res.Length)
             {
-                res[indices[index]] = rng.RandomCharFrom(Definitions.UpperCaseChars);
-
-                index++;
+                res[i] = rng.RandomCharFrom(allowedChars);
             }
 
-            if (settings.SpecialCharacters == Usage.Require)
-            {
-                res[indices[index]] = rng.RandomCharFrom(Definitions.SpecialCharacters);
-
-                index++;
-            }
-
-            while (index < indices.Length)
-            {
-                res[indices[index]] = rng.RandomCharFrom(allowedChars);
-
-                index++;
-            }
-
-            return new string(res);
+            return string.Concat(res.OrderBy(i => rng.GenerateRandomUint()));
         }
 
 
@@ -114,28 +91,6 @@
             }
 
             return new string(res).GetHashCode().ToString("X");
-        }
-
-        /// <summary>
-        /// Codiert <paramref name="text"/>.
-        /// </summary>
-        /// <param name="text">Der zu verschlüsselnde Text.</param>
-        /// <param name="appSettings">Die zu nutzenden Einstellungen.</param>
-        /// <returns>Der codierte String.</returns>
-        public static string Encode(string text, AppSettings appSettings)
-        {
-            return Encrypt(text, appSettings.SaltedPasswordHash);
-        }
-
-        /// <summary>
-        /// Decodiert <paramref name="text"/>.
-        /// </summary>
-        /// <param name="text">Der zu entschlüsselnde Text.</param>
-        /// <param name="appSettings">Die zu nutzenden Einstellungen.</param>
-        /// <returns>Der decodierte String.</returns>
-        public static string Decode(string text, AppSettings appSettings)
-        {
-            return Decrypt(text, appSettings.SaltedPasswordHash);
         }
 
         /// <summary>
