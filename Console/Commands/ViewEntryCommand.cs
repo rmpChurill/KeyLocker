@@ -52,24 +52,9 @@
                 return;
             }
 
-            var entry = core.FindEntryByName(arg);
+            var entry = core.FindEntryByName(arg, true);
 
-            if (entry == default)
-            {
-                var closest = core.FindPossibleAlternativeByName(arg);
-
-                Console.Write($"There is no entry named {arg}.");
-
-                if (closest == default)
-                {
-                    Console.WriteLine();
-                }
-                else
-                {
-                    Console.WriteLine($"Did you mean {closest.Name}?");
-                }
-            }
-            else
+            if (entry != default)
             {
                 var s = entry.CustomSettings;
                 var d = keyLockerCore.Settings.PasswordSettings;

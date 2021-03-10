@@ -8,22 +8,67 @@
     /// <summary>
     /// Stellt Einstellungen für ein Passwort dar.
     /// </summary>
-    public class PasswordSettings
+    public class PasswordSettings : NotifyPropertyChangedBase
     {
+        /// <summary>
+        /// Die Nutzungsrichtlinie für Großbuchstaben.
+        /// </summary>
+        private Usage upperCaseChars;
+
+        /// <summary>
+        /// Die Nutzungsrichtlinie für Kleinbuchstaben.
+        /// </summary>
+        private Usage lowerCaseChars;
+
+        /// <summary>
+        /// Die Nutzungsrichtlinie für Ziffern.
+        /// </summary>
+        private Usage digits;
+
+        /// <summary>
+        /// Die Nutzungsrichtlinie für Sonderzeichen.
+        /// </summary>
+        private Usage specialCharacters;
+
+        /// <summary>
+        /// Die Mindestlänge des Passworts. 
+        /// </summary>
+        private uint minLength;
+
+        /// <summary>
+        /// Die Maximallänge des Passworts. 
+        /// </summary>
+        private uint maxLength;
+
+        /// <summary>
+        /// Eine Liste von verbotenen Zeichen.
+        /// </summary>
+        private char[] forbiddenCharacters;
+
+        /// <summary>
+        /// Eine Liste von erlaubten Sonderzeichen.
+        /// </summary>
+        private char[] allowedSpecialCharacters;
+
+        /// <summary>
+        /// Die Zeitspanne, nach der das Passwort als veraltet gilt.
+        /// </summary>
+        private CustomTimeSpan decayTime;
+
         /// <summary>
         /// Initialisiert eine neue Instanz der Klasse.
         /// </summary>
         public PasswordSettings()
         {
-            this.Digits = Usage.Require;
-            this.UpperCaseChars = Usage.Allow;
-            this.LowerCaseChars = Usage.Allow;
-            this.SpecialCharacters = Usage.Allow;
-            this.MinLength = 8;
-            this.MaxLength = 32;
-            this.DecayTime = new CustomTimeSpan(90, CustomTimeSpanKind.Days);
-            this.ForbiddenCharacters = Array.Empty<char>();
-            this.AllowedSpecialCharacters = Definitions.Digits;
+            this.digits = Usage.Require;
+            this.upperCaseChars = Usage.Allow;
+            this.lowerCaseChars = Usage.Allow;
+            this.specialCharacters = Usage.Allow;
+            this.minLength = 8;
+            this.maxLength = 32;
+            this.decayTime = new CustomTimeSpan(90, CustomTimeSpanKind.Days);
+            this.forbiddenCharacters = Array.Empty<char>();
+            this.allowedSpecialCharacters = Definitions.Digits;
         }
 
         /// <summary>
@@ -35,15 +80,15 @@
         {
             return new PasswordSettings
             {
-                AllowedSpecialCharacters = element.GetProperty(nameof(PartialPasswordSettings.AllowedSpecialCharacters)).GetString()?.ToCharArray() ?? throw new Exception(),
-                ForbiddenCharacters = element.GetProperty(nameof(PartialPasswordSettings.ForbiddenCharacters)).GetString()?.ToCharArray() ?? throw new Exception(),
-                DecayTime = CustomTimeSpan.Parse(element.GetProperty(nameof(PartialPasswordSettings.DecayTime)).GetString() ?? throw new Exception()),
-                Digits = Enum.Parse<Usage>(element.GetProperty(nameof(PartialPasswordSettings.Digits)).GetString() ?? throw new Exception()),
-                LowerCaseChars = Enum.Parse<Usage>(element.GetProperty(nameof(PartialPasswordSettings.LowerCaseChars)).GetString() ?? throw new Exception()),
-                SpecialCharacters = Enum.Parse<Usage>(element.GetProperty(nameof(PartialPasswordSettings.SpecialCharacters)).GetString() ?? throw new Exception()),
-                UpperCaseChars = Enum.Parse<Usage>(element.GetProperty(nameof(PartialPasswordSettings.UpperCaseChars)).GetString() ?? throw new Exception()),
-                MaxLength = element.GetProperty(nameof(PartialPasswordSettings.MaxLength)).GetUInt32(),
-                MinLength = element.GetProperty(nameof(PartialPasswordSettings.MinLength)).GetUInt32()
+                allowedSpecialCharacters = element.GetProperty(nameof(PartialPasswordSettings.AllowedSpecialCharacters)).GetString()?.ToCharArray() ?? throw new Exception(),
+                forbiddenCharacters = element.GetProperty(nameof(PartialPasswordSettings.ForbiddenCharacters)).GetString()?.ToCharArray() ?? throw new Exception(),
+                decayTime = CustomTimeSpan.Parse(element.GetProperty(nameof(PartialPasswordSettings.DecayTime)).GetString() ?? throw new Exception()),
+                digits = Enum.Parse<Usage>(element.GetProperty(nameof(PartialPasswordSettings.Digits)).GetString() ?? throw new Exception()),
+                lowerCaseChars = Enum.Parse<Usage>(element.GetProperty(nameof(PartialPasswordSettings.LowerCaseChars)).GetString() ?? throw new Exception()),
+                specialCharacters = Enum.Parse<Usage>(element.GetProperty(nameof(PartialPasswordSettings.SpecialCharacters)).GetString() ?? throw new Exception()),
+                upperCaseChars = Enum.Parse<Usage>(element.GetProperty(nameof(PartialPasswordSettings.UpperCaseChars)).GetString() ?? throw new Exception()),
+                maxLength = element.GetProperty(nameof(PartialPasswordSettings.MaxLength)).GetUInt32(),
+                minLength = element.GetProperty(nameof(PartialPasswordSettings.MinLength)).GetUInt32()
             };
         }
 
@@ -52,8 +97,19 @@
         /// </summary>
         public Usage UpperCaseChars
         {
-            get;
-            set;
+            get
+            {
+                return this.upperCaseChars;
+            }
+
+            set
+            {
+                if (this.upperCaseChars != value)
+                {
+                    this.upperCaseChars = value;
+                    this.OnPropertyChanged();
+                }
+            }
         }
 
         /// <summary>
@@ -61,8 +117,19 @@
         /// </summary>
         public Usage LowerCaseChars
         {
-            get;
-            set;
+            get
+            {
+                return this.lowerCaseChars;
+            }
+
+            set
+            {
+                if (this.lowerCaseChars != value)
+                {
+                    this.lowerCaseChars = value;
+                    this.OnPropertyChanged();
+                }
+            }
         }
 
         /// <summary>
@@ -70,8 +137,19 @@
         /// </summary>
         public Usage Digits
         {
-            get;
-            set;
+            get
+            {
+                return this.digits;
+            }
+
+            set
+            {
+                if (this.digits != value)
+                {
+                    this.digits = value;
+                    this.OnPropertyChanged();
+                }
+            }
         }
 
         /// <summary>
@@ -79,8 +157,19 @@
         /// </summary>
         public Usage SpecialCharacters
         {
-            get;
-            set;
+            get
+            {
+                return this.specialCharacters;
+            }
+
+            set
+            {
+                if (this.specialCharacters != value)
+                {
+                    this.specialCharacters = value;
+                    this.OnPropertyChanged();
+                }
+            }
         }
 
         /// <summary>
@@ -88,8 +177,19 @@
         /// </summary>
         public uint MinLength
         {
-            get;
-            set;
+            get
+            {
+                return this.minLength;
+            }
+
+            set
+            {
+                if (this.minLength != value)
+                {
+                    this.minLength = value;
+                    this.OnPropertyChanged();
+                }
+            }
         }
 
         /// <summary>
@@ -97,8 +197,19 @@
         /// </summary>
         public uint MaxLength
         {
-            get;
-            set;
+            get
+            {
+                return this.maxLength;
+            }
+
+            set
+            {
+                if (this.maxLength != value)
+                {
+                    this.maxLength = value;
+                    this.OnPropertyChanged();
+                }
+            }
         }
 
         /// <summary>
@@ -106,8 +217,19 @@
         /// </summary>
         public char[] ForbiddenCharacters
         {
-            get;
-            set;
+            get
+            {
+                return this.forbiddenCharacters;
+            }
+
+            set
+            {
+                if (this.forbiddenCharacters != value)
+                {
+                    this.forbiddenCharacters = value;
+                    this.OnPropertyChanged();
+                }
+            }
         }
 
         /// <summary>
@@ -115,8 +237,19 @@
         /// </summary>
         public char[] AllowedSpecialCharacters
         {
-            get;
-            set;
+            get
+            {
+                return this.allowedSpecialCharacters;
+            }
+
+            set
+            {
+                if (this.allowedSpecialCharacters != value)
+                {
+                    this.allowedSpecialCharacters = value;
+                    this.OnPropertyChanged();
+                }
+            }
         }
 
         /// <summary>
@@ -124,8 +257,19 @@
         /// </summary>
         public CustomTimeSpan DecayTime
         {
-            get;
-            set;
+            get
+            {
+                return this.decayTime;
+            }
+
+            set
+            {
+                if (this.decayTime != value)
+                {
+                    this.decayTime = value;
+                    this.OnPropertyChanged();
+                }
+            }
         }
 
         /// <summary>
@@ -177,15 +321,15 @@
         {
             return new PasswordSettings()
             {
-                AllowedSpecialCharacters = this.AllowedSpecialCharacters,
-                DecayTime = this.DecayTime,
-                Digits = this.Digits,
-                ForbiddenCharacters = this.ForbiddenCharacters,
-                LowerCaseChars = this.LowerCaseChars,
-                MaxLength = this.MaxLength,
-                MinLength = this.MinLength,
-                SpecialCharacters = this.SpecialCharacters,
-                UpperCaseChars = this.UpperCaseChars,
+                allowedSpecialCharacters = this.AllowedSpecialCharacters,
+                decayTime = this.DecayTime,
+                digits = this.Digits,
+                forbiddenCharacters = this.ForbiddenCharacters,
+                lowerCaseChars = this.LowerCaseChars,
+                maxLength = this.MaxLength,
+                minLength = this.MinLength,
+                specialCharacters = this.SpecialCharacters,
+                upperCaseChars = this.UpperCaseChars,
             };
         }
 
@@ -218,15 +362,15 @@
         {
             return new PasswordSettings()
             {
-                AllowedSpecialCharacters = partial.AllowedSpecialCharacters ?? this.AllowedSpecialCharacters,
-                DecayTime = partial.DecayTime ?? this.DecayTime,
-                Digits = partial.Digits ?? this.Digits,
-                ForbiddenCharacters = partial.ForbiddenCharacters ?? this.ForbiddenCharacters,
-                LowerCaseChars = partial.LowerCaseChars ?? this.LowerCaseChars,
-                MaxLength = partial.MaxLength ?? this.MaxLength,
-                MinLength = partial.MinLength ?? this.MinLength,
-                SpecialCharacters = partial.SpecialCharacters ?? this.SpecialCharacters,
-                UpperCaseChars = partial.UpperCaseChars ?? this.UpperCaseChars,
+                allowedSpecialCharacters = partial.AllowedSpecialCharacters ?? this.AllowedSpecialCharacters,
+                decayTime = partial.DecayTime ?? this.DecayTime,
+                digits = partial.Digits ?? this.Digits,
+                forbiddenCharacters = partial.ForbiddenCharacters ?? this.ForbiddenCharacters,
+                lowerCaseChars = partial.LowerCaseChars ?? this.LowerCaseChars,
+                maxLength = partial.MaxLength ?? this.MaxLength,
+                minLength = partial.MinLength ?? this.MinLength,
+                specialCharacters = partial.SpecialCharacters ?? this.SpecialCharacters,
+                upperCaseChars = partial.UpperCaseChars ?? this.UpperCaseChars,
             };
         }
 
@@ -238,15 +382,15 @@
         {
             writer.WriteStartObject();
 
-            writer.WriteString(nameof(this.AllowedSpecialCharacters), this.AllowedSpecialCharacters);
-            writer.WriteString(nameof(this.DecayTime), this.DecayTime.ToString());
-            writer.WriteString(nameof(this.Digits), Enum.GetName(this.Digits));
-            writer.WriteString(nameof(this.LowerCaseChars), Enum.GetName(this.LowerCaseChars));
-            writer.WriteString(nameof(this.SpecialCharacters), Enum.GetName(this.SpecialCharacters));
-            writer.WriteString(nameof(this.UpperCaseChars), Enum.GetName(this.UpperCaseChars));
-            writer.WriteString(nameof(this.ForbiddenCharacters), this.ForbiddenCharacters);
-            writer.WriteNumber(nameof(this.MaxLength), this.MaxLength);
-            writer.WriteNumber(nameof(this.MinLength), this.MinLength);
+            writer.WriteString(nameof(this.AllowedSpecialCharacters), this.allowedSpecialCharacters);
+            writer.WriteString(nameof(this.DecayTime), this.decayTime.ToString());
+            writer.WriteString(nameof(this.Digits), Enum.GetName(this.digits));
+            writer.WriteString(nameof(this.LowerCaseChars), Enum.GetName(this.lowerCaseChars));
+            writer.WriteString(nameof(this.SpecialCharacters), Enum.GetName(this.specialCharacters));
+            writer.WriteString(nameof(this.UpperCaseChars), Enum.GetName(this.upperCaseChars));
+            writer.WriteString(nameof(this.ForbiddenCharacters), this.forbiddenCharacters);
+            writer.WriteNumber(nameof(this.MaxLength), this.maxLength);
+            writer.WriteNumber(nameof(this.MinLength), this.minLength);
 
             writer.WriteEndObject();
         }

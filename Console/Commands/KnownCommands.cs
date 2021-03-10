@@ -15,7 +15,7 @@
         /// <summary>
         /// Die Instanz des Befehls zur Erzeugung eines neuen Eintrags.
         /// </summary>
-        public readonly static NewEntryCommand NewEntryCommand = new NewEntryCommand();
+        public readonly static AddEntryCommand NewEntryCommand = new AddEntryCommand();
 
         /// <summary>
         /// Die Instanz des Befehls zum Laden einer Passwortdatei.

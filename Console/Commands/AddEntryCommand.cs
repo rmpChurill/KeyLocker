@@ -8,14 +8,14 @@
     /// <summary>
     /// Stellt den Befehl zur Erzeugung eines neuen Eintrags dar.
     /// </summary>
-    public class NewEntryCommand : ICommand
+    public class AddEntryCommand : ICommand
     {
         /// <inheritdoc/>
         public string HelpDescritpion
         {
             get
             {
-                return "Erzeugt einen neuen Eintrag.";
+                return "Adds a new entry.";
             }
         }
 
@@ -24,7 +24,7 @@
         {
             get
             {
-                return "new";
+                return "add";
             }
         }
 
@@ -33,7 +33,7 @@
         {
             get
             {
-                return 'n';
+                return '+';
             }
         }
 
@@ -166,7 +166,7 @@
             Console.WriteLine($"Successfully created entry {entry.Name}!");
 
             entry.LastUpdateDate = DateTime.Now;
-            keyLockerCore.Register(entry, entry.EncryptedPassword);
+            keyLockerCore.Add(entry, entry.EncryptedPassword);
         }
     }
 }

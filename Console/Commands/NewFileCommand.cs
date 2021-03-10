@@ -23,7 +23,7 @@
         {
             get
             {
-                return "init";
+                return "new";
             }
         }
 

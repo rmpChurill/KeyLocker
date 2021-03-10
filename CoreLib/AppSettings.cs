@@ -3,10 +3,12 @@
     using System;
     using System.Text.Json;
 
+    using KeyLocker.Utility;
+
     /// <summary>
     /// Stellt die App-Einstellungen dar.
     /// </summary>
-    public class AppSettings
+    public class AppSettings : NotifyPropertyChangedBase
     {
         /// <summary>
         /// Erzeugt eine neue Instanz 
@@ -34,9 +36,9 @@
         }
 
         /// <summary>
-        /// Holt den Hash des Passworts mit Salt.
+        /// Holt oder setzt den Hash des Passworts mit Salt.
         /// </summary>
-        public string SaltedPasswordHash
+        internal string SaltedPasswordHash
         {
             get;
             set;
@@ -45,7 +47,7 @@
         /// <summary>
         /// Holt das Salt.5
         /// </summary>
-        public string Salt
+        internal string Salt
         {
             get;
             set;
@@ -54,7 +56,7 @@
         /// <summary>
         /// Holt oder setzt die allgemeingültigen Passworteinstellungen.
         /// </summary>
-        public PasswordSettings PasswordSettings
+        internal PasswordSettings PasswordSettings
         {
             get;
             set;

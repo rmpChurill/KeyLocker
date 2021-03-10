@@ -1,10 +1,6 @@
 ﻿namespace KeyLocker.Console.Commands
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
 
     /// <summary>
     /// Eine Implementierung von <see cref="ICommand"/>, die den Befehl zum Anzeigen eines Passworts anzeigt.
@@ -50,24 +46,9 @@
                 return;
             }
 
-            var entry = core.FindEntryByName(arg);
+            var entry = core.FindEntryByName(arg, true);
 
-            if (entry == default)
-            {
-                var closest = core.FindPossibleAlternativeByName(arg);
-
-                Console.Write($"There is no entry name {arg}.");
-
-                if (closest == default)
-                {
-                    Console.WriteLine();
-                }
-                else
-                {
-                    Console.WriteLine($"Did you mean {closest.Name}?");
-                }
-            }
-            else
+            if (entry != default)
             {
                 for (int i = 0; i < 3; i++)
                 {

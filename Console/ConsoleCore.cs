@@ -51,38 +51,34 @@
 
             while (this.Loop)
             {
-                var input = ConsoleHelper.Prompt();
-
-                var i = 0;
-
-                while (i < input.Length && !char.IsWhiteSpace(input[i])) { i++; }
-
-                var command = input[0..i];
+                var input = ConsoleHelper.Prompt().Trim();
                 var actionToRun = default(ICommand);
+                var actionArgument = string.Empty;
 
                 foreach (var action in KnownCommands.All)
                 {
-                    var comparison = StringComparison.OrdinalIgnoreCase;
-
-                    if (action.Command.Equals(command, comparison))
+                    if (input.StartsWith(action.Command, StringComparison.OrdinalIgnoreCase) &&
+                        (input.Length == action.Command.Length || char.IsWhiteSpace(input[action.Command.Length])))
                     {
                         actionToRun = action;
+                        actionArgument = input[Math.Max(input.Length - 1, action.Command.Length)..];
+
                         break;
                     }
 
                     var alias = action.Alias?.ToString();
 
-                    if (alias != default && alias.Equals(command, comparison))
+                    if (alias != default &&
+                        (input.Length == 1 || char.IsWhiteSpace(input[1])))
                     {
                         actionToRun = action;
+                        actionArgument = input[Math.Max(input.Length - 1, 1)..];
                     }
                 }
 
                 if (actionToRun != default)
                 {
-                    var arg = input[i..].Trim();
-
-                    actionToRun.Execute(this, arg);
+                    actionToRun.Execute(this, actionArgument);
                 }
                 else
                 {
@@ -95,9 +91,32 @@
         /// Sucht einen Eintrag mit Namen <paramref name="name"/>.
         /// </summary>
         /// <param name="name">Der Name des gesuchten Eintrags.</param>
-        public Entry? FindEntryByName(string name)
+        /// <param name="printAlternativesIfNotFound">Gibt an, ob Einträge mit einem ähnlichen Namen 
+        /// angezeigt werden sollen, falls kein Eintrag mit dem Namen <paramref name="name"/> gefunden wurde.</param>
+        /// <returns></returns>
+        public Entry? FindEntryByName(string name, bool printAlternativesIfNotFound = false)
         {
-            return this.KeyLockerCore?.Entries?.SingleOrDefault(i => i.Name.Equals(name));
+            var res = this.KeyLockerCore?.Entries?.SingleOrDefault(i => i.Name.Equals(name));
+
+            if (res == default && printAlternativesIfNotFound)
+            {
+                var closest = this.FindPossibleAlternativeByName(name);
+
+                Console.Write($"There is no entry named {name}.");
+
+                if (closest == default)
+                {
+                    Console.WriteLine();
+                }
+                else
+                {
+                    Console.Write($"Did you mean ");
+                    ConsoleHelper.WriteAll(closest.Select(i => i.Name));
+                    Console.WriteLine("?");
+                }
+            }
+
+            return res;
         }
 
         /// <summary>
@@ -105,12 +124,25 @@
         /// </summary>
         /// <param name="name">Der gesuchte Name.</param>
         /// <returns>Den Eintrag mit dem ähnlichsten Namen.</returns>
-        public Entry? FindPossibleAlternativeByName(string name)
+        public IEnumerable<Entry> FindPossibleAlternativeByName(string name)
         {
-            return this.KeyLockerCore?.Entries?.Select(i => KeyValuePair.Create(LevenshteinDistance.Compute(i.Name, name), i))
-                    .OrderBy(i => i.Key)
-                    .Select(i => i.Value)
-                    .FirstOrDefault();
+            var entries = this.KeyLockerCore?.Entries;
+
+            if (entries == default || entries.Count() == 0)
+            {
+                return Array.Empty<Entry>();
+            }
+
+            var alternatives = entries.Select(i => KeyValuePair.Create(LevenshteinDistance.Compute(i.Name, name), i))
+                                      .OrderBy(i => i.Key);
+
+            if (alternatives == default)
+            {
+                return Array.Empty<Entry>();
+            }
+
+            return alternatives.Where(i => i.Key == alternatives.First().Key)
+                               .Select(i => i.Value);
         }
     }
 }
