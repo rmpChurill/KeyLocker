@@ -52,7 +52,7 @@
             Stellt eine einfache Zeitspanne dar.
             </summary>
         </member>
-        <member name="M:KeyLocker.Utility.CustomTimeSpan.#ctor(System.Double,KeyLocker.Utility.CustomTimeSpanKind)">
+        <member name="M:KeyLocker.Utility.CustomTimeSpan.#ctor(System.Int32,KeyLocker.Utility.CustomTimeSpanKind)">
             <summary>
             Initialisiert eine neue Instanz der Klasse.
             </summary>
@@ -89,6 +89,24 @@
             <param name="s">Der zu parsende String.</param>
             <returns>Eine neue Instanz von <see cref="T:KeyLocker.Utility.CustomTimeSpan"/>.</returns>
         </member>
+        <member name="M:KeyLocker.Utility.CustomTimeSpan.CompareToDifference(System.DateTime,System.DateTime)">
+            <summary>
+            Prüft, ob die die aktuelle Instanz eine Zeitspanne darstellt, die kürzer, gleich oder länger ist als 
+            die Zeit zwischen <paramref name="a"/> und <paramref name="b"/>.
+            </summary>
+            <param name="a">Der erste Zeitpunkt.</param>
+            <param name="b">Der zweite Zeitpunkt.</param>
+            <returns>-1 wenn die dargestllte Zeit kleiner als die Zeit zwischen <paramref name="a"/> und <paramref name="b"/> ist.
+                      0 wenn die Zeiten gleich sind.
+                      1 wenn die dargestellte Zeit länger ist, als die Zeit zwischen <paramref name="a"/> und <paramref name="b"/>.</returns>
+        </member>
+        <member name="M:KeyLocker.Utility.CustomTimeSpan.AddTo(System.DateTime)">
+            <summary>
+            Gibt eine <see cref="T:System.DateTime"/>-Instanz zurück, die um die dargestellte Zeitspanne versetzt wurde.
+            </summary>
+            <param name="a">Der Ausgangszeitpunkt.</param>
+            <returns><paramref name="a"/> + die dargestellte Zeitspanne.</returns>
+        </member>
         <member name="T:KeyLocker.Utility.CustomTimeSpanKind">
             <summary>
             Beschreibt die Art einer Zeitspanne.
@@ -112,11 +130,6 @@
         <member name="F:KeyLocker.Utility.CustomTimeSpanKind.Days">
             <summary>
             Die Zeitspanne beschreibt Tage.
-            </summary>
-        </member>
-        <member name="F:KeyLocker.Utility.CustomTimeSpanKind.Weeks">
-            <summary>
-            Die Zeitspanne beschreibt Wochen.
             </summary>
         </member>
         <member name="F:KeyLocker.Utility.CustomTimeSpanKind.Months">

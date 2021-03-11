@@ -1,6 +1,5 @@
 ﻿namespace KeyLocker.Console
 {
-    using System;
 
     using KeyLocker.Console.Validation;
 

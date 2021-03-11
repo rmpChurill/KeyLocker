@@ -1,8 +1,10 @@
 ﻿namespace KeyLocker.Console.Commands
 {
     using System;
+    using System.Linq;
 
     using KeyLocker.Console.Validation;
+    using KeyLocker.CoreLib.Validation;
     using KeyLocker.Utility;
 
     /// <summary>
@@ -137,7 +139,7 @@
 
             if (ConsoleHelper.PromptBool("Do you want to auto-generate a password for this entry? (y/n): "))
             {
-                entry.EncryptedPassword = Crypto.GeneratePassword(keyLockerCore.Settings.PasswordSettings.Fill(entry.CustomSettings));
+                entry.EncryptedPassword = Crypto.GeneratePassword(keyLockerCore.PasswordSettings.Fill(entry.CustomSettings));
 
                 if (ConsoleHelper.PromptBool("Do you want to show to password right now? (y/n): "))
                 {
@@ -151,21 +153,40 @@
                     var password = ConsoleHelper.Prompt("Enter password: ", new ConsolePromptOptions() { Hidden = true });
                     var confirmation = ConsoleHelper.Prompt("Confirm password: ", new ConsolePromptOptions() { Hidden = true });
 
-                    if (password.Equals(confirmation))
-                    {
-                        entry.EncryptedPassword = password;
-                        break;
-                    }
-                    else
+                    if (!password.Equals(confirmation))
                     {
                         Console.WriteLine("Passwords don't match, try again.");
+
+                        continue;
                     }
+
+                    var settings = keyLockerCore.PasswordSettings.Fill(entry.CustomSettings);
+                    var validationResults = EntryValidator.ValidatePassword(password, settings);
+
+                    if (validationResults.Any())
+                    {
+                        Console.WriteLine("The password validates the following rules: ");
+
+                        foreach (var validationResult in validationResults)
+                        {
+                            Console.WriteLine($"  {validationResult.Description}");
+                        }
+
+                        if (ConsoleHelper.PromptBool("Do you want to enter another password? y/n: "))
+                        {
+                            continue;
+                        }
+                    }
+
+                    entry.EncryptedPassword = password;
+                    break;
                 }
             }
 
             Console.WriteLine($"Successfully created entry {entry.Name}!");
 
             entry.LastUpdateDate = DateTime.Now;
+
             keyLockerCore.Add(entry, entry.EncryptedPassword);
         }
     }

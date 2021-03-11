@@ -10,37 +10,57 @@
         /// <summary>
         /// Die Instanz des Hilfsbefehls.
         /// </summary>
-        public readonly static HelpCommand HelpCommand = new HelpCommand();
-
-        /// <summary>
-        /// Die Instanz des Befehls zur Erzeugung eines neuen Eintrags.
-        /// </summary>
-        public readonly static AddEntryCommand NewEntryCommand = new AddEntryCommand();
+        public static readonly HelpCommand HelpCommand = new HelpCommand();
 
         /// <summary>
         /// Die Instanz des Befehls zum Laden einer Passwortdatei.
         /// </summary>
-        public readonly static LoadFileCommand LoadFileCommand = new LoadFileCommand();
+        public static readonly LoadFileCommand LoadFileCommand = new LoadFileCommand();
 
         /// <summary>
         /// Die Instanz des Befehls zum Speichern einer Passwortdatei.
         /// </summary>
-        public readonly static SaveFileCommand SaveFileCommand = new SaveFileCommand();
+        public static readonly SaveFileCommand SaveFileCommand = new SaveFileCommand();
 
         /// <summary>
         /// Die Instanz des Befehls zum Erstellen einer neuen Passwortdatei.
         /// </summary>
-        public readonly static NewFileCommand NewFileCommand = new NewFileCommand();
+        public static readonly NewFileCommand NewFileCommand = new NewFileCommand();
+
+        /// <summary>
+        /// Die Instanz des Befehls zum Auflisten aller Einträge.
+        /// </summary>
+        public static readonly ListEntriesCommand ListEntriesCommand = new ListEntriesCommand();
+
+        /// <summary>
+        /// Die Instanz des Befehls zum Validieren aller Einträge.
+        /// </summary>
+        public static readonly ValidateEntriesCommand ValidateEntriesCommand = new ValidateEntriesCommand();
+
+        /// <summary>
+        /// Die Instanz des Befehls zur Erzeugung eines neuen Eintrags.
+        /// </summary>
+        public static readonly AddEntryCommand AddEntryCommand = new AddEntryCommand();
 
         /// <summary>
         /// Die Instanz des Befehls zum Anzeigen eines Eintrags.
         /// </summary>
-        public readonly static ViewEntryCommand ViewEntryCommand = new ViewEntryCommand();
+        public static readonly ViewEntryCommand ViewEntryCommand = new ViewEntryCommand();
 
         /// <summary>
         /// Die Instanz des Befehls zum Anzeigen eines Passworts.
         /// </summary>
-        public readonly static ViewPasswordCommand ViewPasswordCommand = new ViewPasswordCommand();
+        public static readonly ViewPasswordCommand ViewPasswordCommand = new ViewPasswordCommand();
+
+        /// <summary>
+        /// Die Instanz des Befehls zur Bearbeitung eines neuen Eintrags.
+        /// </summary>
+        public static readonly EditEntryCommand EditEntryCommand = new EditEntryCommand();
+
+        /// <summary>
+        /// Die Instanz des Befehls zur Entfernung eines neuen Eintrags.
+        /// </summary>
+        public static readonly DeleteEntryCommand DeleteEntryCommand = new DeleteEntryCommand();
 
         /// <summary>
         /// Holt eine Auflistung aller bekannten Befehle.
@@ -53,9 +73,12 @@
                 yield return NewFileCommand;
                 yield return LoadFileCommand;
                 yield return SaveFileCommand;
-                yield return NewEntryCommand;
+                yield return AddEntryCommand;
+                yield return ListEntriesCommand;
+                yield return ValidateEntriesCommand;
                 yield return ViewEntryCommand;
                 yield return ViewPasswordCommand;
+                yield return DeleteEntryCommand;
             }
         }
     }

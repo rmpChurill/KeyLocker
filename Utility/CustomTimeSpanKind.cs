@@ -26,11 +26,6 @@
         Days,
 
         /// <summary>
-        /// Die Zeitspanne beschreibt Wochen.
-        /// </summary>
-        Weeks,
-
-        /// <summary>
         /// Die Zeitspanne beschreibt Sekunden.
         /// </summary>
         Months,

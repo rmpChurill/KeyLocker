@@ -1,7 +1,5 @@
 ﻿namespace KeyLocker.Console
 {
-    using System;
-
     /// <summary>
     /// Hauptklasse des Konsolenprogramms.
     /// </summary>

@@ -2,8 +2,6 @@
 {
     using System;
 
-    using KeyLocker.Console.Validation;
-
     /// <summary>
     /// Optionen für eine Konsolenausgabe.
     /// </summary>

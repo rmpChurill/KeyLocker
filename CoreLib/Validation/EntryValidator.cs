@@ -1,6 +1,5 @@
 ﻿namespace KeyLocker.CoreLib.Validation
 {
-    using System;
     using System.Collections.Generic;
 
     /// <summary>
@@ -12,79 +11,71 @@
         /// Validiert eine <see cref="Entry"/>-Instanz entsprechend den Einstellungen in 
         /// <see cref="Entry.CustomSettings"/> und <paramref name="settings"/>.
         /// </summary>
-        /// <param name="entry">Der zu validierende Eintrag.</param>
+        /// <param name="password">Das zu validierende Passwort.</param>
         /// <param name="settings">Die Standardeinstellungen.</param>
-        /// <param name="now">Der Zeitpunkt an dem die Validierung ausgerichtet werden soll.</param>
         /// <returns>Eine Liste von Validierungsergebnissen.</returns>
-        public static List<IValidationResult> Validate(Entry entry, PasswordSettings settings, DateTime now)
+        public static IEnumerable<IValidationResult> ValidatePassword(string password, PasswordSettings settings)
         {
             var validationResults = new List<IValidationResult>();
-            var filledSettings = settings.Fill(entry.CustomSettings);
 
-            // TODO
-            //if (filledSettings.DecayTime < CustomDateTime.Difference(now, entry.LastUpdateDate))
-            //{
-            //    validationResults.Add(new OutdatedResult(timeSinceLastUpdate));
-            //}
-
-            switch (filledSettings.LowerCaseChars)
+            switch (settings.LowerCaseChars)
             {
                 case Usage.Allow:
                     break;
                 case Usage.Forbid:
-                    CheckForbiddenChars(entry.EncryptedPassword, Definitions.LowerCaseChars, validationResults);
+                    CheckForbiddenChars(password, Definitions.LowerCaseChars, validationResults);
                     break;
                 case Usage.Require:
-                    CheckRequiredChars(entry.EncryptedPassword, Definitions.LowerCaseChars, validationResults);
+                    CheckRequiredChars(password, Definitions.LowerCaseChars, validationResults);
                     break;
             }
 
-            switch (filledSettings.UpperCaseChars)
+            switch (settings.UpperCaseChars)
             {
                 case Usage.Allow:
                     break;
                 case Usage.Forbid:
-                    CheckForbiddenChars(entry.EncryptedPassword, Definitions.UpperCaseChars, validationResults);
+                    CheckForbiddenChars(password, Definitions.UpperCaseChars, validationResults);
                     break;
                 case Usage.Require:
-                    CheckRequiredChars(entry.EncryptedPassword, Definitions.UpperCaseChars, validationResults);
+                    CheckRequiredChars(password, Definitions.UpperCaseChars, validationResults);
                     break;
             }
 
-            switch (filledSettings.Digits)
+            switch (settings.Digits)
             {
                 case Usage.Allow:
                     break;
                 case Usage.Forbid:
-                    CheckForbiddenChars(entry.EncryptedPassword, Definitions.Digits, validationResults);
+                    CheckForbiddenChars(password, Definitions.Digits, validationResults);
                     break;
                 case Usage.Require:
-                    CheckRequiredChars(entry.EncryptedPassword, Definitions.Digits, validationResults);
+                    CheckRequiredChars(password, Definitions.Digits, validationResults);
                     break;
             }
 
-            switch (filledSettings.SpecialCharacters)
+            switch (settings.SpecialCharacters)
             {
                 case Usage.Allow:
                     break;
                 case Usage.Forbid:
-                    CheckForbiddenChars(entry.EncryptedPassword, filledSettings.AllowedSpecialCharacters, validationResults);
+                    CheckForbiddenChars(password, settings.AllowedSpecialCharacters, validationResults);
                     break;
                 case Usage.Require:
-                    CheckRequiredChars(entry.EncryptedPassword, filledSettings.AllowedSpecialCharacters, validationResults);
+                    CheckRequiredChars(password, settings.AllowedSpecialCharacters, validationResults);
                     break;
             }
 
-            CheckForbiddenChars(entry.EncryptedPassword, filledSettings.ForbiddenCharacters, validationResults);
+            CheckForbiddenChars(password, settings.ForbiddenCharacters, validationResults);
 
-            if (entry.EncryptedPassword.Length < filledSettings.MinLength)
+            if (password.Length < settings.MinLength)
             {
-                validationResults.Add(new TooShortResult(entry.EncryptedPassword.Length, (int)filledSettings.MinLength));
+                validationResults.Add(new TooShortResult(password.Length, (int)settings.MinLength));
             }
 
-            if (entry.EncryptedPassword.Length > filledSettings.MaxLength)
+            if (password.Length > settings.MaxLength)
             {
-                validationResults.Add(new TooLongResult(entry.EncryptedPassword.Length, (int)filledSettings.MaxLength));
+                validationResults.Add(new TooLongResult(password.Length, (int)settings.MaxLength));
             }
 
             return validationResults;

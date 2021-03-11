@@ -1,7 +1,5 @@
 ﻿namespace KeyLocker.Console.Commands
 {
-    using System.Collections.Generic;
-
     /// <summary>
     /// Stellt eine ausführbare Aktion dar. 
     /// Ableitende Klassen stellen Methoden und Eigenschaften zur Identifikation der Aktion bereit.

@@ -12,7 +12,7 @@ namespace KeyLocker.Utility
         /// </summary>
         /// <param name="amount">Die Länge der Spanne.</param>
         /// <param name="kind">Die Art der Spanne.</param>
-        public CustomTimeSpan(double amount, CustomTimeSpanKind kind)
+        public CustomTimeSpan(int amount, CustomTimeSpanKind kind)
         {
             this.Amount = amount;
             this.Kind = kind;
@@ -21,7 +21,7 @@ namespace KeyLocker.Utility
         /// <summary>
         /// Holt die Länge der Spanne.
         /// </summary>
-        public double Amount
+        public int Amount
         {
             get;
         }
@@ -62,7 +62,7 @@ namespace KeyLocker.Utility
 
             var unit = s[^0];
 
-            if (!double.TryParse(s[0..^1], out var amount))
+            if (!int.TryParse(s[0..^1], out var amount))
             {
                 return false;
             }
@@ -82,9 +82,6 @@ namespace KeyLocker.Utility
                     break;
                 case 'd':
                     kind = CustomTimeSpanKind.Days;
-                    break;
-                case 'W':
-                    kind = CustomTimeSpanKind.Weeks;
                     break;
                 case 'M':
                     kind = CustomTimeSpanKind.Months;
@@ -113,6 +110,51 @@ namespace KeyLocker.Utility
             }
 
             throw new FormatException();
+        }
+
+        /// <summary>
+        /// Prüft, ob die die aktuelle Instanz eine Zeitspanne darstellt, die kürzer, gleich oder länger ist als 
+        /// die Zeit zwischen <paramref name="a"/> und <paramref name="b"/>.
+        /// </summary>
+        /// <param name="a">Der erste Zeitpunkt.</param>
+        /// <param name="b">Der zweite Zeitpunkt.</param>
+        /// <returns>-1 wenn die dargestllte Zeit kleiner als die Zeit zwischen <paramref name="a"/> und <paramref name="b"/> ist.
+        ///           0 wenn die Zeiten gleich sind.
+        ///           1 wenn die dargestellte Zeit länger ist, als die Zeit zwischen <paramref name="a"/> und <paramref name="b"/>.</returns>
+        public int CompareToDifference(DateTime a, DateTime b)
+        {
+            if (a > b)
+            {
+                return this.CompareToDifference(b, a);
+            }
+
+            return this.AddTo(a).CompareTo(b);
+        }
+
+        /// <summary>
+        /// Gibt eine <see cref="DateTime"/>-Instanz zurück, die um die dargestellte Zeitspanne versetzt wurde.
+        /// </summary>
+        /// <param name="a">Der Ausgangszeitpunkt.</param>
+        /// <returns><paramref name="a"/> + die dargestellte Zeitspanne.</returns>
+        public DateTime AddTo(DateTime a)
+        {
+            switch (this.Kind)
+            {
+                case CustomTimeSpanKind.Seconds:
+                    return a.AddSeconds(this.Amount);
+                case CustomTimeSpanKind.Minutes:
+                    return a.AddMinutes(this.Amount);
+                case CustomTimeSpanKind.Hours:
+                    return a.AddHours(this.Amount);
+                case CustomTimeSpanKind.Days:
+                    return a.AddDays(this.Amount);
+                case CustomTimeSpanKind.Months:
+                    return a.AddMonths(this.Amount);
+                case CustomTimeSpanKind.Years:
+                    return a.AddYears(this.Amount);
+                default:
+                    throw new NotSupportedException();
+            }
         }
     }
 }

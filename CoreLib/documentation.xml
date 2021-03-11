@@ -23,7 +23,7 @@
         </member>
         <member name="P:KeyLocker.AppSettings.SaltedPasswordHash">
             <summary>
-            Holt den Hash des Passworts mit Salt.
+            Holt oder setzt den Hash des Passworts mit Salt.
             </summary>
         </member>
         <member name="P:KeyLocker.AppSettings.Salt">
@@ -82,22 +82,6 @@
             Berechnet einen Salt-String.
             </summary>
             <returns></returns>
-        </member>
-        <member name="M:KeyLocker.Crypto.Encode(System.String,KeyLocker.AppSettings)">
-            <summary>
-            Codiert <paramref name="text"/>.
-            </summary>
-            <param name="text">Der zu verschlüsselnde Text.</param>
-            <param name="appSettings">Die zu nutzenden Einstellungen.</param>
-            <returns>Der codierte String.</returns>
-        </member>
-        <member name="M:KeyLocker.Crypto.Decode(System.String,KeyLocker.AppSettings)">
-            <summary>
-            Decodiert <paramref name="text"/>.
-            </summary>
-            <param name="text">Der zu entschlüsselnde Text.</param>
-            <param name="appSettings">Die zu nutzenden Einstellungen.</param>
-            <returns>Der decodierte String.</returns>
         </member>
         <member name="M:KeyLocker.Crypto.Encrypt(System.String,System.String)">
             <summary>
@@ -230,14 +214,55 @@
             </summary>
             <param name="writer">Das Ausgabeziel.</param>
         </member>
+        <member name="T:KeyLocker.CoreLib.IPendingChanges">
+            <summary>
+            Implementierende Klassen stellen Eigenschaften bereit, die anzeigen, wie 
+            viele Änderungen an einer geladenen Passwortliste vorgenommen wurden.
+            </summary>
+        </member>
+        <member name="P:KeyLocker.CoreLib.IPendingChanges.ModifiedEntries">
+            <summary>
+            Holt die Anzahl der der bearbeiteten Einträge.
+            </summary>
+        </member>
+        <member name="P:KeyLocker.CoreLib.IPendingChanges.AddedEntries">
+            <summary>
+            Holt die Anzahl der hinzugefügten Einträge.
+            </summary>
+        </member>
+        <member name="P:KeyLocker.CoreLib.IPendingChanges.DeletedEntries">
+            <summary>
+            Holt die Anzahl der gelöschten Einträge.
+            </summary>
+        </member>
+        <member name="P:KeyLocker.CoreLib.IPendingChanges.SettingsChanged">
+            <summary>
+            Holt einen Wert der anzeigt ob die Einstellungen geändert wurden oder nicht.
+            </summary>
+        </member>
+        <member name="P:KeyLocker.CoreLib.IPendingChanges.PasswordChanged">
+            <summary>
+            Holt einen Wert der angibt ob das Passwort der Datei geändert wurde oder nicht.
+            </summary>
+        </member>
         <member name="T:KeyLocker.CoreLib.KeyLockerCore">
             <summary>
             Diese Klasse stellt die Schnittstelle zur KeyLocker-Bibliothek dar.
             </summary>
         </member>
+        <member name="F:KeyLocker.CoreLib.KeyLockerCore.pendingChanges">
+            <summary>
+            Die Übersicht über ungespeicherte Änderungen.
+            </summary>
+        </member>
         <member name="F:KeyLocker.CoreLib.KeyLockerCore.entries">
             <summary>
             Die registrierten Einträge.
+            </summary>
+        </member>
+        <member name="F:KeyLocker.CoreLib.KeyLockerCore.settings">
+            <summary>
+            Die Einstellungen.
             </summary>
         </member>
         <member name="M:KeyLocker.CoreLib.KeyLockerCore.#ctor">
@@ -258,7 +283,12 @@
             <param name="element">Die Datenquelle.</param>
             <returns>Die erezugte Instanz.</returns>
         </member>
-        <member name="P:KeyLocker.CoreLib.KeyLockerCore.Settings">
+        <member name="P:KeyLocker.CoreLib.KeyLockerCore.PendingChanges">
+            <summary>
+            Holt eine Übersicht über ungespeicherte Änderungen.
+            </summary>
+        </member>
+        <member name="P:KeyLocker.CoreLib.KeyLockerCore.PasswordSettings">
             <summary>
             Holt die Einstellungen der Bibliothek.
             </summary>
@@ -269,13 +299,19 @@
             </summary>
             <value></value>
         </member>
-        <member name="M:KeyLocker.CoreLib.KeyLockerCore.Register(KeyLocker.Entry,System.String)">
+        <member name="M:KeyLocker.CoreLib.KeyLockerCore.Add(KeyLocker.Entry,System.String)">
             <summary>
-            Registriert einen neuen Eintrag.
-            Das Passwort wird verschlüsselt und gesetzt.
+            Fügt einen neuen Eintrag hinzu, wenn dieser noch nicht vorhanden ist.
+            Das Passwort wird verschlüsselt und beim Eintrag gesetzt.
             </summary>
             <param name="entry">Der Eintrag.</param>
             <param name="rawPassword">Das unverschlüsselte Passwort.</param>
+        </member>
+        <member name="M:KeyLocker.CoreLib.KeyLockerCore.Remove(KeyLocker.Entry)">
+            <summary>
+            Entfernt einen Eintrag.
+            </summary>
+            <param name="entry">Der zu entfernende Eintrag.</param>
         </member>
         <member name="M:KeyLocker.CoreLib.KeyLockerCore.ConfirmPassword(System.String)">
             <summary>
@@ -290,19 +326,105 @@
             </summary>
             <param name="writer"></param>
         </member>
+        <member name="M:KeyLocker.CoreLib.KeyLockerCore.ChangeFilePassword(System.String,System.String)">
+            <summary>
+            Ändert das Passwort der Datei.
+            </summary>
+            <param name="oldPassword">Das aktuelle Passwort.</param>
+            <param name="newPassword">Das neue Passwort.</param>
+        </member>
+        <member name="M:KeyLocker.CoreLib.KeyLockerCore.HandlePropertyChanged(System.Object,KeyLocker.Utility.PropertyChangedEventArgs)">
+            <summary>
+            Behandelt die Änderung eines Eintrags.
+            </summary>
+            <param name="sender">Der geänderte Eintrag.</param>
+            <param name="e">Die Parameter.</param>
+        </member>
+        <member name="T:KeyLocker.CoreLib.PendingChanges">
+            <summary>
+            Die Implementierung von <see cref="T:KeyLocker.CoreLib.IPendingChanges"/>.
+            </summary>
+        </member>
+        <member name="F:KeyLocker.CoreLib.PendingChanges.modifiedEntries">
+            <summary>
+            Alle geänderten Einträge.
+            </summary>
+        </member>
+        <member name="F:KeyLocker.CoreLib.PendingChanges.addedEntries">
+            <summary>
+            Alle hinzugefügtenEinträge.
+            </summary>
+        </member>
+        <member name="F:KeyLocker.CoreLib.PendingChanges.deletedEntries">
+            <summary>
+            Alle gelöschten Einträge.
+            </summary>
+        </member>
+        <member name="M:KeyLocker.CoreLib.PendingChanges.#ctor">
+            <summary>
+            Initialisiert eine neue Instanze der Klasse.
+            </summary>
+        </member>
+        <member name="P:KeyLocker.CoreLib.PendingChanges.AddedEntries">
+            <inheritdoc/>
+        </member>
+        <member name="P:KeyLocker.CoreLib.PendingChanges.ModifiedEntries">
+            <inheritdoc/>
+        </member>
+        <member name="P:KeyLocker.CoreLib.PendingChanges.DeletedEntries">
+            <inheritdoc/>
+        </member>
+        <member name="P:KeyLocker.CoreLib.PendingChanges.SettingsChanged">
+            <inheritdoc/>
+        </member>
+        <member name="P:KeyLocker.CoreLib.PendingChanges.PasswordChanged">
+            <inheritdoc/>
+        </member>
+        <member name="M:KeyLocker.CoreLib.PendingChanges.NotifyAdd(KeyLocker.Entry)">
+            <summary>
+            Registriert die Bearbeitung eines Eintrags.
+            </summary>
+            <param name="entry">Der bearbeitete Eintrag.</param>
+        </member>
+        <member name="M:KeyLocker.CoreLib.PendingChanges.NotifyMofication(KeyLocker.Entry)">
+            <summary>
+            Registriert die Bearbeitung eines Eintrags.
+            </summary>
+            <param name="entry">Der bearbeitete Eintrag.</param>
+        </member>
+        <member name="M:KeyLocker.CoreLib.PendingChanges.NotifyDelete(KeyLocker.Entry)">
+            <summary>
+            Registriert das Entfernen eines Eintrags.
+            </summary>
+            <param name="entry">Der bearbeitete Eintrag.</param>
+        </member>
+        <member name="M:KeyLocker.CoreLib.PendingChanges.NotifySettingsChanged">
+            <summary>
+            Registriert die Änderung der Einstellungen.
+            </summary>
+        </member>
+        <member name="M:KeyLocker.CoreLib.PendingChanges.NotifyPasswordChanged">
+            <summary>
+            Registriert die Änderung des Dateipassworts.
+            </summary>
+        </member>
+        <member name="M:KeyLocker.CoreLib.PendingChanges.NotifySave">
+            <summary>
+            Registriert das Speichern derausstehenden Änderungen, wodurch alle Werte der Instanz zurückgesetzt werden.
+            </summary>
+        </member>
         <member name="T:KeyLocker.CoreLib.Validation.EntryValidator">
             <summary>
             Validiert eine <see cref="T:KeyLocker.Entry"/>-Instanz.
             </summary>
         </member>
-        <member name="M:KeyLocker.CoreLib.Validation.EntryValidator.Validate(KeyLocker.Entry,KeyLocker.PasswordSettings,System.DateTime)">
+        <member name="M:KeyLocker.CoreLib.Validation.EntryValidator.ValidatePassword(System.String,KeyLocker.PasswordSettings)">
             <summary>
             Validiert eine <see cref="T:KeyLocker.Entry"/>-Instanz entsprechend den Einstellungen in 
             <see cref="P:KeyLocker.Entry.CustomSettings"/> und <paramref name="settings"/>.
             </summary>
-            <param name="entry">Der zu validierende Eintrag.</param>
+            <param name="password">Das zu validierende Passwort.</param>
             <param name="settings">Die Standardeinstellungen.</param>
-            <param name="now">Der Zeitpunkt an dem die Validierung ausgerichtet werden soll.</param>
             <returns>Eine Liste von Validierungsergebnissen.</returns>
         </member>
         <member name="M:KeyLocker.CoreLib.Validation.EntryValidator.CheckForbiddenChars(System.String,System.Char[],System.Collections.Generic.List{KeyLocker.CoreLib.Validation.IValidationResult})">
@@ -359,20 +481,6 @@
             <param name="requiredCharacters">Die benötigten Zeichen, von denen keines enthalten war.</param>
         </member>
         <member name="P:KeyLocker.CoreLib.Validation.MissingRequiredCharacterResult.Description">
-            <inheritdoc/>
-        </member>
-        <member name="T:KeyLocker.CoreLib.Validation.OutdatedResult">
-            <summary>
-            Eine Implementierung von <see cref="T:KeyLocker.CoreLib.Validation.IValidationResult"/>, die anzeigt
-            </summary>
-        </member>
-        <member name="M:KeyLocker.CoreLib.Validation.OutdatedResult.#ctor(System.TimeSpan)">
-            <summary>
-            Initialisiert eine neue Instanz der Klasse.
-            </summary>
-            <param name="outdatedSince">Die Zeit, seit der das Passwort veraltet ist.</param>
-        </member>
-        <member name="P:KeyLocker.CoreLib.Validation.OutdatedResult.Description">
             <inheritdoc/>
         </member>
         <member name="T:KeyLocker.CoreLib.Validation.TooLongResult">
@@ -477,6 +585,51 @@
         <member name="T:KeyLocker.PasswordSettings">
             <summary>
             Stellt Einstellungen für ein Passwort dar.
+            </summary>
+        </member>
+        <member name="F:KeyLocker.PasswordSettings.upperCaseChars">
+            <summary>
+            Die Nutzungsrichtlinie für Großbuchstaben.
+            </summary>
+        </member>
+        <member name="F:KeyLocker.PasswordSettings.lowerCaseChars">
+            <summary>
+            Die Nutzungsrichtlinie für Kleinbuchstaben.
+            </summary>
+        </member>
+        <member name="F:KeyLocker.PasswordSettings.digits">
+            <summary>
+            Die Nutzungsrichtlinie für Ziffern.
+            </summary>
+        </member>
+        <member name="F:KeyLocker.PasswordSettings.specialCharacters">
+            <summary>
+            Die Nutzungsrichtlinie für Sonderzeichen.
+            </summary>
+        </member>
+        <member name="F:KeyLocker.PasswordSettings.minLength">
+            <summary>
+            Die Mindestlänge des Passworts. 
+            </summary>
+        </member>
+        <member name="F:KeyLocker.PasswordSettings.maxLength">
+            <summary>
+            Die Maximallänge des Passworts. 
+            </summary>
+        </member>
+        <member name="F:KeyLocker.PasswordSettings.forbiddenCharacters">
+            <summary>
+            Eine Liste von verbotenen Zeichen.
+            </summary>
+        </member>
+        <member name="F:KeyLocker.PasswordSettings.allowedSpecialCharacters">
+            <summary>
+            Eine Liste von erlaubten Sonderzeichen.
+            </summary>
+        </member>
+        <member name="F:KeyLocker.PasswordSettings.decayTime">
+            <summary>
+            Die Zeitspanne, nach der das Passwort als veraltet gilt.
             </summary>
         </member>
         <member name="M:KeyLocker.PasswordSettings.#ctor">

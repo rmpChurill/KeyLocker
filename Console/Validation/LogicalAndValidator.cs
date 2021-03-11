@@ -1,6 +1,5 @@
 namespace KeyLocker.Console.Validation
 {
-    using System.Linq;
     using System.Collections.Generic;
 
     /// <summary>

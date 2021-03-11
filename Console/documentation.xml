@@ -4,6 +4,57 @@
         <name>Console</name>
     </assembly>
     <members>
+        <member name="T:KeyLocker.Console.Commands.AddEntryCommand">
+            <summary>
+            Stellt den Befehl zur Erzeugung eines neuen Eintrags dar.
+            </summary>
+        </member>
+        <member name="P:KeyLocker.Console.Commands.AddEntryCommand.HelpDescritpion">
+            <inheritdoc/>
+        </member>
+        <member name="P:KeyLocker.Console.Commands.AddEntryCommand.Command">
+            <inheritdoc/>
+        </member>
+        <member name="P:KeyLocker.Console.Commands.AddEntryCommand.Alias">
+            <inheritdoc/>
+        </member>
+        <member name="M:KeyLocker.Console.Commands.AddEntryCommand.Execute(KeyLocker.Console.ConsoleCore,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="T:KeyLocker.Console.Commands.DeleteEntryCommand">
+            <summary>
+            Eine Implementierung von <see cref="T:KeyLocker.Console.Commands.ICommand"/>, die den Befehl zum Entfernen eines Eintrags darstellt.
+            </summary>
+        </member>
+        <member name="P:KeyLocker.Console.Commands.DeleteEntryCommand.HelpDescritpion">
+            <inheritdoc/>
+        </member>
+        <member name="P:KeyLocker.Console.Commands.DeleteEntryCommand.Command">
+            <inheritdoc/>
+        </member>
+        <member name="P:KeyLocker.Console.Commands.DeleteEntryCommand.Alias">
+            <inheritdoc/>
+        </member>
+        <member name="M:KeyLocker.Console.Commands.DeleteEntryCommand.Execute(KeyLocker.Console.ConsoleCore,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="T:KeyLocker.Console.Commands.EditEntryCommand">
+            <summary>
+            Eine Implementierung von <see cref="T:KeyLocker.Console.Commands.ICommand"/>, die den Befehl zum Bearbeiten eines Eintrags darstellt.
+            </summary>
+        </member>
+        <member name="P:KeyLocker.Console.Commands.EditEntryCommand.HelpDescritpion">
+            <inheritdoc/>
+        </member>
+        <member name="P:KeyLocker.Console.Commands.EditEntryCommand.Command">
+            <inheritdoc/>
+        </member>
+        <member name="P:KeyLocker.Console.Commands.EditEntryCommand.Alias">
+            <inheritdoc/>
+        </member>
+        <member name="M:KeyLocker.Console.Commands.EditEntryCommand.Execute(KeyLocker.Console.ConsoleCore,System.String)">
+            <inheritdoc/>
+        </member>
         <member name="T:KeyLocker.Console.Commands.HelpCommand">
             <summary>
             Stellt den Hilfebefehl dar.
@@ -59,11 +110,6 @@
             Die Instanz des Hilfsbefehls.
             </summary>
         </member>
-        <member name="F:KeyLocker.Console.Commands.KnownCommands.NewEntryCommand">
-            <summary>
-            Die Instanz des Befehls zur Erzeugung eines neuen Eintrags.
-            </summary>
-        </member>
         <member name="F:KeyLocker.Console.Commands.KnownCommands.LoadFileCommand">
             <summary>
             Die Instanz des Befehls zum Laden einer Passwortdatei.
@@ -79,6 +125,21 @@
             Die Instanz des Befehls zum Erstellen einer neuen Passwortdatei.
             </summary>
         </member>
+        <member name="F:KeyLocker.Console.Commands.KnownCommands.ListEntriesCommand">
+            <summary>
+            Die Instanz des Befehls zum Auflisten aller Einträge.
+            </summary>
+        </member>
+        <member name="F:KeyLocker.Console.Commands.KnownCommands.ValidateEntriesCommand">
+            <summary>
+            Die Instanz des Befehls zum Validieren aller Einträge.
+            </summary>
+        </member>
+        <member name="F:KeyLocker.Console.Commands.KnownCommands.AddEntryCommand">
+            <summary>
+            Die Instanz des Befehls zur Erzeugung eines neuen Eintrags.
+            </summary>
+        </member>
         <member name="F:KeyLocker.Console.Commands.KnownCommands.ViewEntryCommand">
             <summary>
             Die Instanz des Befehls zum Anzeigen eines Eintrags.
@@ -89,10 +150,37 @@
             Die Instanz des Befehls zum Anzeigen eines Passworts.
             </summary>
         </member>
+        <member name="F:KeyLocker.Console.Commands.KnownCommands.EditEntryCommand">
+            <summary>
+            Die Instanz des Befehls zur Bearbeitung eines neuen Eintrags.
+            </summary>
+        </member>
+        <member name="F:KeyLocker.Console.Commands.KnownCommands.DeleteEntryCommand">
+            <summary>
+            Die Instanz des Befehls zur Entfernung eines neuen Eintrags.
+            </summary>
+        </member>
         <member name="P:KeyLocker.Console.Commands.KnownCommands.All">
             <summary>
             Holt eine Auflistung aller bekannten Befehle.
             </summary>
+        </member>
+        <member name="T:KeyLocker.Console.Commands.ListEntriesCommand">
+            <summary>
+            Eine Implementierung von <see cref="T:KeyLocker.Console.Commands.ICommand"/>, die den Befehl zur Auflistung aller Einträge darstellt.
+            </summary>
+        </member>
+        <member name="P:KeyLocker.Console.Commands.ListEntriesCommand.HelpDescritpion">
+            <inheritdoc/>
+        </member>
+        <member name="P:KeyLocker.Console.Commands.ListEntriesCommand.Command">
+            <inheritdoc/>
+        </member>
+        <member name="P:KeyLocker.Console.Commands.ListEntriesCommand.Alias">
+            <inheritdoc/>
+        </member>
+        <member name="M:KeyLocker.Console.Commands.ListEntriesCommand.Execute(KeyLocker.Console.ConsoleCore,System.String)">
+            <inheritdoc/>
         </member>
         <member name="T:KeyLocker.Console.Commands.LoadFileCommand">
             <summary>
@@ -109,23 +197,6 @@
             <inheritdoc/>
         </member>
         <member name="M:KeyLocker.Console.Commands.LoadFileCommand.Execute(KeyLocker.Console.ConsoleCore,System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="T:KeyLocker.Console.Commands.NewEntryCommand">
-            <summary>
-            Stellt den Befehl zur Erzeugung eines neuen Eintrags dar.
-            </summary>
-        </member>
-        <member name="P:KeyLocker.Console.Commands.NewEntryCommand.HelpDescritpion">
-            <inheritdoc/>
-        </member>
-        <member name="P:KeyLocker.Console.Commands.NewEntryCommand.Command">
-            <inheritdoc/>
-        </member>
-        <member name="P:KeyLocker.Console.Commands.NewEntryCommand.Alias">
-            <inheritdoc/>
-        </member>
-        <member name="M:KeyLocker.Console.Commands.NewEntryCommand.Execute(KeyLocker.Console.ConsoleCore,System.String)">
             <inheritdoc/>
         </member>
         <member name="T:KeyLocker.Console.Commands.NewFileCommand">
@@ -160,6 +231,23 @@
             <inheritdoc/>
         </member>
         <member name="M:KeyLocker.Console.Commands.SaveFileCommand.Execute(KeyLocker.Console.ConsoleCore,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="T:KeyLocker.Console.Commands.ValidateEntriesCommand">
+            <summary>
+            Eine Implementierung von <see cref="T:KeyLocker.Console.Commands.ICommand"/>, die den Befehl zur Prüfung aller Einträge darstellt.
+            </summary>
+        </member>
+        <member name="P:KeyLocker.Console.Commands.ValidateEntriesCommand.HelpDescritpion">
+            <inheritdoc/>
+        </member>
+        <member name="P:KeyLocker.Console.Commands.ValidateEntriesCommand.Command">
+            <inheritdoc/>
+        </member>
+        <member name="P:KeyLocker.Console.Commands.ValidateEntriesCommand.Alias">
+            <inheritdoc/>
+        </member>
+        <member name="M:KeyLocker.Console.Commands.ValidateEntriesCommand.Execute(KeyLocker.Console.ConsoleCore,System.String)">
             <inheritdoc/>
         </member>
         <member name="T:KeyLocker.Console.Commands.ViewEntryCommand">
@@ -221,11 +309,14 @@
             Startet die Ausführung des Konsolenprogramms in einer Endlosschleife.
             </summary>
         </member>
-        <member name="M:KeyLocker.Console.ConsoleCore.FindEntryByName(System.String)">
+        <member name="M:KeyLocker.Console.ConsoleCore.FindEntryByName(System.String,System.Boolean)">
             <summary>
             Sucht einen Eintrag mit Namen <paramref name="name"/>.
             </summary>
             <param name="name">Der Name des gesuchten Eintrags.</param>
+            <param name="printAlternativesIfNotFound">Gibt an, ob Einträge mit einem ähnlichen Namen 
+            angezeigt werden sollen, falls kein Eintrag mit dem Namen <paramref name="name"/> gefunden wurde.</param>
+            <returns></returns>
         </member>
         <member name="M:KeyLocker.Console.ConsoleCore.FindPossibleAlternativeByName(System.String)">
             <summary>

@@ -1,12 +1,6 @@
 ﻿namespace KeyLocker.Console.Commands
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-
-    using KeyLocker.Utility;
 
     /// <summary>
     /// Eine Implementierung von <see cref="ICommand"/>, die den Befehl zur Anzeige eines Eintrags darstellt.
@@ -36,7 +30,7 @@
         {
             get
             {
-                return 'v';
+                return '?';
             }
         }
 
@@ -57,7 +51,7 @@
             if (entry != default)
             {
                 var s = entry.CustomSettings;
-                var d = keyLockerCore.Settings.PasswordSettings;
+                var d = keyLockerCore.PasswordSettings;
 
                 static string isDefault(object? x) => x == null ? "        " : "    X   ";
 
