@@ -4,6 +4,7 @@
     using System.IO;
     using System.Text.Json;
 
+    using KeyLocker.Console.Validation;
     using KeyLocker.CoreLib;
 
     /// <summary>
@@ -43,6 +44,11 @@
         {
             arg = arg.Trim().Trim('"');
 
+            if (string.IsNullOrEmpty(arg))
+            {
+                arg = ConsoleHelper.Prompt("Enter the file name to be opened: ", new ConsolePromptOptions() { Validator = new NotEmptyValidator("File name") });
+            }
+
             try
             {
                 using var inStream = File.OpenRead(arg) ?? throw new FileNotFoundException();
@@ -65,10 +71,16 @@
                     Console.WriteLine("Wrong password! Try again!");
                 }
             }
-            catch (FileNotFoundException)
+            catch (Exception e)
             {
-                Console.WriteLine($"File {arg} could not be opened!");
-                return;
+                if (e is ArgumentException || e is FileNotFoundException)
+                {
+                    Console.WriteLine($"File \"{arg}\" could not be opened!");
+                }
+                else
+                {
+                    throw new Exception("Unknown exception!", e);
+                }
             }
         }
     }

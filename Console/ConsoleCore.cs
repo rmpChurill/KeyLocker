@@ -55,6 +55,11 @@
                 var actionToRun = default(ICommand);
                 var actionArgument = string.Empty;
 
+                if (string.IsNullOrEmpty(input))
+                {
+                    continue;
+                }
+
                 foreach (var action in KnownCommands.All)
                 {
                     if (input.StartsWith(action.Command, StringComparison.OrdinalIgnoreCase) &&
@@ -66,13 +71,16 @@
                         break;
                     }
 
-                    var alias = action.Alias?.ToString();
+                    var alias = action.Alias;
 
                     if (alias != default &&
+                        input[0] == alias &&
                         (input.Length == 1 || char.IsWhiteSpace(input[1])))
                     {
                         actionToRun = action;
                         actionArgument = input[Math.Max(input.Length - 1, 1)..];
+
+                        break;
                     }
                 }
 

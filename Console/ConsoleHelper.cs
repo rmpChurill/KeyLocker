@@ -127,13 +127,27 @@
         private static string HiddenReadLine()
         {
             var sb = new StringBuilder();
-            var key = Console.ReadKey(true);
+            var run = true;
 
-            while (key.Key != ConsoleKey.Enter)
+            while (run)
             {
-                sb.Append(key.KeyChar);
+                var key = Console.ReadKey(true);
 
-                key = Console.ReadKey(true);
+                switch (key.Key)
+                {
+                    case ConsoleKey.Backspace:
+                        if (sb.Length > 0)
+                        {
+                            sb.Remove(sb.Length - 1, 1);
+                        }
+                        break;
+                    case ConsoleKey.Enter:
+                        run = false;
+                        break;
+                    default:
+                        sb.Append(key.KeyChar);
+                        break;
+                }
             }
 
             Console.WriteLine();
