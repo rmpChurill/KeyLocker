@@ -2,7 +2,9 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
+    using System.Text;
 
     using KeyLocker.Console.Commands;
     using KeyLocker.CoreLib;
@@ -51,7 +53,9 @@
 
             while (this.Loop)
             {
-                var input = ConsoleHelper.Prompt(this.GenPrompt()).Trim();
+                this.WritePrompt();
+
+                var input = ConsoleHelper.Prompt().Trim();
                 var actionToRun = default(ICommand);
                 var actionArgument = string.Empty;
 
@@ -136,7 +140,7 @@
         {
             var entries = this.KeyLockerCore?.Entries;
 
-            if (entries == default || entries.Count() == 0)
+            if (entries == default || !entries.Any())
             {
                 return Array.Empty<Entry>();
             }
@@ -157,9 +161,9 @@
         /// Gibt einen Prompttext zurück.
         /// </summary>
         /// <returns></returns>
-        public string GenPrompt()
+        public void WritePrompt()
         {
-
+            ConsoleHelper.Write(Path.GetFileName(this.FileName) ?? "[no file]");
         }
     }
 }
