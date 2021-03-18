@@ -51,7 +51,7 @@
 
             while (this.Loop)
             {
-                var input = ConsoleHelper.Prompt().Trim();
+                var input = ConsoleHelper.Prompt(this.GenPrompt()).Trim();
                 var actionToRun = default(ICommand);
                 var actionArgument = string.Empty;
 
@@ -151,6 +151,15 @@
 
             return alternatives.Where(i => i.Key == alternatives.First().Key)
                                .Select(i => i.Value);
+        }
+
+        /// <summary>
+        /// Gibt einen Prompttext zurück.
+        /// </summary>
+        /// <returns></returns>
+        public string GenPrompt()
+        {
+
         }
     }
 }
