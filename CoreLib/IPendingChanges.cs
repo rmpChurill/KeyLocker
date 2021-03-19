@@ -45,5 +45,13 @@
         {
             get;
         }
+
+        /// <summary>
+        /// Holt einen Wert der angibt ob irgendein Wert oder Eintrag geändert wurde oder nicht.
+        /// </summary>
+        bool Any
+        {
+            get;
+        }
     }
 }

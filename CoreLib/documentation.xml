@@ -245,6 +245,11 @@
             Holt einen Wert der angibt ob das Passwort der Datei geändert wurde oder nicht.
             </summary>
         </member>
+        <member name="P:KeyLocker.CoreLib.IPendingChanges.Any">
+            <summary>
+            Holt einen Wert der angibt ob irgendein Wert oder Eintrag geändert wurde oder nicht.
+            </summary>
+        </member>
         <member name="T:KeyLocker.CoreLib.KeyLockerCore">
             <summary>
             Diese Klasse stellt die Schnittstelle zur KeyLocker-Bibliothek dar.
@@ -378,6 +383,9 @@
             <inheritdoc/>
         </member>
         <member name="P:KeyLocker.CoreLib.PendingChanges.PasswordChanged">
+            <inheritdoc/>
+        </member>
+        <member name="P:KeyLocker.CoreLib.PendingChanges.Any">
             <inheritdoc/>
         </member>
         <member name="M:KeyLocker.CoreLib.PendingChanges.NotifyAdd(KeyLocker.Entry)">

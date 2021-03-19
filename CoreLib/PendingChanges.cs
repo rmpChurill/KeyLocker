@@ -73,6 +73,19 @@
             private set;
         }
 
+        /// <inheritdoc/>
+        public bool Any
+        {
+            get
+            {
+                return this.AddedEntries > 0 ||
+                        this.ModifiedEntries > 0 ||
+                        this.DeletedEntries > 0 ||
+                        this.PasswordChanged ||
+                        this.SettingsChanged;
+            }
+        }
+
         /// <summary>
         /// Registriert die Bearbeitung eines Eintrags.
         /// </summary>

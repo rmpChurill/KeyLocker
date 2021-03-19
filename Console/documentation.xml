@@ -55,6 +55,23 @@
         <member name="M:KeyLocker.Console.Commands.EditEntryCommand.Execute(KeyLocker.Console.ConsoleCore,System.String)">
             <inheritdoc/>
         </member>
+        <member name="T:KeyLocker.Console.Commands.ExitCommand">
+            <summary>
+            Eine Implementierung von <see cref="T:KeyLocker.Console.Commands.ICommand"/>, die den Befehl zum Beenden der Anwendung darstellt.
+            </summary>
+        </member>
+        <member name="P:KeyLocker.Console.Commands.ExitCommand.HelpDescritpion">
+            <inheritdoc/>
+        </member>
+        <member name="P:KeyLocker.Console.Commands.ExitCommand.Command">
+            <inheritdoc/>
+        </member>
+        <member name="P:KeyLocker.Console.Commands.ExitCommand.Alias">
+            <inheritdoc/>
+        </member>
+        <member name="M:KeyLocker.Console.Commands.ExitCommand.Execute(KeyLocker.Console.ConsoleCore,System.String)">
+            <inheritdoc/>
+        </member>
         <member name="T:KeyLocker.Console.Commands.HelpCommand">
             <summary>
             Stellt den Hilfebefehl dar.
