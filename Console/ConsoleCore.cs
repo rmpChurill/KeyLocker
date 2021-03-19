@@ -4,7 +4,6 @@
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
-    using System.Text;
 
     using KeyLocker.Console.Commands;
     using KeyLocker.CoreLib;
@@ -15,6 +14,15 @@
     /// </summary>
     public class ConsoleCore
     {
+        private readonly ConsoleWriteOptions noFileTextOptions = new ConsoleWriteOptions() { TextColor = ConsoleColor.Gray, BackgroundColor = ConsoleColor.Black };
+        private readonly ConsoleWriteOptions unnamedFileTextOptions = new ConsoleWriteOptions() { TextColor = ConsoleColor.Yellow, BackgroundColor = ConsoleColor.Black };
+        private readonly ConsoleWriteOptions fileNameTextOptions = new ConsoleWriteOptions() { TextColor = ConsoleColor.Cyan, BackgroundColor = ConsoleColor.Black };
+        private readonly ConsoleWriteOptions entriesAddedTextOptions = new ConsoleWriteOptions() { TextColor = ConsoleColor.Green, BackgroundColor = ConsoleColor.Black };
+        private readonly ConsoleWriteOptions entriesModifedTextOptions = new ConsoleWriteOptions() { TextColor = ConsoleColor.Yellow, BackgroundColor = ConsoleColor.Black };
+        private readonly ConsoleWriteOptions entriesDeletedTextOptions = new ConsoleWriteOptions() { TextColor = ConsoleColor.Red, BackgroundColor = ConsoleColor.Black };
+        private readonly ConsoleWriteOptions settingsChangedTextOptions = new ConsoleWriteOptions() { TextColor = ConsoleColor.DarkYellow, BackgroundColor = ConsoleColor.Black };
+        private readonly ConsoleWriteOptions passwordChangedTextOptions = new ConsoleWriteOptions() { TextColor = ConsoleColor.DarkRed, BackgroundColor = ConsoleColor.Black };
+
         /// <summary>
         /// Holt den Kern der Bibliothek, über den die Transaktionen ausgeführt werden.
         /// </summary>
@@ -49,13 +57,15 @@
         {
             Console.WriteLine("Welcome to KeyLocker V 0.1");
 
+            var promptOptions = new ConsolePromptOptions() { TextColor = ConsoleColor.White, BackgroundColor = ConsoleColor.Black };
+
             this.Loop = true;
 
             while (this.Loop)
             {
                 this.WritePrompt();
 
-                var input = ConsoleHelper.Prompt().Trim();
+                var input = ConsoleHelper.Prompt(options: promptOptions).Trim();
                 var actionToRun = default(ICommand);
                 var actionArgument = string.Empty;
 
@@ -163,7 +173,42 @@
         /// <returns></returns>
         public void WritePrompt()
         {
-            ConsoleHelper.Write(Path.GetFileName(this.FileName) ?? "[no file]");
+            if (this.KeyLockerCore != null)
+            {
+                var fileName = Path.GetFileName(this.FileName);
+                var changes = this.KeyLockerCore.PendingChanges;
+
+                if (fileName != null)
+                {
+                    ConsoleHelper.Write(fileName, this.fileNameTextOptions);
+                }
+                else
+                {
+                    ConsoleHelper.Write("[unnamed file]", this.unnamedFileTextOptions);
+                }
+
+                if (changes.SettingsChanged)
+                {
+                    ConsoleHelper.Write("s!", this.settingsChangedTextOptions);
+                }
+
+                if (changes.PasswordChanged)
+                {
+                    ConsoleHelper.Write("pw!", this.passwordChangedTextOptions);
+                }
+
+                ConsoleHelper.Write("[");
+                ConsoleHelper.Write($"+{changes.AddedEntries}", changes.AddedEntries > 0 ? this.entriesAddedTextOptions : default);
+                ConsoleHelper.Write($" ~{changes.ModifiedEntries}", changes.ModifiedEntries > 0 ? this.entriesModifedTextOptions : default);
+                ConsoleHelper.Write($" -{changes.DeletedEntries}", changes.DeletedEntries > 0 ? this.entriesDeletedTextOptions : default);
+                ConsoleHelper.Write("]");
+            }
+            else
+            {
+                ConsoleHelper.Write("[no file]", this.noFileTextOptions);
+            }
+
+            ConsoleHelper.Write(" ");
         }
     }
 }

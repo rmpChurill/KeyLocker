@@ -325,6 +325,12 @@
             <param name="name">Der gesuchte Name.</param>
             <returns>Den Eintrag mit dem ähnlichsten Namen.</returns>
         </member>
+        <member name="M:KeyLocker.Console.ConsoleCore.WritePrompt">
+            <summary>
+            Gibt einen Prompttext zurück.
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:KeyLocker.Console.ConsoleHelper">
             <summary>
             Eine Hilfsklasse für Ein- und Ausgabe auf der Konsole.

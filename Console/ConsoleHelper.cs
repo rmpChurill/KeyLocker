@@ -55,7 +55,7 @@
 
             while (true)
             {
-                Console.Write(question);
+                ConsoleHelper.Write(question, options);
 
                 res = options.Hidden
                     ? HiddenReadLine()
