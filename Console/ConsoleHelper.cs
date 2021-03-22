@@ -12,6 +12,11 @@
     public static class ConsoleHelper
     {
         /// <summary>
+        /// Ein Event 
+        /// </summary>
+        public static event EventHandler<string>? TabPressed;
+
+        /// <summary>
         /// Füllt eine Zeile des Terminals mit <paramref name="seperator"/>.
         /// </summary>
         /// <param name="seperator">Das auszugebende Zeichen.</param>
@@ -57,9 +62,7 @@
             {
                 ConsoleHelper.Write(question, options);
 
-                res = options.Hidden
-                    ? HiddenReadLine()
-                    : Console.ReadLine();
+                res = ReadLine(options.Hidden);
 
                 if (options.Validator != null &&
                     options.AllowSkip &&
@@ -121,17 +124,21 @@
         }
 
         /// <summary>
-        /// Liest eine Zeile der Nutzereingabe ein, ohne die Zeichen im Terminal anzuzeigen.
+        /// Liest eine Zeile der Nutzereingabe ein und behandelt Sonderzeichen, etc.
+        /// Es werden folgende Eingaben ignoriert:
+        /// 
+        /// Für folgende Eingaben werden Events ausgelöst:
+        /// Tab: <see cref="TabPressed"/>,
         /// </summary>
         /// <returns>Die Nutzereingabe.</returns>
-        private static string HiddenReadLine()
+        private static string ReadLine(bool hidden, string initialInput = "")
         {
             var sb = new StringBuilder();
             var run = true;
 
             while (run)
             {
-                var key = Console.ReadKey(true);
+                var key = Console.ReadKey(hidden);
 
                 switch (key.Key)
                 {
@@ -139,10 +146,19 @@
                         if (sb.Length > 0)
                         {
                             sb.Remove(sb.Length - 1, 1);
+
+                            //if ()
+                            //{
+                            //    Console.SetCursorPosition(Console.CursorLeft - 1, Console.CursorTop);
+                            //    Console.Write(" ");
+                            //}
                         }
                         break;
                     case ConsoleKey.Enter:
                         run = false;
+                        break;
+                    case ConsoleKey.Tab:
+                        ConsoleHelper.OnTabPressed(sb.ToString());
                         break;
                     default:
                         sb.Append(key.KeyChar);
@@ -153,6 +169,15 @@
             Console.WriteLine();
 
             return sb.ToString();
+        }
+
+        /// <summary>
+        /// Löst <see cref="TabPressed"/> aus.
+        /// </summary>
+        /// <param name="inputTillNow">Die bisherige Eingabe der Zeile.</param>
+        private static void OnTabPressed(string inputTillNow)
+        {
+            ConsoleHelper.TabPressed?.Invoke(null, inputTillNow);
         }
     }
 }

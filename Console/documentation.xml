@@ -353,6 +353,11 @@
             Eine Hilfsklasse für Ein- und Ausgabe auf der Konsole.
             </summary>
         </member>
+        <member name="E:KeyLocker.Console.ConsoleHelper.TabPressed">
+            <summary>
+            Ein Event 
+            </summary>
+        </member>
         <member name="M:KeyLocker.Console.ConsoleHelper.WriteSeperator(System.Char)">
             <summary>
             Füllt eine Zeile des Terminals mit <paramref name="seperator"/>.
@@ -391,11 +396,21 @@
             <param name="items">Die auszugebenden Items.</param>
             <param name="seperator">Der string, der nach jedem Element, außer dem letzten, aus <paramref name="items"/> ausgegeben wird.</param>
         </member>
-        <member name="M:KeyLocker.Console.ConsoleHelper.HiddenReadLine">
+        <member name="M:KeyLocker.Console.ConsoleHelper.ReadLine(System.Boolean)">
             <summary>
-            Liest eine Zeile der Nutzereingabe ein, ohne die Zeichen im Terminal anzuzeigen.
+            Liest eine Zeile der Nutzereingabe ein und behandelt Sonderzeichen, etc.
+            Es werden folgende Eingaben ignoriert:
+            
+            Für folgende Eingaben werden Events ausgelöst:
+            Tab: <see cref="E:KeyLocker.Console.ConsoleHelper.TabPressed"/>,
             </summary>
             <returns>Die Nutzereingabe.</returns>
+        </member>
+        <member name="M:KeyLocker.Console.ConsoleHelper.OnTabPressed(System.String)">
+            <summary>
+            Löst <see cref="E:KeyLocker.Console.ConsoleHelper.TabPressed"/> aus.
+            </summary>
+            <param name="inputTillNow">Die bisherige Eingabe der Zeile.</param>
         </member>
         <member name="T:KeyLocker.Console.ConsolePromptOptions">
             <summary>
