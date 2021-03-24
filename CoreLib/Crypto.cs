@@ -58,7 +58,7 @@
 
             while (i < res.Length)
             {
-                res[i] = rng.RandomCharFrom(allowedChars);
+                res[i++] = rng.RandomCharFrom(allowedChars);
             }
 
             return string.Concat(res.OrderBy(i => rng.GenerateRandomUint()));

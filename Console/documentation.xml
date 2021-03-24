@@ -177,6 +177,11 @@
             Die Instanz des Befehls zur Entfernung eines neuen Eintrags.
             </summary>
         </member>
+        <member name="F:KeyLocker.Console.Commands.KnownCommands.ExitCommand">
+            <summary>
+            Die Instanz des Befehls zum Beenden der Anwendung.
+            </summary>
+        </member>
         <member name="P:KeyLocker.Console.Commands.KnownCommands.All">
             <summary>
             Holt eine Auflistung aller bekannten Befehle.
@@ -396,7 +401,7 @@
             <param name="items">Die auszugebenden Items.</param>
             <param name="seperator">Der string, der nach jedem Element, außer dem letzten, aus <paramref name="items"/> ausgegeben wird.</param>
         </member>
-        <member name="M:KeyLocker.Console.ConsoleHelper.ReadLine(System.Boolean)">
+        <member name="M:KeyLocker.Console.ConsoleHelper.ReadLine(System.Boolean,System.String)">
             <summary>
             Liest eine Zeile der Nutzereingabe ein und behandelt Sonderzeichen, etc.
             Es werden folgende Eingaben ignoriert:

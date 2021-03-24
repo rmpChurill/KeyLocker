@@ -1,4 +1,4 @@
-namespace KeyLocker.Console.Validation
+namespace KeyLocker.Utility.Console.Validation
 {
     using System;
 

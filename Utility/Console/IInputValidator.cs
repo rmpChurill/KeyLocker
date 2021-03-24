@@ -1,5 +1,5 @@
-namespace KeyLocker.Console.Validation
-{
+namespace KeyLocker.Utility.Console
+{ 
     /// <summary>
     /// Implementierende Klassen stellen Methoden bereit, um eine Nutzereingabe zu validieren.
     /// </summary>

@@ -1,4 +1,4 @@
-namespace KeyLocker.Console.Validation
+namespace KeyLocker.Utility.Console.Validation
 {
     using System;
 
@@ -11,7 +11,7 @@ namespace KeyLocker.Console.Validation
         /// Das zu validierende Ziel. 
         /// Wird am Anfangg einer potentiellen Fehlermeldung ausgegeben.
         /// </summary>
-        private string target;
+        private readonly string target;
 
         /// <summary>
         /// Initialisiert eine neue Instanz.

@@ -8,20 +8,21 @@
     using KeyLocker.Console.Commands;
     using KeyLocker.CoreLib;
     using KeyLocker.Utility;
+    using KeyLocker.Utility.Console;
 
     /// <summary>
     /// Stellt den Kern der Anwendung dar.
     /// </summary>
-    public class ConsoleCore
+    public class ConsoleCore 
     {
-        private readonly ConsoleWriteOptions noFileTextOptions = new ConsoleWriteOptions() { TextColor = ConsoleColor.Gray, BackgroundColor = ConsoleColor.Black };
-        private readonly ConsoleWriteOptions unnamedFileTextOptions = new ConsoleWriteOptions() { TextColor = ConsoleColor.Yellow, BackgroundColor = ConsoleColor.Black };
-        private readonly ConsoleWriteOptions fileNameTextOptions = new ConsoleWriteOptions() { TextColor = ConsoleColor.Cyan, BackgroundColor = ConsoleColor.Black };
-        private readonly ConsoleWriteOptions entriesAddedTextOptions = new ConsoleWriteOptions() { TextColor = ConsoleColor.Green, BackgroundColor = ConsoleColor.Black };
-        private readonly ConsoleWriteOptions entriesModifedTextOptions = new ConsoleWriteOptions() { TextColor = ConsoleColor.Yellow, BackgroundColor = ConsoleColor.Black };
-        private readonly ConsoleWriteOptions entriesDeletedTextOptions = new ConsoleWriteOptions() { TextColor = ConsoleColor.Red, BackgroundColor = ConsoleColor.Black };
-        private readonly ConsoleWriteOptions settingsChangedTextOptions = new ConsoleWriteOptions() { TextColor = ConsoleColor.DarkYellow, BackgroundColor = ConsoleColor.Black };
-        private readonly ConsoleWriteOptions passwordChangedTextOptions = new ConsoleWriteOptions() { TextColor = ConsoleColor.DarkRed, BackgroundColor = ConsoleColor.Black };
+        private readonly ConsoleWriteOptions noFileTextOptions = new() { TextColor = ConsoleColor.Gray, BackgroundColor = ConsoleColor.Black };
+        private readonly ConsoleWriteOptions unnamedFileTextOptions = new() { TextColor = ConsoleColor.Yellow, BackgroundColor = ConsoleColor.Black };
+        private readonly ConsoleWriteOptions fileNameTextOptions = new() { TextColor = ConsoleColor.Cyan, BackgroundColor = ConsoleColor.Black };
+        private readonly ConsoleWriteOptions entriesAddedTextOptions = new() { TextColor = ConsoleColor.Green, BackgroundColor = ConsoleColor.Black };
+        private readonly ConsoleWriteOptions entriesModifedTextOptions = new() { TextColor = ConsoleColor.Yellow, BackgroundColor = ConsoleColor.Black };
+        private readonly ConsoleWriteOptions entriesDeletedTextOptions = new() { TextColor = ConsoleColor.Red, BackgroundColor = ConsoleColor.Black };
+        private readonly ConsoleWriteOptions settingsChangedTextOptions = new() { TextColor = ConsoleColor.DarkYellow, BackgroundColor = ConsoleColor.Black };
+        private readonly ConsoleWriteOptions passwordChangedTextOptions = new() { TextColor = ConsoleColor.DarkRed, BackgroundColor = ConsoleColor.Black };
 
         /// <summary>
         /// Holt den Kern der Bibliothek, über den die Transaktionen ausgeführt werden.

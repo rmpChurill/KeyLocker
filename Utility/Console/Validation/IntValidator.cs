@@ -1,6 +1,8 @@
-namespace KeyLocker.Console.Validation
+namespace KeyLocker.Utility.Console.Validation
 {
     using System;
+
+    using KeyLocker.Utility.Console;
 
     /// <summary>
     /// Implementierung von <see cref="IInputValidator"/>, die prüft, ob die Eingabe eine Zahl ist.
@@ -10,12 +12,12 @@ namespace KeyLocker.Console.Validation
         /// <summary>
         /// Das erlaubte inklusive Minimum.
         /// </summary>
-        private int min;
+        private readonly int min;
 
         /// <summary>
         /// Das erlaubte inklusive Maximum.
         /// </summary>
-        private int max;
+        private readonly int max;
 
         /// <summary>
         /// Initialisiert eine neue Instanz, die sämtliche Eingaben erlaubt, die einen Integer darstellen.

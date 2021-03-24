@@ -1,7 +1,9 @@
-namespace KeyLocker.Console.Validation
+namespace KeyLocker.Utility.Console.Validation
 {
     using System;
     using System.Linq;
+
+    using KeyLocker.Utility.Console;
 
     /// <summary>
     /// Implementierung von <see cref="IInputValidator"/>, die prüft, ob die Eingabe einem Wert einer Enum entspricht.
@@ -12,7 +14,7 @@ namespace KeyLocker.Console.Validation
         /// <summary>
         /// Die Namen der Enum-Werte.
         /// </summary>
-        private string[] names;
+        private readonly string[] names;
 
         /// <summary>
         /// Inituialisiert eine neue Instanz.

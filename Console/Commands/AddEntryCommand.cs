@@ -63,12 +63,12 @@
             {
                 Name = ConsoleHelper.Prompt("Enter entry name: ", new ConsolePromptOptions() { Validator = nameValidator }),
                 Login = ConsoleHelper.Prompt("Enter login: ", new ConsolePromptOptions() { Validator = loginNotEmtpyValidator }),
-                Comment = ConsoleHelper.Prompt("Enter comment (optional):"),
+                Comment = ConsoleHelper.Prompt("Enter comment (optional): "),
             };
 
             if (ConsoleHelper.PromptBool("Do you want to set special settings for this entry? (y/n): "))
             {
-                Console.WriteLine("\nEnter required values or skip to use default settings:");
+                Console.WriteLine("\nEnter required values or skip to use default settings: ");
 
                 var usageValidator = new EnumValidator<Usage>();
                 var settings = new PartialPasswordSettings();

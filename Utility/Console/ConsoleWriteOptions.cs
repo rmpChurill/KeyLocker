@@ -1,4 +1,4 @@
-﻿namespace KeyLocker.Console
+﻿namespace KeyLocker.Utility.Console
 {
     using System;
 

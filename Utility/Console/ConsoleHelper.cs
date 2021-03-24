@@ -1,21 +1,16 @@
-﻿namespace KeyLocker.Console
+﻿namespace KeyLocker.Utility.Console
 {
     using System;
     using System.Collections.Generic;
     using System.Text;
 
-    using KeyLocker.Console.Validation;
+    using KeyLocker.Utility.Console.Validation;
 
     /// <summary>
     /// Eine Hilfsklasse für Ein- und Ausgabe auf der Konsole.
     /// </summary>
     public static class ConsoleHelper
     {
-        /// <summary>
-        /// Ein Event 
-        /// </summary>
-        public static event EventHandler<string>? TabPressed;
-
         /// <summary>
         /// Füllt eine Zeile des Terminals mit <paramref name="seperator"/>.
         /// </summary>
@@ -62,7 +57,7 @@
             {
                 ConsoleHelper.Write(question, options);
 
-                res = ReadLine(options.Hidden);
+                res = ReadLine(options);
 
                 if (options.Validator != null &&
                     options.AllowSkip &&
@@ -126,19 +121,18 @@
         /// <summary>
         /// Liest eine Zeile der Nutzereingabe ein und behandelt Sonderzeichen, etc.
         /// Es werden folgende Eingaben ignoriert:
-        /// 
-        /// Für folgende Eingaben werden Events ausgelöst:
-        /// Tab: <see cref="TabPressed"/>,
         /// </summary>
         /// <returns>Die Nutzereingabe.</returns>
-        private static string ReadLine(bool hidden, string initialInput = "")
+        private static string ReadLine(ConsolePromptOptions options, string initialInput = "")
         {
-            var sb = new StringBuilder();
+            var sb = new StringBuilder(initialInput);
             var run = true;
+
+            Console.Write(initialInput);
 
             while (run)
             {
-                var key = Console.ReadKey(hidden);
+                var key = Console.ReadKey(options.Hidden);
 
                 switch (key.Key)
                 {
@@ -158,7 +152,10 @@
                         run = false;
                         break;
                     case ConsoleKey.Tab:
-                        ConsoleHelper.OnTabPressed(sb.ToString());
+                        if (options.Autocompleter != null)
+                        {
+                            options.Autocompleter.GetAutocCompleteOptions(sb.ToString());
+                        }
                         break;
                     default:
                         sb.Append(key.KeyChar);
@@ -169,15 +166,6 @@
             Console.WriteLine();
 
             return sb.ToString();
-        }
-
-        /// <summary>
-        /// Löst <see cref="TabPressed"/> aus.
-        /// </summary>
-        /// <param name="inputTillNow">Die bisherige Eingabe der Zeile.</param>
-        private static void OnTabPressed(string inputTillNow)
-        {
-            ConsoleHelper.TabPressed?.Invoke(null, inputTillNow);
         }
     }
 }

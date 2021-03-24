@@ -12,7 +12,7 @@
         {
             get
             {
-                throw new NotImplementedException();
+                return "Beendet die Anwendung";
             }
         }
 
@@ -21,7 +21,7 @@
         {
             get
             {
-                throw new NotImplementedException();
+                return "exit";
             }
         }
 
@@ -30,7 +30,7 @@
         {
             get
             {
-                throw new NotImplementedException();
+                return null;
             }
         }
 

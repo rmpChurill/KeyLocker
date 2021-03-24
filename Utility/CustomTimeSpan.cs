@@ -62,7 +62,7 @@ namespace KeyLocker.Utility
 
             var unit = s[^1];
 
-            if (!int.TryParse(s[0..^2], out var amount))
+            if (!int.TryParse(s[0..^1], out var amount))
             {
                 return false;
             }

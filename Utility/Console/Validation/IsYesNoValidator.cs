@@ -1,6 +1,8 @@
-namespace KeyLocker.Console.Validation
+namespace KeyLocker.Utility.Console.Validation
 {
     using System;
+
+    using KeyLocker.Utility.Console;
 
     /// <summary>
     /// Implementierung von <see cref="IInputValidator"/>, die prüft, ob die Eingabe y, Y, n oder N ist. (Ja/Nein)

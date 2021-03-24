@@ -2,7 +2,9 @@ namespace KeyLocker.Console.Validation
 {
     using System;
     using System.Linq;
+
     using KeyLocker.CoreLib;
+    using KeyLocker.Utility.Console;
 
     /// <summary>
     /// Implementierung von <see cref="IInputValidator"/>, die prüft, ob keine andere Instanz 
@@ -13,7 +15,7 @@ namespace KeyLocker.Console.Validation
         /// <summary>
         /// Die ausführende <see cref="KeyLockerCore"/>-Instanz.
         /// </summary>
-        private KeyLockerCore core;
+        private readonly KeyLockerCore core;
 
         /// <summary>
         /// Initialisiert eine neue Instanz.

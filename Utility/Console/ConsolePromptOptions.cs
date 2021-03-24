@@ -1,8 +1,5 @@
-﻿namespace KeyLocker.Console
+﻿namespace KeyLocker.Utility.Console
 {
-
-    using KeyLocker.Console.Validation;
-
     /// <summary>
     /// Optionen für eine Konsolenausgabe.
     /// </summary>
@@ -21,6 +18,15 @@
         /// Holt den <see cref="IInputValidator"/> der die Eingabe validieren soll.
         /// </summary>
         public IInputValidator? Validator
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Holt oder setzt den zu nutzenden <see cref="IAutocompleter"/>.
+        /// </summary>
+        public IAutocompleter? Autocompleter
         {
             get;
             set;

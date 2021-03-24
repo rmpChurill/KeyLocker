@@ -56,15 +56,14 @@
 
                 var keylockerCore = KeyLockerCore.Load(json.RootElement);
 
-                int tries = 0;
-                const int maxTries = 3;
-
-                while (tries < maxTries)
+                for (int i = 0; i < 3; i++)
                 {
                     var password = ConsoleHelper.Prompt("Enter password: ", new ConsolePromptOptions() { Hidden = true });
 
                     if (keylockerCore.ConfirmPassword(password))
                     {
+                        Console.WriteLine("File opened!");
+
                         break;
                     }
 
