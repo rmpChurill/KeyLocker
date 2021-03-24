@@ -8,12 +8,20 @@
     public class PropertyChangedEventArgs : EventArgs
     {
         /// <summary>
-        /// Der Name der geänderten Eigenschaftn.
+        /// Initialisiert eine neue Instanz der Klasse.
+        /// </summary>
+        /// <param name="propertyName">Der Name der geänderten Eigenschaft.</param>
+        public PropertyChangedEventArgs(string propertyName)
+        {
+            this.PropertyName = propertyName;
+        }
+
+        /// <summary>
+        /// Der Name der geänderten Eigenschaft.
         /// </summary>
         public string PropertyName
         {
             get;
-            init;
         }
     }
 }

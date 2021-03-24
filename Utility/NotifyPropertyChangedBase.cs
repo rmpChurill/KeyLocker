@@ -11,7 +11,7 @@
         /// <summary>
         /// Wird ausgelöst, wenn 
         /// </summary>
-        public event EventHandler<PropertyChangedEventArgs> PropertyChanged;
+        public event EventHandler<PropertyChangedEventArgs>? PropertyChanged;
 
         /// <summary>
         /// Löst <see cref="PropertyChanged"/> aus.
@@ -19,7 +19,7 @@
         /// <param name="propertyName">Der Name der geänderten Eigenschaft.</param>
         protected void OnPropertyChanged([CallerMemberName] string propertyName = "")
         {
-            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs() { PropertyName = propertyName });
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

@@ -14,8 +14,13 @@
         /// <param name="path">Der Pfad zur Datei.</param>
         public static void CreateFile(string path)
         {
-            CreateSubDirs(Path.GetDirectoryName(path));
-            File.Create(path);
+            var directoryName = Path.GetDirectoryName(path);
+
+            if (directoryName != null)
+            {
+                CreateSubDirs(directoryName);
+                File.Create(path);
+            }
         }
 
         /// <summary>
@@ -24,9 +29,11 @@
         /// <param name="path">Der zu erstellende Pfad.</param>
         private static void CreateSubDirs(string path)
         {
-            if (!Directory.Exists(Path.GetDirectoryName(path)))
+            var directoryName = Path.GetDirectoryName(path);
+
+            if (!string.IsNullOrEmpty(directoryName) && !Directory.Exists(directoryName))
             {
-                CreateSubDirs(Path.GetDirectoryName(path));
+                CreateSubDirs(directoryName);
             }
 
             Directory.CreateDirectory(path);
