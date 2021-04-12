@@ -6,6 +6,8 @@
     using KeyLocker.Console.Validation;
     using KeyLocker.CoreLib.Validation;
     using KeyLocker.Utility;
+    using KeyLocker.Utility.Console;
+    using KeyLocker.Utility.Console.Validation;
 
     /// <summary>
     /// Stellt den Befehl zur Erzeugung eines neuen Eintrags dar.
@@ -88,7 +90,7 @@
                 var minLength = ConsoleHelper.Prompt("    Min length: ", new ConsolePromptOptions() { AllowSkip = true, Validator = new IntValidator(0, int.MaxValue) });
                 var maxLength = ConsoleHelper.Prompt("    Max length: ", new ConsolePromptOptions() { AllowSkip = true, Validator = new IntValidator(minLength != null ? int.Parse(minLength) : 1, int.MaxValue) });
                 var forbiddenCharacters = ConsoleHelper.Prompt("    List of forbidden characters: ", new ConsolePromptOptions() { AllowSkip = true });
-                var allowedSpecialCharacters = ConsoleHelper.Prompt("    Allowed special characters: ", new ConsolePromptOptions() { AllowSkip = true, Validator = new IsOnlySpecialCharactersValidator() });
+                var allowedSpecialCharacters = ConsoleHelper.Prompt("    Allowed special characters: ", new ConsolePromptOptions() { AllowSkip = true, Validator = new IsOnlyOfValidator(Definitions.SpecialCharacters) });
                 var decayTime = ConsoleHelper.Prompt("    Time until invalidation: ", new ConsolePromptOptions() { AllowSkip = true, Validator = new CustomTimeSpanValidator() });
 
                 if (!string.IsNullOrEmpty(upperCaseChars))

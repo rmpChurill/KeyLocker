@@ -4,6 +4,8 @@
     using System.Text.Json;
 
     using KeyLocker.Console.Validation;
+    using KeyLocker.Utility.Console;
+    using KeyLocker.Utility.Console.Validation;
 
     /// <summary>
     /// Speichert eine geöffnete Datei.

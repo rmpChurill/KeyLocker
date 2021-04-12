@@ -3,6 +3,7 @@
     using System;
 
     using KeyLocker.CoreLib;
+    using KeyLocker.Utility.Console;
 
     /// <summary>
     /// Eine Implementierung von <see cref="ICommand"/>, die die Erstellung einer neuen Passwortliste darstellt.

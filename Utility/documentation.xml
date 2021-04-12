@@ -4,6 +4,284 @@
         <name>Utility</name>
     </assembly>
     <members>
+        <member name="T:KeyLocker.Utility.Console.ConsoleHelper">
+            <summary>
+            Eine Hilfsklasse für Ein- und Ausgabe auf der Konsole.
+            </summary>
+        </member>
+        <member name="M:KeyLocker.Utility.Console.ConsoleHelper.WriteSeperator(System.Char)">
+            <summary>
+            Füllt eine Zeile des Terminals mit <paramref name="seperator"/>.
+            </summary>
+            <param name="seperator">Das auszugebende Zeichen.</param>
+        </member>
+        <member name="M:KeyLocker.Utility.Console.ConsoleHelper.Write(System.String,KeyLocker.Utility.Console.ConsoleWriteOptions)">
+            <summary>
+            Gibt <paramref name="text"/> aus und wendet die Optionen <paramref name="options"/> an.
+            </summary>
+            <param name="text">Der auszugebende Text.</param>
+            <param name="options">Die anzuwendenden Optionen</param>
+        </member>
+        <member name="M:KeyLocker.Utility.Console.ConsoleHelper.Prompt(System.String,KeyLocker.Utility.Console.ConsolePromptOptions)">
+            <summary>
+            Schreibt <paramref name="question"/> (Standardwert ist "> "), liest eine Zeile der Nutzereingabe und gibt diese zurück.
+            </summary>
+            <param name="question">Der Text, der vor der Eingabe angezeigt werden soll.</param>
+            <param name="options">Die anzuwendenden Optionen.</param>
+            <returns>Die Nutzereingabe.</returns>
+        </member>
+        <member name="M:KeyLocker.Utility.Console.ConsoleHelper.PromptBool(System.String,KeyLocker.Utility.Console.ConsolePromptOptions)">
+            <summary>
+            Schreibt <paramref name="question"/> (Standardwert ist "> ") und liest eine Zeile der Nutzereingabe, 
+            die als boolescher Wert interpretiert wird.
+            </summary>
+            <param name="question">Der Text, der vor der Eingabe angezeigt werden soll.</param>
+            <param name="options">Die anzuwendenden Optionen.</param>
+            <returns>True, wenn die Eingabe y oder Y war, false wenn die Eingabe n oder N war.</returns>
+        </member>
+        <member name="M:KeyLocker.Utility.Console.ConsoleHelper.WriteAll``1(System.Collections.Generic.IEnumerable{``0},System.String)">
+            <summary>
+            Schreibt eine Auflistung von Elementen in die Konsole.
+            </summary>
+            <typeparam name="T">Der Typ der auszugebenden Items.</typeparam>
+            <param name="items">Die auszugebenden Items.</param>
+            <param name="seperator">Der string, der nach jedem Element, außer dem letzten, aus <paramref name="items"/> ausgegeben wird.</param>
+        </member>
+        <member name="M:KeyLocker.Utility.Console.ConsoleHelper.ReadLine(KeyLocker.Utility.Console.ConsolePromptOptions,System.String)">
+            <summary>
+            Liest eine Zeile der Nutzereingabe ein und behandelt Sonderzeichen, etc.
+            Es werden folgende Eingaben ignoriert:
+            </summary>
+            <returns>Die Nutzereingabe.</returns>
+        </member>
+        <member name="T:KeyLocker.Utility.Console.ConsolePromptOptions">
+            <summary>
+            Optionen für eine Konsolenausgabe.
+            </summary>
+        </member>
+        <member name="P:KeyLocker.Utility.Console.ConsolePromptOptions.Hidden">
+            <summary>
+            Holt einen Wert, der angibt, ob die Eingabe versteckt werden soll oder nicht.
+            </summary>
+        </member>
+        <member name="P:KeyLocker.Utility.Console.ConsolePromptOptions.Validator">
+            <summary>
+            Holt den <see cref="T:KeyLocker.Utility.Console.IInputValidator"/> der die Eingabe validieren soll.
+            </summary>
+        </member>
+        <member name="P:KeyLocker.Utility.Console.ConsolePromptOptions.Autocompleter">
+            <summary>
+            Holt oder setzt den zu nutzenden <see cref="T:KeyLocker.Utility.Console.IAutocompleter"/>.
+            </summary>
+        </member>
+        <member name="P:KeyLocker.Utility.Console.ConsolePromptOptions.AllowSkip">
+            <summary>
+            Holt einen Wert, der angibt, ob eine leere Eingabe unabhängig von <see cref="P:KeyLocker.Utility.Console.ConsolePromptOptions.Validator"/>
+            akzeptiert werden soll und dann <code>default(string)</code> zurückgibt.
+            </summary>
+        </member>
+        <member name="T:KeyLocker.Utility.Console.ConsoleWriteOptions">
+            <summary>
+            Optionen für eine Konsolenausgabe.
+            </summary>
+        </member>
+        <member name="P:KeyLocker.Utility.Console.ConsoleWriteOptions.TextColor">
+            <summary>
+            Holt die Textfarbe.
+            </summary>
+        </member>
+        <member name="P:KeyLocker.Utility.Console.ConsoleWriteOptions.BackgroundColor">
+            <summary>
+            Holt die Hintergrundfarbe.
+            </summary>
+        </member>
+        <member name="T:KeyLocker.Utility.Console.IAutocompleter">
+            <summary>
+            Implementierende Klassen stellen Funkktionen bereit, die zur Auovervollständigung dienen.
+            </summary>
+        </member>
+        <member name="M:KeyLocker.Utility.Console.IAutocompleter.GetAutocCompleteOptions(System.String)">
+            <summary>
+            Holt alle Autovervollständigungsoptionen die für die Eingabe <paramref name="input"/> verfügbar sind.
+            </summary>
+            <param name="input">Die bisherige Eingabe.</param>
+            <returns>Eine Auflistung von Autovervollständigungsoptionen.</returns>
+        </member>
+        <member name="T:KeyLocker.Utility.Console.IInputValidator">
+            <summary>
+            Implementierende Klassen stellen Methoden bereit, um eine Nutzereingabe zu validieren.
+            </summary>
+        </member>
+        <member name="M:KeyLocker.Utility.Console.IInputValidator.IsValid(System.String)">
+            <summary>
+            Validiert eine Nutzereingabe.
+            </summary>
+            <param name="userInput">Die zu validierende Eingabe.</param>
+            <returns>True, wenn die Eingabe gültig ist, sonst false.</returns>
+        </member>
+        <member name="T:KeyLocker.Utility.Console.Validation.CustomTimeSpanValidator">
+            <summary>
+            Implementierung von <see cref="T:KeyLocker.Utility.Console.IInputValidator"/>, die prüft, ob die Eingabe eine Zeitspanne darstellt.
+            </summary>
+        </member>
+        <member name="M:KeyLocker.Utility.Console.Validation.CustomTimeSpanValidator.IsValid(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="T:KeyLocker.Utility.Console.Validation.EnumValidator`1">
+            <summary>
+            Implementierung von <see cref="T:KeyLocker.Utility.Console.IInputValidator"/>, die prüft, ob die Eingabe einem Wert einer Enum entspricht.
+            </summary>
+        </member>
+        <member name="F:KeyLocker.Utility.Console.Validation.EnumValidator`1.names">
+            <summary>
+            Die Namen der Enum-Werte.
+            </summary>
+        </member>
+        <member name="M:KeyLocker.Utility.Console.Validation.EnumValidator`1.#ctor">
+            <summary>
+            Inituialisiert eine neue Instanz.
+            </summary>
+        </member>
+        <member name="M:KeyLocker.Utility.Console.Validation.EnumValidator`1.IsValid(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="T:KeyLocker.Utility.Console.Validation.IntValidator">
+            <summary>
+            Implementierung von <see cref="T:KeyLocker.Utility.Console.IInputValidator"/>, die prüft, ob die Eingabe eine Zahl ist.
+            </summary>
+        </member>
+        <member name="F:KeyLocker.Utility.Console.Validation.IntValidator.min">
+            <summary>
+            Das erlaubte inklusive Minimum.
+            </summary>
+        </member>
+        <member name="F:KeyLocker.Utility.Console.Validation.IntValidator.max">
+            <summary>
+            Das erlaubte inklusive Maximum.
+            </summary>
+        </member>
+        <member name="M:KeyLocker.Utility.Console.Validation.IntValidator.#ctor">
+            <summary>
+            Initialisiert eine neue Instanz, die sämtliche Eingaben erlaubt, die einen Integer darstellen.
+            </summary>
+        </member>
+        <member name="M:KeyLocker.Utility.Console.Validation.IntValidator.#ctor(System.Int32)">
+            <summary>
+            Initialisiert eine neue Instanz, die sämtliche Eingaben erlaubt, die einen 
+            Integer zwischen 0 und <paramref name="max"/> (inklusive) darstellen.
+            </summary>
+            <param name="max">Das inklusive Maximum.</param>
+        </member>
+        <member name="M:KeyLocker.Utility.Console.Validation.IntValidator.#ctor(System.Int32,System.Int32)">
+            <summary>
+            Initialisiert eine neue Instanz, die sämtliche Eingaben erlaubt, die einen 
+            Integer zwischen <paramref name="min"/> und <paramref name="max"/> (beide inklusive) darstellen.
+            </summary>
+            <param name="min">Das inklusive Minimum</param>
+            <param name="max">Das inklusive Maximum.</param>
+        </member>
+        <member name="M:KeyLocker.Utility.Console.Validation.IntValidator.IsValid(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="T:KeyLocker.Utility.Console.Validation.IsOnlyOfValidator">
+            <summary>
+            Implementierung von <see cref="T:KeyLocker.Utility.Console.IInputValidator"/>, die prüft, ob die Eingabe nur aus einer Liste von erlaubten Zeichen besteht.
+            </summary>
+        </member>
+        <member name="F:KeyLocker.Utility.Console.Validation.IsOnlyOfValidator.allowedCharacters">
+            <summary>
+            Die erlaubten Zeichen. 
+            </summary>
+        </member>
+        <member name="M:KeyLocker.Utility.Console.Validation.IsOnlyOfValidator.#ctor(System.String)">
+            <summary>
+            Initialisiert eine neue Instanz der Klasse.
+            </summary>
+            <param name="allowedCharacters">Die erlaubten Zeichen.</param>
+        </member>
+        <member name="M:KeyLocker.Utility.Console.Validation.IsOnlyOfValidator.#ctor(System.Char[])">
+            <summary>
+            Initialisiert eine neue Instanz der Klasse.
+            </summary>
+            <param name="allowedCharacters">Die erlaubten Zeichen.</param>
+        </member>
+        <member name="M:KeyLocker.Utility.Console.Validation.IsOnlyOfValidator.IsValid(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="T:KeyLocker.Utility.Console.Validation.IsYesNoValidator">
+            <summary>
+            Implementierung von <see cref="T:KeyLocker.Utility.Console.IInputValidator"/>, die prüft, ob die Eingabe y, Y, n oder N ist. (Ja/Nein)
+            </summary>
+        </member>
+        <member name="M:KeyLocker.Utility.Console.Validation.IsYesNoValidator.IsValid(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="T:KeyLocker.Utility.Console.Validation.LogicalAndValidator">
+            <summary>
+            Eine Implementierung von <see cref="T:KeyLocker.Utility.Console.IInputValidator"/>, die mehrere andere <see cref="T:KeyLocker.Utility.Console.IInputValidator"/>
+            durch logisches UND verknüpft.
+            </summary>
+        </member>
+        <member name="F:KeyLocker.Utility.Console.Validation.LogicalAndValidator.validators">
+            <summary>
+            Die zu prüfenden <see cref="T:KeyLocker.Utility.Console.IInputValidator"/>-Instanzen.
+            </summary>
+        </member>
+        <member name="M:KeyLocker.Utility.Console.Validation.LogicalAndValidator.#ctor(System.Collections.Generic.IEnumerable{KeyLocker.Utility.Console.IInputValidator})">
+            <summary>
+            Initialisiert eine neue Instanz der Klasse.
+            </summary>
+            <param name="validators">Die zu prüfenden <see cref="T:KeyLocker.Utility.Console.IInputValidator"/>-Instanzen.</param>
+        </member>
+        <member name="M:KeyLocker.Utility.Console.Validation.LogicalAndValidator.#ctor(KeyLocker.Utility.Console.IInputValidator[])">
+            <summary>
+            Initialisiert eine neue Instanz der Klasse.
+            </summary>
+            <param name="validators">Die zu prüfenden <see cref="T:KeyLocker.Utility.Console.IInputValidator"/>-Instanzen.</param>
+        </member>
+        <member name="M:KeyLocker.Utility.Console.Validation.LogicalAndValidator.IsValid(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="T:KeyLocker.Utility.Console.Validation.LogicalOrValidator">
+            <summary>
+            Eine Implementierung von <see cref="T:KeyLocker.Utility.Console.IInputValidator"/>, die mehrere andere <see cref="T:KeyLocker.Utility.Console.IInputValidator"/>
+            durch logisches ODER verknüpft.
+            </summary>
+        </member>
+        <member name="F:KeyLocker.Utility.Console.Validation.LogicalOrValidator.validators">
+            <summary>
+            Die zu prüfenden <see cref="T:KeyLocker.Utility.Console.IInputValidator"/>-Instanzen.
+            </summary>
+        </member>
+        <member name="M:KeyLocker.Utility.Console.Validation.LogicalOrValidator.#ctor(System.Collections.Generic.IEnumerable{KeyLocker.Utility.Console.IInputValidator})">
+            <summary>
+            Initialisiert eine neue Instanz der Klasse.
+            </summary>
+            <param name="validators">Die zu prüfenden <see cref="T:KeyLocker.Utility.Console.IInputValidator"/>-Instanzen.</param>
+        </member>
+        <member name="M:KeyLocker.Utility.Console.Validation.LogicalOrValidator.IsValid(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="T:KeyLocker.Utility.Console.Validation.NotEmptyValidator">
+            <summary>
+            Implementierung von <see cref="T:KeyLocker.Utility.Console.IInputValidator"/>, die prüft, ob die Eingabe nicht leer ist.
+            </summary>
+        </member>
+        <member name="F:KeyLocker.Utility.Console.Validation.NotEmptyValidator.target">
+            <summary>
+            Das zu validierende Ziel. 
+            Wird am Anfangg einer potentiellen Fehlermeldung ausgegeben.
+            </summary>
+        </member>
+        <member name="M:KeyLocker.Utility.Console.Validation.NotEmptyValidator.#ctor(System.String)">
+            <summary>
+            Initialisiert eine neue Instanz.
+            </summary>
+            <param name="target">Das zu validierende Ziel. Wird am Anfangg einer potentiellen Fehlermeldung ausgegeben.</param>
+        </member>
+        <member name="M:KeyLocker.Utility.Console.Validation.NotEmptyValidator.IsValid(System.String)">
+            <inheritdoc/>
+        </member>
         <member name="T:KeyLocker.Utility.CryptoRandomGenerator">
             <summary>
             Enthält einige statische Methoden für die Erzeugung von Kryptografischen Zufallswerten.
@@ -176,9 +454,15 @@
             Argumente für ein Event, dass die Änderung einer Eigenschaft beschreibt.
             </summary>
         </member>
+        <member name="M:KeyLocker.Utility.PropertyChangedEventArgs.#ctor(System.String)">
+            <summary>
+            Initialisiert eine neue Instanz der Klasse.
+            </summary>
+            <param name="propertyName">Der Name der geänderten Eigenschaft.</param>
+        </member>
         <member name="P:KeyLocker.Utility.PropertyChangedEventArgs.PropertyName">
             <summary>
-            Der Name der geänderten Eigenschaftn.
+            Der Name der geänderten Eigenschaft.
             </summary>
         </member>
         <member name="T:Utility.FileUtil">

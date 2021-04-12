@@ -4,6 +4,7 @@
     using System.Linq;
 
     using KeyLocker.CoreLib.Validation;
+    using KeyLocker.Utility.Console;
 
     /// <summary>
     /// Eine Implementierung von <see cref="ICommand"/>, die den Befehl zur Prüfung aller Einträge darstellt.

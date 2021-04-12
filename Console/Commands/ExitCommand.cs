@@ -1,6 +1,7 @@
 ﻿namespace KeyLocker.Console.Commands
 {
     using System;
+    using KeyLocker.Utility.Console;
 
     /// <summary>
     /// Eine Implementierung von <see cref="ICommand"/>, die den Befehl zum Beenden der Anwendung darstellt.
