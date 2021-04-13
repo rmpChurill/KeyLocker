@@ -123,12 +123,10 @@
         /// Es werden folgende Eingaben ignoriert:
         /// </summary>
         /// <returns>Die Nutzereingabe.</returns>
-        private static string ReadLine(ConsolePromptOptions options, string initialInput = "")
+        private static string ReadLine(ConsolePromptOptions options)
         {
-            var sb = new StringBuilder(initialInput);
+            var sb = new StringBuilder();
             var run = true;
-
-            Console.Write(initialInput);
 
             while (run)
             {
@@ -141,11 +139,11 @@
                         {
                             sb.Remove(sb.Length - 1, 1);
 
-                            //if ()
-                            //{
-                            //    Console.SetCursorPosition(Console.CursorLeft - 1, Console.CursorTop);
-                            //    Console.Write(" ");
-                            //}
+                            if (!options.Hidden)
+                            {
+                                Console.SetCursorPosition(Console.CursorLeft - 1, Console.CursorTop);
+                                Console.Write(" ");
+                            }
                         }
                         break;
                     case ConsoleKey.Enter:
@@ -154,7 +152,9 @@
                     case ConsoleKey.Tab:
                         if (options.Autocompleter != null)
                         {
-                            options.Autocompleter.GetAutocCompleteOptions(sb.ToString());
+                            var autocompleteOptions = options.Autocompleter.GetAutocCompleteOptions(sb.ToString());
+
+                            ConsoleHelper.WriteAll(autocompleteOptions, " ");
                         }
                         break;
                     default:
