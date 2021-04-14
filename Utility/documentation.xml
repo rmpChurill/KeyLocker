@@ -47,7 +47,7 @@
             <param name="items">Die auszugebenden Items.</param>
             <param name="seperator">Der string, der nach jedem Element, außer dem letzten, aus <paramref name="items"/> ausgegeben wird.</param>
         </member>
-        <member name="M:KeyLocker.Utility.Console.ConsoleHelper.ReadLine(KeyLocker.Utility.Console.ConsolePromptOptions,System.String)">
+        <member name="M:KeyLocker.Utility.Console.ConsoleHelper.ReadLine(System.String,KeyLocker.Utility.Console.ConsolePromptOptions)">
             <summary>
             Liest eine Zeile der Nutzereingabe ein und behandelt Sonderzeichen, etc.
             Es werden folgende Eingaben ignoriert:

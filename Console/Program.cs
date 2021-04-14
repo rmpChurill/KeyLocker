@@ -26,7 +26,7 @@ namespace KeyLocker.Console
 
             Utility.Console.ConsoleHelper.Prompt("> ", new Utility.Console.ConsolePromptOptions()
             {
-                Autocompleter =
+                Autocompleter = new Autocompleter()
             });
         }
     }

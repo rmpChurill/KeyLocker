@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Text;
 
     using KeyLocker.Utility.Console.Validation;
@@ -55,9 +56,7 @@
 
             while (true)
             {
-                ConsoleHelper.Write(question, options);
-
-                res = ReadLine(options);
+                res = ReadLine(question, options);
 
                 if (options.Validator != null &&
                     options.AllowSkip &&
@@ -123,8 +122,10 @@
         /// Es werden folgende Eingaben ignoriert:
         /// </summary>
         /// <returns>Die Nutzereingabe.</returns>
-        private static string ReadLine(ConsolePromptOptions options)
+        private static string ReadLine(string prompt, ConsolePromptOptions options)
         {
+            ConsoleHelper.Write(prompt, options);
+
             var sb = new StringBuilder();
             var run = true;
 
@@ -153,8 +154,23 @@
                         if (options.Autocompleter != null)
                         {
                             var autocompleteOptions = options.Autocompleter.GetAutocCompleteOptions(sb.ToString());
+                            var numOptions = autocompleteOptions.Count();
 
-                            ConsoleHelper.WriteAll(autocompleteOptions, " ");
+                            if (numOptions == 1)
+                            {
+                                var part = autocompleteOptions.First().Substring(sb.Length);
+
+                                sb.Append(part);
+                                Console.Write(part);
+                            }
+                            else if (numOptions != 1)
+                            {
+                                Console.WriteLine();
+                                ConsoleHelper.WriteAll(autocompleteOptions, " ");
+                                Console.WriteLine();
+                                ConsoleHelper.Write(prompt, options);
+                                Console.Write(sb.ToString());
+                            }
                         }
                         break;
                     default:
