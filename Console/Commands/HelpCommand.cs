@@ -3,6 +3,7 @@
     using System;
     using System.Linq;
     using KeyLocker.Utility;
+    using KeyLocker.Utility.Console;
 
     /// <summary>
     /// Stellt den Hilfebefehl dar.
@@ -51,21 +52,40 @@
 
         private void AutocompleteCommand(string prefix)
         {
-            var alternatives = KnownCommands.All
-                .Select(i => new Tuple<ICommand, int>(i, LevenshteinDistance.Compute(i.Command, prefix)))
-                .OrderBy(i => i.Item2)
-                .Where(i => i.Item2 < 4);
+            var matching = KnownCommands.All
+                .Where(i => string.Compare(prefix, i.Command, StringComparison.OrdinalIgnoreCase) == 0)
+                .SingleOrDefault();
 
-            if(alternatives.Any())
+            if (matching != default)
             {
-                Console.WriteLine("");
+                Console.WriteLine($"Command:     {matching.Command}");
+                Console.WriteLine($"Shortcut:    {matching.Alias?.ToString() ?? " - none -"}");
+                Console.WriteLine($"Description: {matching.HelpDescritpion}");
             }
             else
             {
 
+
+                var alternatives = KnownCommands.All
+                    .Select(i => new Tuple<ICommand, int>(i, LevenshteinDistance.Compute(i.Command, prefix)))
+                    .OrderBy(i => i.Item2)
+                    .Where(i => i.Item2 < 4);
+
+                if (alternatives.Any())
+                {
+                    Console.WriteLine("Similiar commands: ");
+                    ConsoleHelper.WriteAll(alternatives);
+                }
+                else
+                {
+                    Console.WriteLine("No matching commands");
+                }
             }
         }
 
+        /// <summary>
+        /// Gibt eine Auflistung aller Befehle mit Hilfen aus.
+        /// </summary>
         private void ListAllCommands()
         {
             var longestCommand = 0;
