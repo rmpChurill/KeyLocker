@@ -2,6 +2,7 @@
 {
     using System;
     using System.Linq;
+    using KeyLocker.Utility;
 
     /// <summary>
     /// Stellt den Hilfebefehl dar.
@@ -37,6 +38,35 @@
 
         /// <inheritdoc/>
         public void Execute(ConsoleCore core, string arg)
+        {
+            if (string.IsNullOrEmpty(arg))
+            {
+                this.ListAllCommands();
+            }
+            else
+            {
+                this.AutocompleteCommand(arg);
+            }
+        }
+
+        private void AutocompleteCommand(string prefix)
+        {
+            var alternatives = KnownCommands.All
+                .Select(i => new Tuple<ICommand, int>(i, LevenshteinDistance.Compute(i.Command, prefix)))
+                .OrderBy(i => i.Item2)
+                .Where(i => i.Item2 < 4);
+
+            if(alternatives.Any())
+            {
+                Console.WriteLine("");
+            }
+            else
+            {
+
+            }
+        }
+
+        private void ListAllCommands()
         {
             var longestCommand = 0;
 

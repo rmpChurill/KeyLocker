@@ -6,6 +6,7 @@
     using System.Linq;
 
     using KeyLocker.Console.Commands;
+    using KeyLocker.Console.Localization;
     using KeyLocker.CoreLib;
     using KeyLocker.Utility;
     using KeyLocker.Utility.Console;
@@ -13,7 +14,7 @@
     /// <summary>
     /// Stellt den Kern der Anwendung dar.
     /// </summary>
-    public class ConsoleCore 
+    public class ConsoleCore
     {
         private readonly ConsoleWriteOptions noFileTextOptions = new() { TextColor = ConsoleColor.Gray, BackgroundColor = ConsoleColor.Black };
         private readonly ConsoleWriteOptions unnamedFileTextOptions = new() { TextColor = ConsoleColor.Yellow, BackgroundColor = ConsoleColor.Black };
@@ -25,12 +26,30 @@
         private readonly ConsoleWriteOptions passwordChangedTextOptions = new() { TextColor = ConsoleColor.DarkRed, BackgroundColor = ConsoleColor.Black };
 
         /// <summary>
+        /// Initialisiert eine neue Instanz der Klasse.
+        /// </summary>
+        /// <param name="args">Die Parameter der Befehlszeile.</param>
+        public ConsoleCore(string[] args)
+        {
+            this.Loop = false;
+            this.LocalTexts = new LocalTextDEde();
+        }
+
+        /// <summary>
         /// Holt den Kern der Bibliothek, über den die Transaktionen ausgeführt werden.
         /// </summary>
         public KeyLockerCore? KeyLockerCore
         {
             get;
             set;
+        }
+
+        /// <summary>
+        /// Holt die lokalisierten Texte.
+        /// </summary>
+        public ILocalText LocalTexts
+        {
+            get;
         }
 
         /// <summary>

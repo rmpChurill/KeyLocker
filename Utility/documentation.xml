@@ -69,11 +69,6 @@
             Holt den <see cref="T:KeyLocker.Utility.Console.IInputValidator"/> der die Eingabe validieren soll.
             </summary>
         </member>
-        <member name="P:KeyLocker.Utility.Console.ConsolePromptOptions.Autocompleter">
-            <summary>
-            Holt oder setzt den zu nutzenden <see cref="T:KeyLocker.Utility.Console.IAutocompleter"/>.
-            </summary>
-        </member>
         <member name="P:KeyLocker.Utility.Console.ConsolePromptOptions.AllowSkip">
             <summary>
             Holt einen Wert, der angibt, ob eine leere Eingabe unabhängig von <see cref="P:KeyLocker.Utility.Console.ConsolePromptOptions.Validator"/>
@@ -94,18 +89,6 @@
             <summary>
             Holt die Hintergrundfarbe.
             </summary>
-        </member>
-        <member name="T:KeyLocker.Utility.Console.IAutocompleter">
-            <summary>
-            Implementierende Klassen stellen Funkktionen bereit, die zur Auovervollständigung dienen.
-            </summary>
-        </member>
-        <member name="M:KeyLocker.Utility.Console.IAutocompleter.GetAutocCompleteOptions(System.String)">
-            <summary>
-            Holt alle Autovervollständigungsoptionen die für die Eingabe <paramref name="input"/> verfügbar sind.
-            </summary>
-            <param name="input">Die bisherige Eingabe.</param>
-            <returns>Eine Auflistung von Autovervollständigungsoptionen.</returns>
         </member>
         <member name="T:KeyLocker.Utility.Console.IInputValidator">
             <summary>

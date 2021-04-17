@@ -24,15 +24,6 @@
         }
 
         /// <summary>
-        /// Holt oder setzt den zu nutzenden <see cref="IAutocompleter"/>.
-        /// </summary>
-        public IAutocompleter? Autocompleter
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
         /// Holt einen Wert, der angibt, ob eine leere Eingabe unabhängig von <see cref="Validator"/>
         /// akzeptiert werden soll und dann <code>default(string)</code> zurückgibt.
         /// </summary>
