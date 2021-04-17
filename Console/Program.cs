@@ -24,10 +24,13 @@ namespace KeyLocker.Console
         {
             // new ConsoleCore().Run();
 
-            Utility.Console.ConsoleHelper.Prompt("> ", new Utility.Console.ConsolePromptOptions()
+            var input = Utility.Console.ConsoleHelper.Prompt("> ", new Utility.Console.ConsolePromptOptions()
             {
-                Autocompleter = new Autocompleter()
+                Autocompleter = new Autocompleter(),
+                Hidden = true,
             });
+
+            System.Console.WriteLine(input);
         }
     }
 }

@@ -126,12 +126,17 @@
         {
             ConsoleHelper.Write(prompt, options);
 
+            if (!options.Hidden)
+            {
+                return Console.ReadLine() ?? string.Empty;
+            }
+
             var sb = new StringBuilder();
             var run = true;
 
             while (run)
             {
-                var key = Console.ReadKey(options.Hidden);
+                var key = Console.ReadKey(true);
 
                 switch (key.Key)
                 {
@@ -139,39 +144,10 @@
                         if (sb.Length > 0)
                         {
                             sb.Remove(sb.Length - 1, 1);
-
-                            if (!options.Hidden)
-                            {
-                                Console.SetCursorPosition(Console.CursorLeft - 1, Console.CursorTop);
-                                Console.Write(" ");
-                            }
                         }
                         break;
                     case ConsoleKey.Enter:
                         run = false;
-                        break;
-                    case ConsoleKey.Tab:
-                        if (options.Autocompleter != null)
-                        {
-                            var autocompleteOptions = options.Autocompleter.GetAutocCompleteOptions(sb.ToString());
-                            var numOptions = autocompleteOptions.Count();
-
-                            if (numOptions == 1)
-                            {
-                                var part = autocompleteOptions.First().Substring(sb.Length);
-
-                                sb.Append(part);
-                                Console.Write(part);
-                            }
-                            else if (numOptions != 1)
-                            {
-                                Console.WriteLine();
-                                ConsoleHelper.WriteAll(autocompleteOptions, " ");
-                                Console.WriteLine();
-                                ConsoleHelper.Write(prompt, options);
-                                Console.Write(sb.ToString());
-                            }
-                        }
                         break;
                     default:
                         sb.Append(key.KeyChar);
