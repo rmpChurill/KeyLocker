@@ -1,7 +1,5 @@
 ﻿namespace KeyLocker.Console
 {
-    using System.Collections.Generic;
-
     /// <summary>
     /// Hauptklasse des Konsolenprogramms.
     /// </summary>
@@ -10,9 +8,9 @@
         /// <summary>
         /// Haupteinsprungspunkt des Konsolenprogramms.
         /// </summary>
-        public static void Main()
+        public static void Main(string[] args)
         {
-            new ConsoleCore().Run();
+            new ConsoleCore(args).Run();
         }
     }
 }

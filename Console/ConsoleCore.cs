@@ -83,7 +83,7 @@
 
             while (this.Loop)
             {
-                this.WritePrompt();
+                this.WriteStatus();
 
                 var input = ConsoleHelper.Prompt(options: promptOptions).Trim();
                 var actionToRun = default(ICommand);
@@ -100,7 +100,7 @@
                         (input.Length == action.Command.Length || char.IsWhiteSpace(input[action.Command.Length])))
                     {
                         actionToRun = action;
-                        actionArgument = input[Math.Max(input.Length - 1, action.Command.Length)..];
+                        actionArgument = input[Math.Min(input.Length - 1, action.Command.Length)..];
 
                         break;
                     }
@@ -188,10 +188,9 @@
         }
 
         /// <summary>
-        /// Gibt einen Prompttext zurück.
+        /// Schreibt eine Statusübersicht in die Konsole.
         /// </summary>
-        /// <returns></returns>
-        public void WritePrompt()
+        public void WriteStatus()
         {
             if (this.KeyLockerCore != null)
             {

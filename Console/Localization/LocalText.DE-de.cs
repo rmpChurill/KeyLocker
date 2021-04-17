@@ -7,7 +7,7 @@ namespace KeyLocker.Console.Localization
     /// </summary>
     public class LocalTextDEde : ILocalText
     {
-        /// <inheritdoc>
+        /// <inheritdoc />
         public string GetText(TextCode text)
         {
             switch (text)

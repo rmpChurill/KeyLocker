@@ -89,6 +89,11 @@
         <member name="M:KeyLocker.Console.Commands.HelpCommand.Execute(KeyLocker.Console.ConsoleCore,System.String)">
             <inheritdoc/>
         </member>
+        <member name="M:KeyLocker.Console.Commands.HelpCommand.ListAllCommands">
+            <summary>
+            Gibt eine Auflistung aller Befehle mit Hilfen aus.
+            </summary>
+        </member>
         <member name="T:KeyLocker.Console.Commands.ICommand">
             <summary>
             Stellt eine ausführbare Aktion dar. 
@@ -311,9 +316,20 @@
             Stellt den Kern der Anwendung dar.
             </summary>
         </member>
+        <member name="M:KeyLocker.Console.ConsoleCore.#ctor(System.String[])">
+            <summary>
+            Initialisiert eine neue Instanz der Klasse.
+            </summary>
+            <param name="args">Die Parameter der Befehlszeile.</param>
+        </member>
         <member name="P:KeyLocker.Console.ConsoleCore.KeyLockerCore">
             <summary>
             Holt den Kern der Bibliothek, über den die Transaktionen ausgeführt werden.
+            </summary>
+        </member>
+        <member name="P:KeyLocker.Console.ConsoleCore.LocalTexts">
+            <summary>
+            Holt die lokalisierten Texte.
             </summary>
         </member>
         <member name="P:KeyLocker.Console.ConsoleCore.FileName">
@@ -347,18 +363,42 @@
             <param name="name">Der gesuchte Name.</param>
             <returns>Den Eintrag mit dem ähnlichsten Namen.</returns>
         </member>
-        <member name="M:KeyLocker.Console.ConsoleCore.WritePrompt">
+        <member name="M:KeyLocker.Console.ConsoleCore.WriteStatus">
             <summary>
-            Gibt einen Prompttext zurück.
+            Schreibt eine Statusübersicht in die Konsole.
             </summary>
+        </member>
+        <member name="T:KeyLocker.Console.Localization.ILocalText">
+            <summary>
+            Implementierende Klassen stellen eine Sammlung von lokalisierten Texten dar.
+            </summary>
+        </member>
+        <member name="M:KeyLocker.Console.Localization.ILocalText.GetText(KeyLocker.Console.Localization.TextCode)">
+            <summary>
+            Holt den Text
+            </summary>
+            <param name="text"></param>
             <returns></returns>
+        </member>
+        <member name="T:KeyLocker.Console.Localization.LocalTextDEde">
+            <summary>
+            Stellt lokalisiert Texte auf Deutsch bereit.
+            </summary>
+        </member>
+        <member name="M:KeyLocker.Console.Localization.LocalTextDEde.GetText(KeyLocker.Console.Localization.TextCode)">
+            <inheritdoc />
+        </member>
+        <member name="T:KeyLocker.Console.Localization.TextCode">
+            <summary>
+            Eine Sammlung von Codes für auszugebende Texte.
+            </summary>
         </member>
         <member name="T:KeyLocker.Console.Program">
             <summary>
             Hauptklasse des Konsolenprogramms.
             </summary>
         </member>
-        <member name="M:KeyLocker.Console.Program.Main">
+        <member name="M:KeyLocker.Console.Program.Main(System.String[])">
             <summary>
             Haupteinsprungspunkt des Konsolenprogramms.
             </summary>

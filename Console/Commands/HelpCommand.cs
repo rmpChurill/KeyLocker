@@ -64,17 +64,17 @@
             }
             else
             {
-
-
                 var alternatives = KnownCommands.All
                     .Select(i => new Tuple<ICommand, int>(i, LevenshteinDistance.Compute(i.Command, prefix)))
                     .OrderBy(i => i.Item2)
-                    .Where(i => i.Item2 < 4);
+                    .Where(i => i.Item2 < 3)
+                    .Select(i => i.Item1.Command);
 
                 if (alternatives.Any())
                 {
                     Console.WriteLine("Similiar commands: ");
                     ConsoleHelper.WriteAll(alternatives);
+                    Console.WriteLine();
                 }
                 else
                 {
